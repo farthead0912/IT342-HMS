@@ -9,7 +9,7 @@ MediSync is an all-in-one hospital management system with an AI chatbot for cons
 - [ ] Medical Second-Opinion Telemedicine Platform
 - [ ] Prescription Information and Order Management
 ## Links
-- link to Figma
+- link to Figma: https://www.figma.com/design/iwIiDmIT4GEHQL0StzGOFt/HMS---Frontend%2FMobile?node-id=0-1&t=53I5ahfqeSjYf6Bo-1
 - link to Diagrams
 ## Developers' Profiles
 1. **Flores, Adrian Ash D.**
