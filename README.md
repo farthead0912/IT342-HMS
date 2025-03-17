@@ -24,6 +24,3 @@ COURSE & YEAR: BSIT-3
 # ABOUT ME
 
 I'm a kind person and I like watching anime and playing video games on mobile phone and also I like motorcycles.
-
-
-2131231321
