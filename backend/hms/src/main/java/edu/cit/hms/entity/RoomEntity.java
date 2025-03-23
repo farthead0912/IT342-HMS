@@ -15,12 +15,10 @@ public class RoomEntity {
     private int floorNumber;
     private boolean isOccupied;
     
-    @Id
     @ManyToOne
     @JoinColumn(name = "patientId")
     private PatientEntity patient;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "staffId")
     private StaffEntity staff;

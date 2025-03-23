@@ -17,5 +17,5 @@ public interface EquipmentRepository extends JpaRepository<EquipmentEntity, Inte
     public List<EquipmentEntity> findByStatus(String status);
 
     public Optional<EquipmentEntity> findByRoom(RoomEntity room);
-    public List<EquipmentEntity> findByDepartments(DepartmentEntity department);
+    // public List<EquipmentEntity> findByDepartment(DepartmentEntity department);
 }

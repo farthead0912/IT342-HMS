@@ -76,4 +76,12 @@ public class DoctorEntity {
     public void setUser(UserEntity user) {
         this.user = user;
     }
+
+    public List<ScheduleEntity> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<ScheduleEntity> schedules) {
+        this.schedules = schedules;
+    }
 }

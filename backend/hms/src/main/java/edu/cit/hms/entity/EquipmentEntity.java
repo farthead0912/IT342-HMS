@@ -23,13 +23,13 @@ public class EquipmentEntity {
     private RoomEntity room;
 
     // ManyToMany relationship with DepartmentEntity
-    @ManyToMany
+    /* @ManyToMany
     @JoinTable(
         name = "DepartmentEquipment",
         joinColumns = @JoinColumn(name = "equipmentId"),
         inverseJoinColumns = @JoinColumn(name = "deptId")
     )
-    private Set<DepartmentEntity> departments;
+    private Set<DepartmentEntity> departments; */
 
     // Constructor
     public EquipmentEntity() {
@@ -93,11 +93,11 @@ public class EquipmentEntity {
         this.room = room;
     }
 
-    public Set<DepartmentEntity> getDepartments() {
+    /* public Set<DepartmentEntity> getDepartments() {
         return departments;
     }
 
     public void setDepartments(Set<DepartmentEntity> departments) {
         this.departments = departments;
-    }
+    } */
 }

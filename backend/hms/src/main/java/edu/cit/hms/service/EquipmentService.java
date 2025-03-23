@@ -48,9 +48,9 @@ public class EquipmentService {
         if (newEquipment.getRoom() != null) {
             equipment.setRoom(newEquipment.getRoom());
         }
-        if (newEquipment.getDepartments() != null) {
+        /* if (newEquipment.getDepartments() != null) {
             equipment.setDepartments(newEquipment.getDepartments());
-        }
+        } */
 
         return equipmentRepository.save(equipment);
     }
