@@ -54,19 +54,19 @@ public class StaffEntity {
         this.position = position;
     }
 
-    // public DepartmentEntity getDepartment() {
-    //     return department;
-    // }
+    public DepartmentEntity getDepartment() {
+        return department;
+    }
 
-    // public void setDepartment(DepartmentEntity department) {
-    //     this.department = department;
-    // }
+    public void setDepartment(DepartmentEntity department) {
+        this.department = department;
+    }
 
-    // public UserEntity getUser() {
-    //     return user;
-    // }
+    public UserEntity getUser() {
+        return user;
+    }
 
-    // public void setUser(UserEntity user) {
-    //     this.user = user;
-    // }
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
 }

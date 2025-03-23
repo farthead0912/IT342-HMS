@@ -9,10 +9,9 @@ import java.util.Optional;
 import edu.cit.hms.entity.DepartmentEntity;
 import edu.cit.hms.entity.EquipmentEntity;
 import edu.cit.hms.entity.RoomEntity;
-import edu.cit.hms.junctions.DepartmentEquipment;
 
 @Repository
-public interface EquipmentRepository extends JpaRepository<EquipmentEntity, DepartmentEquipment> {
+public interface EquipmentRepository extends JpaRepository<EquipmentEntity, Integer> {
     public List<EquipmentEntity> findByEquipmentName(String equipmentName);
     public List<EquipmentEntity> findByEquipmentType(String equipmentType);
     public List<EquipmentEntity> findByStatus(String status);

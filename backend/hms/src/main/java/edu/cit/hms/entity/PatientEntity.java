@@ -99,4 +99,20 @@ public class PatientEntity {
     public void setUser(UserEntity user) {
         this.user = user;
     }
+
+    public List<PatientRecordEntity> getPatientRecords() {
+        return patientRecords;
+    }
+
+    public void setPatientRecords(List<PatientRecordEntity> patientRecords) {
+        this.patientRecords = patientRecords;
+    }
+
+    public List<ScheduleEntity> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<ScheduleEntity> schedules) {
+        this.schedules = schedules;
+    }
 }
