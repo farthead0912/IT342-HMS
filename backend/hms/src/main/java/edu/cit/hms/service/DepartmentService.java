@@ -46,11 +46,13 @@ public class DepartmentService {
         }
     }
 
-    public void deleteDepartment(int deptId) {
+    public String deleteDepartment(int deptId) {
         Optional<DepartmentEntity> department = departmentRepository.findById(deptId);
 
         if(department.isPresent()) {
             departmentRepository.deleteById(deptId);
+
+            return "Department ID: " + deptId + " deleted successfully!";
         } else {
             throw new RuntimeException("Department ID: " + deptId + " not found!");
         }

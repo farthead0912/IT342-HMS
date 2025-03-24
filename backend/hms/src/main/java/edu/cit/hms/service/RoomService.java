@@ -50,11 +50,13 @@ public class RoomService {
         return roomRepository.save(room);
     }
     
-    public void deleteRoom(int roomId) {
+    public String deleteRoom(int roomId) {
         Optional<RoomEntity> room = roomRepository.findById(roomId);
 
         if(room.isPresent()) {
             roomRepository.deleteById(roomId);
+
+            return "Room ID: " + roomId + " deleted successfully!";
         } else {
             throw new RuntimeException("Room ID: " + roomId + " not found!");
         }

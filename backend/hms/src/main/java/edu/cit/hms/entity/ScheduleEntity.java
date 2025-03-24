@@ -1,6 +1,8 @@
 package edu.cit.hms.entity;
 
 import jakarta.persistence.*;
+
+import java.sql.Time;
 import java.util.Date;
 
 @Entity
@@ -11,15 +13,20 @@ public class ScheduleEntity {
     private int scheduleId;
 
     @ManyToOne
-    @JoinColumn(name = "doctorId")
+    @JoinColumn(name = "doctorId", nullable = true)
     private DoctorEntity doctor;
 
     @ManyToOne
-    @JoinColumn(name = "patientId")
+    @JoinColumn(name = "patientId", nullable = true)
     private PatientEntity patient;
 
+    @Column(nullable = true)
     private Date appointmentDate;
-    private String appointmentTime;
+
+    @Column(nullable = true)
+    private Time appointmentTime;
+
+    @Column(nullable = true, length = 10)
     private String status;
 
     // Getters and Setters
@@ -55,11 +62,11 @@ public class ScheduleEntity {
         this.appointmentDate = appointmentDate;
     }
 
-    public String getAppointmentTime() {
+    public Time getAppointmentTime() {
         return appointmentTime;
     }
 
-    public void setAppointmentTime(String appointmentTime) {
+    public void setAppointmentTime(Time appointmentTime) {
         this.appointmentTime = appointmentTime;
     }
 

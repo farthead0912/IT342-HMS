@@ -50,11 +50,13 @@ public class ScheduleService {
         return scheduleRepository.save(schedule);
     }
 
-    public void deleteSchedule(int scheduleId) {
+    public String deleteSchedule(int scheduleId) {
         Optional<ScheduleEntity> schedule = scheduleRepository.findById(scheduleId);
 
         if(schedule.isPresent()) {
             scheduleRepository.deleteById(scheduleId);
+
+            return "Schedule ID: " + scheduleId + " deleted successfully!";
         } else {
             throw new RuntimeException("Schedule ID: " + scheduleId + " not found!");
         }

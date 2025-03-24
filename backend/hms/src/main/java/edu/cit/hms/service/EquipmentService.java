@@ -48,18 +48,20 @@ public class EquipmentService {
         if (newEquipment.getRoom() != null) {
             equipment.setRoom(newEquipment.getRoom());
         }
-        /* if (newEquipment.getDepartments() != null) {
+        if (newEquipment.getDepartments() != null) {
             equipment.setDepartments(newEquipment.getDepartments());
-        } */
+        }
 
         return equipmentRepository.save(equipment);
     }
 
-    public void deleteEquipment(int equipmentId) {
+    public String deleteEquipment(int equipmentId) {
         Optional<EquipmentEntity> equipment = equipmentRepository.findById(equipmentId);
 
         if (equipment.isPresent()) {
             equipmentRepository.deleteById(equipmentId);
+
+            return "Equipment ID: " + equipmentId + " deleted successfully!";
         } else {
             throw new RuntimeException("Equipment ID: " + equipmentId + " not found!");
         }

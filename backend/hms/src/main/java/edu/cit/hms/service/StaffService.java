@@ -50,11 +50,13 @@ public class StaffService {
         return staffRepository.save(staff);
     }
 
-    public void deleteStaff(int staffId) {
+    public String deleteStaff(int staffId) {
         Optional<StaffEntity> staff = staffRepository.findById(staffId);
 
         if (staff.isPresent()) {
             staffRepository.deleteById(staffId);
+
+            return "Staff ID: " + staffId + " deleted successfully!";
         } else {
             throw new RuntimeException("Staff ID: " + staffId + " not found!");
         }

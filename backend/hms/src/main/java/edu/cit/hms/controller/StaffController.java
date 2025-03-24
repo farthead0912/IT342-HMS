@@ -35,7 +35,7 @@ public class StaffController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteStaff(@PathVariable int id) {
-        staffService.deleteStaff(id);
+    public String deleteStaff(@PathVariable int id) {
+        return staffService.deleteStaff(id);
     }
 }

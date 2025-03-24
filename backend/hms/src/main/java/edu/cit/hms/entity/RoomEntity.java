@@ -9,18 +9,27 @@ public class RoomEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int roomId;
 
+    @Column(nullable = false, length = 50)
     private String roomType;
+
+    @Column(nullable = false, length = 3)
     private int roomNumber;
+
+    @Column(nullable = false, length = 10)
     private double roomPrice;
+
+    @Column(nullable = false, length = 2)
     private int floorNumber;
+
+    @Column(nullable = false)
     private boolean isOccupied;
     
     @ManyToOne
-    @JoinColumn(name = "patientId")
+    @JoinColumn(name = "patientId", nullable = true)
     private PatientEntity patient;
 
     @ManyToOne
-    @JoinColumn(name = "staffId")
+    @JoinColumn(name = "staffId", nullable = true)
     private StaffEntity staff;
 
     // Getters and Setters

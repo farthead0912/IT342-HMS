@@ -1,5 +1,7 @@
 package edu.cit.hms.entity;
 
+import java.util.Set;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -9,7 +11,11 @@ public class DepartmentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int deptId;
 
+    @Column(nullable = false, length = 50)
     private String deptName;
+
+    @ManyToMany(mappedBy = "departments")
+    private Set<EquipmentEntity> equipments;
 
     // Getters and Setters
     public int getDeptId() {

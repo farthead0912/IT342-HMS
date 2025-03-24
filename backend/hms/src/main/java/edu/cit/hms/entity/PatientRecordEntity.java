@@ -12,12 +12,19 @@ public class PatientRecordEntity {
     private int recordId;
 
     @ManyToOne
-    @JoinColumn(name = "patientId")
+    @JoinColumn(name = "patientId", nullable = true)
     private PatientEntity patient;
 
+    @Column(nullable = false, length = 255)
     private String sickness;
+
+    @Column(nullable = false)
     private Date diagnosisDate;
+
+    @Column(nullable = false, length = 50)
     private String severity;
+
+    @Column(nullable = false, length = 255)
     private String treatmentPlan;
 
     // Getters and Setters

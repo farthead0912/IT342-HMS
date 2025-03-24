@@ -29,13 +29,13 @@ public class DepartmentController {
         return departmentService.createDepartment(department);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/{deptId}")
     public DepartmentEntity updateDepartment(@PathVariable int deptId, @RequestBody DepartmentEntity department) {
         return departmentService.updateDepartment(deptId, department);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteDepartment(@PathVariable int id) {
-        departmentService.deleteDepartment(id);
+    public String deleteDepartment(@PathVariable int id) {
+        return departmentService.deleteDepartment(id);
     }
 }

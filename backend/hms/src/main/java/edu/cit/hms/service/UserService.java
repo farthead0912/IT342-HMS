@@ -48,11 +48,13 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void deleteUser(int userId) {
+    public String deleteUser(int userId) {
         Optional<UserEntity> user = userRepository.findById(userId);
 
         if(user.isPresent()) {
             userRepository.delete(user.get());
+
+            return "User ID: " + userId + " deleted successfully!";
         } else {
             throw new RuntimeException("User ID: " + userId + " not found!");
         }

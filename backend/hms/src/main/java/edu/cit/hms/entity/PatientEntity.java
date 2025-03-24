@@ -11,15 +11,24 @@ public class PatientEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int patientId;
 
+    @Column(nullable = false, length = 50)
     private String firstName;
+
+    @Column(nullable = false, length = 50)
     private String lastName;
+
+    @Column(nullable = false, length = 3)
     private int age;
+
+    @Column(nullable = false, length = 10)
     private String gender;
+
+    @Column(nullable = false, length = 3)
     private String bloodType;
 
     // this is ManyToOne since many patients can be in one room, like in some hospitals with 3 beds per room
     @ManyToOne
-    @JoinColumn(name = "roomId")
+    @JoinColumn(name = "roomId", nullable = true)
     private RoomEntity room;
 
     // this is OneToOne since one patient can only have one user account
@@ -29,10 +38,12 @@ public class PatientEntity {
 
     // this is OneToMany since one patient can have many records
     @OneToMany(mappedBy = "patient")
+    @Column(nullable = true)
     private List<PatientRecordEntity> patientRecords;
 
     // this is OneToMany since one patient can have many schedules
     @OneToMany(mappedBy = "patient")
+    @Column(nullable = true)
     private List<ScheduleEntity> schedules;
 
     // Getters and Setters

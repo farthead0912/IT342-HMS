@@ -38,11 +38,21 @@ public class DoctorService {
             doctor = doctorRepository.findById(doctorId)
                 .orElseThrow(() -> new RuntimeException("Doctor ID: " + doctorId + " not found!"));
 
-            doctor.setFirstName(newDoctor.getFirstName());
-            doctor.setLastName(newDoctor.getLastName());
-            doctor.setSpecialization(newDoctor.getSpecialization());
-            doctor.setDepartment(newDoctor.getDepartment());
-            doctor.setUser(newDoctor.getUser());
+            if(doctor.getFirstName() != null && newDoctor.getFirstName().isEmpty()) {
+                doctor.setFirstName(newDoctor.getFirstName());
+            }
+            if(doctor.getLastName() != null && newDoctor.getLastName().isEmpty()) {
+                doctor.setLastName(newDoctor.getLastName());
+            }
+            if(doctor.getSpecialization() != null && newDoctor.getSpecialization().isEmpty()) {
+                doctor.setSpecialization(newDoctor.getSpecialization());
+            }
+            if(doctor.getDepartment() != null && newDoctor.getDepartment() != null) {
+                doctor.setDepartment(newDoctor.getDepartment());
+            }
+            if(doctor.getUser() != null && newDoctor.getUser() != null) {
+                doctor.setUser(newDoctor.getUser());
+            }
 
             return doctorRepository.save(doctor);
         } catch (NoSuchElementException nex) {
@@ -50,11 +60,13 @@ public class DoctorService {
         }
     }
 
-    public void deleteDoctor(int doctorId) {
+    public String deleteDoctor(int doctorId) {
         Optional<DoctorEntity> doctor = doctorRepository.findById(doctorId);
 
         if(doctor.isPresent()) {
             doctorRepository.deleteById(doctorId);
+
+            return "Doctor ID: " + doctorId + " deleted successfully!";
         } else {
             throw new RuntimeException("Doctor ID: " + doctorId + " not found!");
         }

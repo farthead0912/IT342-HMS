@@ -9,9 +9,16 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
 
+    @Column(nullable = false, length = 18)
     private String username;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
     private String role;
+
+    @Column(nullable = false, length = 50)
     private String email;
 
     // Getters and Setters

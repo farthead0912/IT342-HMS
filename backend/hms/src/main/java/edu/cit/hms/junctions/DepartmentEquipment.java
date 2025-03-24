@@ -12,11 +12,11 @@ public class DepartmentEquipment {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "equipmentId")
+    @JoinColumn(name = "equipmentId", nullable = false)
     private EquipmentEntity equipment;
 
     @ManyToOne
-    @JoinColumn(name = "deptId")
+    @JoinColumn(name = "deptId", nullable = false)
     private DepartmentEntity department;
 
     // Getters and Setters

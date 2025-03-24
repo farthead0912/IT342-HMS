@@ -9,8 +9,13 @@ public class StaffEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int staffId;
 
+    @Column(nullable = false, length = 50)
     private String firstName;
+
+    @Column(nullable = false, length = 50)
     private String lastName;
+
+    @Column(nullable = false, length = 50)
     private String position;
 
     @ManyToOne

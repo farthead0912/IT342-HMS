@@ -35,7 +35,7 @@ public class PatientRecordController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deletePatientRecord(@PathVariable int id) {
-        patientRecordService.deletePatientRecord(id);
+    public String deletePatientRecord(@PathVariable int id) {
+        return patientRecordService.deletePatientRecord(id);
     }
 }

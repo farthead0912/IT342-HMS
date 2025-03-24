@@ -35,7 +35,7 @@ public class ScheduleController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteSchedule(@PathVariable int id) {
-        scheduleService.deleteSchedule(id);
+    public String deleteSchedule(@PathVariable int id) {
+        return scheduleService.deleteSchedule(id);
     }
 }

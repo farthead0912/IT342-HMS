@@ -48,11 +48,13 @@ public class PatientRecordService {
         return patientRecordRepository.save(patientRecord);
     }
 
-    public void deletePatientRecord(int patientRecordId) {
+    public String deletePatientRecord(int patientRecordId) {
         Optional<PatientRecordEntity> patientRecord = patientRecordRepository.findById(patientRecordId);
 
         if(patientRecord.isPresent()) {
             patientRecordRepository.deleteById(patientRecordId);
+
+            return "Patient Record ID: " + patientRecordId + " deleted successfully!";
         } else {
             throw new RuntimeException("Patient Record ID: " + patientRecordId + " not found!");
         }

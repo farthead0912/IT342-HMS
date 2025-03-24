@@ -35,7 +35,7 @@ public class EquipmentController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteEquipment(@PathVariable int id) {
-        equipmentService.deleteEquipment(id);
+    public String deleteEquipment(@PathVariable int id) {
+        return equipmentService.deleteEquipment(id);
     }
 }

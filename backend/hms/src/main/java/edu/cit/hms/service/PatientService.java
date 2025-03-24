@@ -65,11 +65,13 @@ public class PatientService {
         return patientRepository.save(patient);
     }
 
-    public void deletePatient(int patientId) {
+    public String deletePatient(int patientId) {
         Optional<PatientEntity> patient = patientRepository.findById(patientId);
 
         if(patient.isPresent()) {
             patientRepository.deleteById(patientId);
+
+            return "Patient ID: " + patientId + " deleted successfully!";
         } else {
             throw new RuntimeException("Patient ID: " + patientId + " not found!");
         }
