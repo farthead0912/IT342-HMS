@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -15,12 +16,19 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/dashboard").authenticated()
-                                .anyRequest().permitAll()
+                            .requestMatchers("/admin/register", "/doctor/register", "/staff/register").hasRole("ADMIN")
+                            .requestMatchers("/dashboard").authenticated()
+                            .anyRequest().permitAll()
                 )
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(null))
                 .logout(logout -> logout.logoutSuccessUrl("/"))
                 .formLogin(form -> form.defaultSuccessUrl("/dashboard", true))
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

@@ -1,14 +1,15 @@
 package edu.cit.hms.service;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import edu.cit.hms.dto.UserDTO;
 import edu.cit.hms.entity.UserEntity;
+import edu.cit.hms.enums.Roles;
 import edu.cit.hms.repository.UserRepository;
 
 @Service
@@ -16,34 +17,64 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public ResponseEntity<UserEntity> createUser(UserEntity user) {
-        try {
-            UserEntity createdUser = userRepository.save(user);
-            return new ResponseEntity<>(createdUser, HttpStatus.CREATED); // 201 Created
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // 500 Internal Server Error
-        }
+    public UserEntity createUser(UserDTO userDTO) {
+        UserEntity user = new UserEntity();
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(userDTO.getPassword());
+        user.setRole(Roles.PATIENT); // Default role is PATIENT
+        user.setEmail(userDTO.getEmail());
+
+        return userRepository.save(user); // Save the patient user to the database
     }
 
-    public ResponseEntity<UserEntity> getUserById(int userId) {
+    public UserEntity createStaff(UserDTO userDTO) {
+        UserEntity user = new UserEntity();
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(userDTO.getPassword());
+        user.setRole(Roles.STAFF); // Default role is STAFF
+        user.setEmail(userDTO.getEmail());
+
+        return userRepository.save(user); // Save the staff user to the database
+    }
+
+    public UserEntity createDoctor(UserDTO userDTO) {
+        UserEntity user = new UserEntity();
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(userDTO.getPassword());
+        user.setRole(Roles.DOCTOR); // Default role is DOCTOR
+        user.setEmail(userDTO.getEmail());
+
+        return userRepository.save(user); // Save the doctor user to the database
+    }
+
+    public UserEntity createAdmin(UserDTO userDTO) {
+        UserEntity user = new UserEntity();
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(userDTO.getPassword());
+        user.setRole(Roles.ADMIN);
+        user.setEmail(userDTO.getEmail());
+
+        return userRepository.save(user); // Save the admin user to the database
+    }
+
+    public UserEntity getUserById(int userId) {
         Optional<UserEntity> user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            return new ResponseEntity<>(user.get(), HttpStatus.OK); // 200 OK
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 Not Found
-        }
+        return user.orElse(null); // Return the user if present, otherwise null
     }
 
-    public ResponseEntity<List<UserEntity>> getUsers() {
+    public UserEntity getUserByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
+    }
+
+    public List<UserEntity> getUsers() {
         try {
-            List<UserEntity> users = userRepository.findAll();
-            return new ResponseEntity<>(users, HttpStatus.OK); // 200 OK
+            return userRepository.findAll(); // Return the list of users
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // 500 Internal Server Error
+            return null; // Return null in case of an error
         }
     }
 
-    public ResponseEntity<UserEntity> updateUser(int userId, UserEntity newUser) {
+    public UserEntity updateUser(int userId, UserEntity newUser) {
         Optional<UserEntity> userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             UserEntity user = userOptional.get();
@@ -55,27 +86,28 @@ public class UserService {
             if (newUser.getPassword() != null && !newUser.getPassword().isEmpty()) {
                 user.setPassword(newUser.getPassword());
             }
-            if (newUser.getRole() != null && !newUser.getRole().isEmpty()) {
+            if (newUser.getRole() != null && EnumSet.allOf(Roles.class).contains(newUser.getRole())) {
                 user.setRole(newUser.getRole());
+            } else if (newUser.getRole() != null) {
+                throw new IllegalArgumentException("Invalid role: " + newUser.getRole());
             }
             if (newUser.getEmail() != null && !newUser.getEmail().isEmpty()) {
                 user.setEmail(newUser.getEmail());
             }
 
-            UserEntity updatedUser = userRepository.save(user);
-            return new ResponseEntity<>(updatedUser, HttpStatus.OK); // 200 OK
+            return userRepository.save(user); // Return the updated user
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 Not Found
+            return null; // Return null if the user is not found
         }
     }
 
-    public ResponseEntity<String> deleteUser(int userId) {
+    public String deleteUser(int userId) {
         Optional<UserEntity> user = userRepository.findById(userId);
         if (user.isPresent()) {
             userRepository.delete(user.get());
-            return new ResponseEntity<>("User ID: " + userId + " deleted successfully!", HttpStatus.OK); // 200 OK
+            return "User ID: " + userId + " deleted successfully!"; // Return success message
         } else {
-            return new ResponseEntity<>("User ID: " + userId + " not found!", HttpStatus.NOT_FOUND); // 404 Not Found
+            return "User ID: " + userId + " not found!"; // Return not found message
         }
     }
 }

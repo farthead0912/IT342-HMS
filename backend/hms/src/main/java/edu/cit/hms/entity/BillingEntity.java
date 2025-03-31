@@ -1,5 +1,7 @@
 package edu.cit.hms.entity;
 
+import java.sql.Date;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -18,6 +20,8 @@ public class BillingEntity {
     private RoomEntity room;
 
     private double amount;
+
+    private Date issuedAt;
 
     public double getAmount() {
         return amount;
@@ -41,5 +45,13 @@ public class BillingEntity {
 
     public void setRoom(RoomEntity room) {
         this.room = room;
+    }
+
+    public Date getIssuedAt() {
+        return issuedAt;
+    }
+
+    public void setIssuedAt(Date issuedAt) {
+        this.issuedAt = issuedAt;
     }
 }

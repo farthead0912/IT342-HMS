@@ -1,28 +1,14 @@
-package edu.cit.hms.entity;
+package edu.cit.hms.dto;
 
 import edu.cit.hms.enums.Roles;
-import jakarta.persistence.*;
 
-@Entity
-@Table(name = "users")
-public class UserEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserDTO {
     private int userId;
-
-    @Column(nullable = false, length = 18)
     private String username;
-
-    @Column(nullable = false)
     private String password;
-
-    @Column(nullable = false)
     private Roles role;
-
-    @Column(nullable = false, length = 50)
     private String email;
 
-    // Getters and Setters
     public int getUserId() {
         return userId;
     }

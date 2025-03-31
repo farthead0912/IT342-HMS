@@ -11,6 +11,11 @@ import edu.cit.hms.service.DepartmentService;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
+@ApiResponses(value = {
+    @ApiResponse(responseCode = "400", description = "Bad request"),
+    @ApiResponse(responseCode = "404", description = "Department not found"),
+    @ApiResponse(responseCode = "500", description = "Internal server error")
+})
 @RestController
 @RequestMapping("/api/department")
 public class DepartmentController {
@@ -18,52 +23,31 @@ public class DepartmentController {
     private DepartmentService departmentService;
     
     @GetMapping("/")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved departments"),
-            @ApiResponse(responseCode = "404", description = "Department not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved departments")
     public List<DepartmentEntity> getAllDepartments() {
         return departmentService.getAllDepartments();
     }
 
     @GetMapping("/{deptId}")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved department"),
-            @ApiResponse(responseCode = "404", description = "Department not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved department")
     public DepartmentEntity getDepartmentById(@PathVariable int deptId) {
         return departmentService.getDepartmentById(deptId);
     }
 
     @PostMapping("/")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Successfully created department"),
-            @ApiResponse(responseCode = "400", description = "Bad request"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "201", description = "Successfully created department")
     public DepartmentEntity createDepartment(@RequestBody DepartmentEntity department) {
         return departmentService.createDepartment(department);
     }
 
     @PutMapping("/{deptId}")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully updated department"),
-            @ApiResponse(responseCode = "400", description = "Bad request"),
-            @ApiResponse(responseCode = "404", description = "Department not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully updated department")
     public DepartmentEntity updateDepartment(@PathVariable int deptId, @RequestBody DepartmentEntity department) {
         return departmentService.updateDepartment(deptId, department);
     }
 
     @DeleteMapping("/{deptId}")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully deleted department"),
-            @ApiResponse(responseCode = "404", description = "Department not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully deleted department")
     public String deleteDepartment(@PathVariable int deptId) {
         return departmentService.deleteDepartment(deptId);
     }

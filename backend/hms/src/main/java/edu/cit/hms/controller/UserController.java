@@ -3,7 +3,6 @@ package edu.cit.hms.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import edu.cit.hms.entity.UserEntity;
@@ -23,7 +22,7 @@ public class UserController {
         @ApiResponse(responseCode = "200", description = "Successfully retrieved list of users"),
         @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<List<UserEntity>> getUsers() {
+    public List<UserEntity> getUsers() {
         return userService.getUsers();
     }
 
@@ -33,18 +32,8 @@ public class UserController {
         @ApiResponse(responseCode = "404", description = "User not found"),
         @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<UserEntity> getUserById(@PathVariable int userId) {
+    public UserEntity getUserById(@PathVariable int userId) {
         return userService.getUserById(userId);
-    }
-
-    @PostMapping("/")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Successfully created user"),
-        @ApiResponse(responseCode = "400", description = "Bad request"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
-    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user) {
-        return userService.createUser(user);
     }
 
     @PutMapping("/{userId}")
@@ -54,7 +43,7 @@ public class UserController {
         @ApiResponse(responseCode = "400", description = "Bad request"),
         @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<UserEntity> updateUser(@PathVariable int userId, @RequestBody UserEntity user) {
+    public UserEntity updateUser(@PathVariable int userId, @RequestBody UserEntity user) {
         return userService.updateUser(userId, user);
     }
 
@@ -64,7 +53,7 @@ public class UserController {
         @ApiResponse(responseCode = "404", description = "User not found"),
         @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<String> deleteUser(@PathVariable int userId) {
+    public String deleteUser(@PathVariable int userId) {
         return userService.deleteUser(userId);
     }
 }
