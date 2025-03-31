@@ -2,6 +2,7 @@ package edu.cit.hms.entity;
 
 import java.util.List;
 
+import edu.cit.hms.junctions.PatientEquipment;
 import jakarta.persistence.*;
 
 @Entity
@@ -44,7 +45,10 @@ public class PatientEntity {
     // this is OneToMany since one patient can have many schedules
     @OneToMany(mappedBy = "patient")
     @Column(nullable = true)
-    private List<ScheduleEntity> schedules;
+    private List<AdmissionEntity> admissions;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<PatientEquipment> equipmentUsage;
 
     // Getters and Setters
     public int getPatientId() {
@@ -119,11 +123,11 @@ public class PatientEntity {
         this.patientRecords = patientRecords;
     }
 
-    public List<ScheduleEntity> getSchedules() {
-        return schedules;
+    public List<AdmissionEntity> getAdmissions() {
+        return admissions;
     }
 
-    public void setSchedules(List<ScheduleEntity> schedules) {
-        this.schedules = schedules;
+    public void setAdmissions(List<AdmissionEntity> admissions) {
+        this.admissions = admissions;
     }
 }

@@ -14,7 +14,7 @@ public interface DoctorRepository extends JpaRepository<DoctorEntity, Integer> {
     public List<DoctorEntity> findByLastName(String lastName);
     public List<DoctorEntity> findBySpecialization(String specialization);
 
-    public List<DoctorEntity> findBySchedules(ScheduleEntity schedules);
+    public List<DoctorEntity> findByAdmissions(AdmissionEntity admissions);
     public Optional<DoctorEntity> findByUser(UserEntity user);
     public Optional<DoctorEntity> findByDepartment(DepartmentEntity department);
 }

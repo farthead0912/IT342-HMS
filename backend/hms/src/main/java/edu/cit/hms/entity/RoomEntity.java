@@ -1,5 +1,7 @@
 package edu.cit.hms.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -31,6 +33,9 @@ public class RoomEntity {
     @ManyToOne
     @JoinColumn(name = "staffId", nullable = true)
     private StaffEntity staff;
+
+    @OneToMany(mappedBy = "room")
+    private List<AdmissionEntity> admissions;
 
     // Getters and Setters
     public int getRoomId() {
@@ -95,5 +100,13 @@ public class RoomEntity {
 
     public void setStaff(StaffEntity staff) {
         this.staff = staff;
+    }
+
+    public List<AdmissionEntity> getAdmissions() {
+        return admissions;
+    }
+
+    public void setAdmissions(List<AdmissionEntity> admissions) {
+        this.admissions = admissions;
     }
 }

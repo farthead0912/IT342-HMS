@@ -2,6 +2,9 @@ package edu.cit.hms.entity;
 
 import jakarta.persistence.*;
 import java.util.Set;
+import java.util.List;
+
+import edu.cit.hms.junctions.PatientEquipment;
 
 @Entity
 @Table(name = "equipment")
@@ -38,6 +41,9 @@ public class EquipmentEntity {
         inverseJoinColumns = @JoinColumn(name = "deptId", nullable = false)
     )
     private Set<DepartmentEntity> departments;
+
+    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL)
+    private List<PatientEquipment> patientUsage;
 
     // Constructor
     public EquipmentEntity() {

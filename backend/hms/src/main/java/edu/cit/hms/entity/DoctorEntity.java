@@ -31,7 +31,7 @@ public class DoctorEntity {
 
     // this is OneToMany since one doctor can have many schedules for many patients, also setting nullable to true since doctor might not have any schedules (or schedule has been finished)
     @OneToMany(mappedBy = "doctor")
-    private List<ScheduleEntity> schedules;
+    private List<AdmissionEntity> admissions;
 
     // Getters and Setters
     public int getDoctorId() {
@@ -82,11 +82,11 @@ public class DoctorEntity {
         this.user = user;
     }
 
-    public List<ScheduleEntity> getSchedules() {
-        return schedules;
+    public List<AdmissionEntity> getAdmissions() {
+        return admissions;
     }
 
-    public void setSchedules(List<ScheduleEntity> schedules) {
-        this.schedules = schedules;
+    public void setAdmissions(List<AdmissionEntity> admissions) {
+        this.admissions = admissions;
     }
 }

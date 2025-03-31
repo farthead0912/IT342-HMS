@@ -9,7 +9,7 @@ import jakarta.persistence.*;
 public class DepartmentEquipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int deeqId;
 
     @ManyToOne
     @JoinColumn(name = "equipmentId", nullable = false)
@@ -20,12 +20,12 @@ public class DepartmentEquipment {
     private DepartmentEntity department;
 
     // Getters and Setters
-    public int getId() {
-        return id;
+    public int getdeeqId() {
+        return deeqId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setdeeqId(int deeqId) {
+        this.deeqId = deeqId;
     }
 
     public EquipmentEntity getEquipment() {

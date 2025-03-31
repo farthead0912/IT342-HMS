@@ -52,8 +52,8 @@ public class PatientService {
         if(newPatient.getRoom() != null) {
             patient.setRoom(newPatient.getRoom());
         }
-        if(newPatient.getSchedules() != null) {
-            patient.setSchedules(newPatient.getSchedules());
+        if(newPatient.getAdmissions() != null) {
+            patient.setAdmissions(newPatient.getAdmissions());
         }
         if(newPatient.getPatientRecords() != null) {
             patient.setPatientRecords(newPatient.getPatientRecords());
