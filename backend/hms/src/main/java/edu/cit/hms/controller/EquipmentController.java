@@ -11,6 +11,11 @@ import edu.cit.hms.service.EquipmentService;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
+@ApiResponses(value = {
+    @ApiResponse(responseCode = "404", description = "Equipment not found"),
+    @ApiResponse(responseCode = "400", description = "Bad request"),
+    @ApiResponse(responseCode = "500", description = "Internal server error")
+})
 @RestController
 @RequestMapping("/api/equipment")
 public class EquipmentController {
@@ -18,51 +23,31 @@ public class EquipmentController {
     private EquipmentService equipmentService;
 
     @GetMapping("/")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully retrieved list of equipment"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of equipment")
     public List<EquipmentEntity> getEquipments() {
         return equipmentService.getEquipments();
     }
 
     @GetMapping("/{equipmentId}")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully retrieved equipment by ID"),
-        @ApiResponse(responseCode = "404", description = "Equipment not found"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved equipment by ID")
     public EquipmentEntity getEquipmentById(@PathVariable int equipmentId) {
         return equipmentService.getEquipmentById(equipmentId);
     }
 
     @PostMapping("/")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Successfully created equipment"),
-        @ApiResponse(responseCode = "400", description = "Bad request"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "201", description = "Successfully created equipment")
     public EquipmentEntity createEquipment(@RequestBody EquipmentEntity equipment) {
         return equipmentService.createEquipment(equipment);
     }
 
     @PutMapping("/{equipmentId}")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully updated equipment"),
-        @ApiResponse(responseCode = "404", description = "Equipment not found"),
-        @ApiResponse(responseCode = "400", description = "Bad request"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully updated equipment")
     public EquipmentEntity updateEquipment(@PathVariable int equipmentId, @RequestBody EquipmentEntity equipment) {
         return equipmentService.updateEquipment(equipmentId, equipment);
     }
 
     @DeleteMapping("/{equipmentId}")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully deleted equipment"),
-        @ApiResponse(responseCode = "404", description = "Equipment not found"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully deleted equipment")
     public String deleteEquipment(@PathVariable int equipmentId) {
         return equipmentService.deleteEquipment(equipmentId);
     }

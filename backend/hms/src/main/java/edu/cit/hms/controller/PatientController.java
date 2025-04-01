@@ -11,6 +11,11 @@ import edu.cit.hms.service.PatientService;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
+@ApiResponses(value = {
+    @ApiResponse(responseCode = "404", description = "Patient not found"),
+    @ApiResponse(responseCode = "400", description = "Bad request"),
+    @ApiResponse(responseCode = "500", description = "Internal server error")
+})
 @RestController
 @RequestMapping("/api/patient")
 public class PatientController {
@@ -18,51 +23,31 @@ public class PatientController {
     private PatientService patientService;
 
     @GetMapping("/")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully retrieved list of patients"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of patients")
     public List<PatientEntity> getPatients() {
         return patientService.getPatients();
     }
 
     @GetMapping("/{patientId}")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully retrieved patient by ID"),
-        @ApiResponse(responseCode = "404", description = "Patient not found"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved patient by ID")
     public PatientEntity getPatientById(@PathVariable int patientId) {
         return patientService.getPatientById(patientId);
     }
 
     @PostMapping("/")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Successfully created patient"),
-        @ApiResponse(responseCode = "400", description = "Bad request"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "201", description = "Successfully created patient")
     public PatientEntity createPatient(@RequestBody PatientEntity patient) {
         return patientService.createPatient(patient);
     }
 
     @PutMapping("/{patientId}")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully updated patient"),
-        @ApiResponse(responseCode = "404", description = "Patient not found"),
-        @ApiResponse(responseCode = "400", description = "Bad request"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully updated patient")
     public PatientEntity updatePatient(@PathVariable int patientId, @RequestBody PatientEntity patient) {
         return patientService.updatePatient(patientId, patient);
     }
 
     @DeleteMapping("/{patientId}")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully deleted patient"),
-        @ApiResponse(responseCode = "404", description = "Patient not found"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully deleted patient")
     public String deletePatient(@PathVariable int patientId) {
         return patientService.deletePatient(patientId);
     }

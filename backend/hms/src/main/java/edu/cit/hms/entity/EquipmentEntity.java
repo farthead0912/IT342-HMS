@@ -43,6 +43,7 @@ public class EquipmentEntity {
     private Set<DepartmentEntity> departments;
 
     @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL)
+    @Column(nullable = true)
     private List<PatientEquipment> patientUsage;
 
     // Constructor

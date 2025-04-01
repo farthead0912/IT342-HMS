@@ -11,6 +11,11 @@ import edu.cit.hms.service.StaffService;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
+@ApiResponses(value = {
+    @ApiResponse(responseCode = "404", description = "Staff not found"),
+    @ApiResponse(responseCode = "400", description = "Bad request"),
+    @ApiResponse(responseCode = "500", description = "Internal server error")
+})
 @RestController
 @RequestMapping("/api/staff")
 public class StaffController {
@@ -18,51 +23,31 @@ public class StaffController {
     private StaffService staffService;
 
     @GetMapping("/")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully retrieved list of staff"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of staff")
     public List<StaffEntity> getStaff() {
         return staffService.getStaff();
     }
 
     @GetMapping("/{staffId}")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully retrieved staff by ID"),
-        @ApiResponse(responseCode = "404", description = "Staff not found"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved staff by ID")
     public StaffEntity getStaffById(@PathVariable int staffId) {
         return staffService.getStaffById(staffId);
     }
 
     @PostMapping("/")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Successfully created staff"),
-        @ApiResponse(responseCode = "400", description = "Bad request"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "201", description = "Successfully created staff")
     public StaffEntity createStaff(@RequestBody StaffEntity staff) {
         return staffService.createStaff(staff);
     }
 
     @PutMapping("/{staffId}")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully updated staff"),
-        @ApiResponse(responseCode = "404", description = "Staff not found"),
-        @ApiResponse(responseCode = "400", description = "Bad request"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully updated staff")
     public StaffEntity updateStaff(@PathVariable int staffId, @RequestBody StaffEntity staff) {
         return staffService.updateStaff(staffId, staff);
     }
 
     @DeleteMapping("/{staffId}")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully deleted staff"),
-        @ApiResponse(responseCode = "404", description = "Staff not found"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully deleted staff")
     public String deleteStaff(@PathVariable int staffId) {
         return staffService.deleteStaff(staffId);
     }

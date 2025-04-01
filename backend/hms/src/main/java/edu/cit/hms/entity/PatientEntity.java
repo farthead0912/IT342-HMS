@@ -48,6 +48,7 @@ public class PatientEntity {
     private List<AdmissionEntity> admissions;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @Column(nullable = true)
     private List<PatientEquipment> equipmentUsage;
 
     // Getters and Setters

@@ -12,6 +12,11 @@ import edu.cit.hms.service.AdmissionService;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
+@ApiResponses(value = {
+    @ApiResponse(responseCode = "400", description = "Bad request"),
+    @ApiResponse(responseCode = "404", description = "Admission not found"),
+    @ApiResponse(responseCode = "500", description = "Internal server error")
+})
 @RestController
 @RequestMapping("/api/admission")
 public class AdmissionController {
@@ -19,52 +24,31 @@ public class AdmissionController {
     private AdmissionService admissionService;
 
     @GetMapping("/")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved admissions"),
-            @ApiResponse(responseCode = "404", description = "Admission not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved admissions")
     public ResponseEntity<List<AdmissionEntity>> getAdmissions() {
         return admissionService.getAdmissions();
     }
 
     @GetMapping("/{admissionId}")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved admission"),
-            @ApiResponse(responseCode = "404", description = "Admission not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved admission")
     public ResponseEntity<AdmissionEntity> getAdmissionById(@PathVariable int admissionId) {
         return admissionService.getAdmissionById(admissionId);
     }
 
     @PostMapping("/")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Successfully created admission"),
-            @ApiResponse(responseCode = "400", description = "Bad request"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "201", description = "Successfully created admission")
     public ResponseEntity<AdmissionEntity> createAdmission(@RequestBody AdmissionEntity admission) {
         return admissionService.createAdmission(admission);
     }
 
     @PutMapping("/{id}")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully updated admission"),
-            @ApiResponse(responseCode = "400", description = "Bad request"),
-            @ApiResponse(responseCode = "404", description = "Admission not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully updated admission")
     public ResponseEntity<AdmissionEntity> updateAdmission(@PathVariable int admissionId, @RequestBody AdmissionEntity admission) {
         return admissionService.updateAdmission(admissionId, admission);
     }
 
     @DeleteMapping("/{admissionId}")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully deleted admission"),
-            @ApiResponse(responseCode = "404", description = "Admission not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-    })
+    @ApiResponse(responseCode = "200", description = "Successfully deleted admission")
     public ResponseEntity<String> deleteAdmission(@PathVariable int admissionId) {
         return admissionService.deleteAdmission(admissionId);
     }
