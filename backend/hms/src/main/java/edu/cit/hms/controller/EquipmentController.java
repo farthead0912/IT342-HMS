@@ -3,6 +3,8 @@ package edu.cit.hms.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import edu.cit.hms.entity.EquipmentEntity;
@@ -18,37 +20,43 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 })
 @RestController
 @RequestMapping("/api/equipment")
+@PreAuthorize("hasAnyRole('ADMIN', 'STAFF')") // Class-level restriction
 public class EquipmentController {
     @Autowired
     private EquipmentService equipmentService;
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of equipment")
-    public List<EquipmentEntity> getEquipments() {
-        return equipmentService.getEquipments();
+    public ResponseEntity<List<EquipmentEntity>> getEquipments() {
+        return ResponseEntity.ok(equipmentService.getEquipments());
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     @GetMapping("/{equipmentId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved equipment by ID")
-    public EquipmentEntity getEquipmentById(@PathVariable int equipmentId) {
-        return equipmentService.getEquipmentById(equipmentId);
+    public ResponseEntity<EquipmentEntity> getEquipmentById(@PathVariable int equipmentId) {
+        return ResponseEntity.ok(equipmentService.getEquipmentById(equipmentId));
     }
 
+    @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can create equipment
     @PostMapping("/")
     @ApiResponse(responseCode = "201", description = "Successfully created equipment")
-    public EquipmentEntity createEquipment(@RequestBody EquipmentEntity equipment) {
-        return equipmentService.createEquipment(equipment);
+    public ResponseEntity<EquipmentEntity> createEquipment(@RequestBody EquipmentEntity equipment) {
+        return ResponseEntity.status(201).body(equipmentService.createEquipment(equipment));
     }
 
+    @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can update equipment
     @PutMapping("/{equipmentId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated equipment")
-    public EquipmentEntity updateEquipment(@PathVariable int equipmentId, @RequestBody EquipmentEntity equipment) {
-        return equipmentService.updateEquipment(equipmentId, equipment);
+    public ResponseEntity<EquipmentEntity> updateEquipment(@PathVariable int equipmentId, @RequestBody EquipmentEntity equipment) {
+        return ResponseEntity.ok(equipmentService.updateEquipment(equipmentId, equipment));
     }
 
+    @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can delete equipment
     @DeleteMapping("/{equipmentId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted equipment")
-    public String deleteEquipment(@PathVariable int equipmentId) {
-        return equipmentService.deleteEquipment(equipmentId);
+    public ResponseEntity<String> deleteEquipment(@PathVariable int equipmentId) {
+        return ResponseEntity.ok(equipmentService.deleteEquipment(equipmentId));
     }
 }

@@ -3,6 +3,8 @@ package edu.cit.hms.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import edu.cit.hms.entity.BillingEntity;
@@ -17,37 +19,41 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 })
 @RestController
 @RequestMapping("/api/billing")
+@PreAuthorize("hasAnyRole('ADMIN', 'STAFF')") // Class-level restriction
 public class BillingController {
     @Autowired
     private BillingService billingService;
 
     @GetMapping("/")
-    @ApiResponse(responseCode = "400", description = "Successfully retrieved billings")
-    public List<BillingEntity> getBillings() {
-        return billingService.getBillings();
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved billings")
+    public ResponseEntity<List<BillingEntity>> getBillings() {
+        return ResponseEntity.ok(billingService.getBillings());
     }
 
     @GetMapping("/{billingId}")
-    @ApiResponse(responseCode = "400", description = "Successfully retrieved billing by ID")
-    public BillingEntity getBillingById(@PathVariable int billingId) {
-        return billingService.getBillingById(billingId);
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved billing by ID")
+    public ResponseEntity<BillingEntity> getBillingById(@PathVariable int billingId) {
+        return ResponseEntity.ok(billingService.getBillingById(billingId));
     }
 
+    @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can create billing records
     @PostMapping("/")
     @ApiResponse(responseCode = "201", description = "Successfully created billing record")
-    public BillingEntity createBilling(@RequestBody BillingEntity newBilling) {
-        return billingService.createBilling(newBilling);
+    public ResponseEntity<BillingEntity> createBilling(@RequestBody BillingEntity newBilling) {
+        return ResponseEntity.status(201).body(billingService.createBilling(newBilling));
     }
 
+    @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can update billing records
     @PutMapping("/{billingId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated billing record")
-    public BillingEntity updateBilling(@PathVariable int billingId, @RequestBody BillingEntity billing) {
-        return billingService.updateBilling(billingId, billing);
+    public ResponseEntity<BillingEntity> updateBilling(@PathVariable int billingId, @RequestBody BillingEntity billing) {
+        return ResponseEntity.ok(billingService.updateBilling(billingId, billing));
     }
 
+    @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can delete billing records
     @DeleteMapping("/{billingId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted billing record")
-    public String deleteBilling(@PathVariable int billingId) {
-        return billingService.deleteBilling(billingId);
+    public ResponseEntity<String> deleteBilling(@PathVariable int billingId) {
+        return ResponseEntity.ok(billingService.deleteBilling(billingId));
     }
 }

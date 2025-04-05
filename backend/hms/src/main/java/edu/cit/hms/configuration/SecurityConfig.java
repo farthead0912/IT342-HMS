@@ -14,16 +14,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                            .requestMatchers("/admin/register", "/doctor/register", "/staff/register").hasRole("ADMIN")
-                            .requestMatchers("/dashboard").authenticated()
-                            .anyRequest().permitAll()
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        // Restrict access to admission endpoints
+                        .requestMatchers("/api/admission/**").hasAnyRole("ADMIN", "DOCTOR")
+                        
+                        // Restrict access to other endpoints
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/doctor/**").hasRole("DOCTOR")
+                        .requestMatchers("/staff/**").hasRole("STAFF")
+                        .requestMatchers("/patient/**").hasRole("PATIENT")
+                        
+                        // Allow all other requests (e.g., public endpoints)
+                        .anyRequest().permitAll()
                 )
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(null))
-                .logout(logout -> logout.logoutSuccessUrl("/"))
-                .formLogin(form -> form.defaultSuccessUrl("/dashboard", true))
-                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(form -> form.defaultSuccessUrl("/dashboard", true)) // Redirect after login
+                .logout(logout -> logout.logoutSuccessUrl("/")) // Redirect after logout
+                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for simplicity (not recommended for production)
                 .build();
     }
 

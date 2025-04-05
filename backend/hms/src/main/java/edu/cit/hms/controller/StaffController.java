@@ -3,6 +3,8 @@ package edu.cit.hms.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import edu.cit.hms.entity.StaffEntity;
@@ -16,39 +18,45 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
     @ApiResponse(responseCode = "400", description = "Bad request"),
     @ApiResponse(responseCode = "500", description = "Internal server error")
 })
+@PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
 @RestController
 @RequestMapping("/api/staff")
 public class StaffController {
     @Autowired
     private StaffService staffService;
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of staff")
-    public List<StaffEntity> getStaff() {
-        return staffService.getStaff();
+    public ResponseEntity<List<StaffEntity>> getStaff() {
+        return ResponseEntity.ok(staffService.getStaff());
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     @GetMapping("/{staffId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved staff by ID")
-    public StaffEntity getStaffById(@PathVariable int staffId) {
-        return staffService.getStaffById(staffId);
+    public ResponseEntity<StaffEntity> getStaffById(@PathVariable int staffId) {
+        return ResponseEntity.ok(staffService.getStaffById(staffId));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     @ApiResponse(responseCode = "201", description = "Successfully created staff")
-    public StaffEntity createStaff(@RequestBody StaffEntity staff) {
-        return staffService.createStaff(staff);
+    public ResponseEntity<StaffEntity> createStaff(@RequestBody StaffEntity staff) {
+        return ResponseEntity.status(201).body(staffService.createStaff(staff));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{staffId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated staff")
-    public StaffEntity updateStaff(@PathVariable int staffId, @RequestBody StaffEntity staff) {
-        return staffService.updateStaff(staffId, staff);
+    public ResponseEntity<StaffEntity> updateStaff(@PathVariable int staffId, @RequestBody StaffEntity staff) {
+        return ResponseEntity.ok(staffService.updateStaff(staffId, staff));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{staffId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted staff")
-    public String deleteStaff(@PathVariable int staffId) {
-        return staffService.deleteStaff(staffId);
+    public ResponseEntity<String> deleteStaff(@PathVariable int staffId) {
+        return ResponseEntity.ok(staffService.deleteStaff(staffId));
     }
 }

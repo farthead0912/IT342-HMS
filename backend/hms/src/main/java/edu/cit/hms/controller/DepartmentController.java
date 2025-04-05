@@ -3,6 +3,8 @@ package edu.cit.hms.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import edu.cit.hms.entity.DepartmentEntity;
@@ -16,39 +18,45 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
     @ApiResponse(responseCode = "404", description = "Department not found"),
     @ApiResponse(responseCode = "500", description = "Internal server error")
 })
+@PreAuthorize("hasAnyRole('ADMIN', 'STAFF')") // Class-level restriction
 @RestController
 @RequestMapping("/api/department")
 public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
     
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved departments")
-    public List<DepartmentEntity> getAllDepartments() {
-        return departmentService.getAllDepartments();
+    public ResponseEntity<List<DepartmentEntity>> getAllDepartments() {
+        return ResponseEntity.ok(departmentService.getAllDepartments());
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     @GetMapping("/{deptId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved department")
-    public DepartmentEntity getDepartmentById(@PathVariable int deptId) {
-        return departmentService.getDepartmentById(deptId);
+    public ResponseEntity<DepartmentEntity> getDepartmentById(@PathVariable int deptId) {
+        return ResponseEntity.ok(departmentService.getDepartmentById(deptId));
     }
 
+    @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can create departments
     @PostMapping("/")
     @ApiResponse(responseCode = "201", description = "Successfully created department")
-    public DepartmentEntity createDepartment(@RequestBody DepartmentEntity department) {
-        return departmentService.createDepartment(department);
+    public ResponseEntity<DepartmentEntity> createDepartment(@RequestBody DepartmentEntity department) {
+        return ResponseEntity.status(201).body(departmentService.createDepartment(department));
     }
 
+    @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can update departments
     @PutMapping("/{deptId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated department")
-    public DepartmentEntity updateDepartment(@PathVariable int deptId, @RequestBody DepartmentEntity department) {
-        return departmentService.updateDepartment(deptId, department);
+    public ResponseEntity<DepartmentEntity> updateDepartment(@PathVariable int deptId, @RequestBody DepartmentEntity department) {
+        return ResponseEntity.ok(departmentService.updateDepartment(deptId, department));
     }
 
+    @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can delete departments
     @DeleteMapping("/{deptId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted department")
-    public String deleteDepartment(@PathVariable int deptId) {
-        return departmentService.deleteDepartment(deptId);
+    public ResponseEntity<String> deleteDepartment(@PathVariable int deptId) {
+        return ResponseEntity.ok(departmentService.deleteDepartment(deptId));
     }
 }

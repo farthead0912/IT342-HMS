@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import edu.cit.hms.entity.AdmissionEntity;
@@ -19,6 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 })
 @RestController
 @RequestMapping("/api/admission")
+@PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')") // Class-level restriction
 public class AdmissionController {
     @Autowired
     private AdmissionService admissionService;
@@ -35,18 +37,21 @@ public class AdmissionController {
         return admissionService.getAdmissionById(admissionId);
     }
 
+    @PreAuthorize("hasRole('ADMIN')") // Method-level override for stricter access
     @PostMapping("/")
     @ApiResponse(responseCode = "201", description = "Successfully created admission")
     public ResponseEntity<AdmissionEntity> createAdmission(@RequestBody AdmissionEntity admission) {
         return admissionService.createAdmission(admission);
     }
 
-    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')") // Method-level override for stricter access
+    @PutMapping("/{admissionId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated admission")
     public ResponseEntity<AdmissionEntity> updateAdmission(@PathVariable int admissionId, @RequestBody AdmissionEntity admission) {
         return admissionService.updateAdmission(admissionId, admission);
     }
 
+    @PreAuthorize("hasRole('ADMIN')") // Method-level override for stricter access
     @DeleteMapping("/{admissionId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted admission")
     public ResponseEntity<String> deleteAdmission(@PathVariable int admissionId) {

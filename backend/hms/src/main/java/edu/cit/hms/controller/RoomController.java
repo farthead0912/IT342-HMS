@@ -3,6 +3,8 @@ package edu.cit.hms.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import edu.cit.hms.entity.RoomEntity;
@@ -18,6 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 })
 @RestController
 @RequestMapping("/api/room")
+@PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
 public class RoomController {
     @Autowired
     private RoomService roomService;
@@ -34,21 +37,24 @@ public class RoomController {
         return roomService.getRoomById(roomId);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     @ApiResponse(responseCode = "201", description = "Successfully created room")
-    public RoomEntity createRoom(@RequestBody RoomEntity room) {
-        return roomService.createRoom(room);
+    public ResponseEntity<RoomEntity> createRoom(@RequestBody RoomEntity room) {
+        return ResponseEntity.ok(roomService.createRoom(room));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{roomId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated room")
-    public RoomEntity updateRoom(@PathVariable int roomId, @RequestBody RoomEntity room) {
-        return roomService.updateRoom(roomId, room);
+    public ResponseEntity<RoomEntity> updateRoom(@PathVariable int roomId, @RequestBody RoomEntity room) {
+        return ResponseEntity.ok(roomService.updateRoom(roomId, room));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{roomId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted room")
-    public String deleteRoom(@PathVariable int roomId) {
-        return roomService.deleteRoom(roomId);
+    public ResponseEntity<String> deleteRoom(@PathVariable int roomId) {
+        return ResponseEntity.ok(roomService.deleteRoom(roomId));
     }
 }
