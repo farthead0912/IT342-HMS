@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "../styles/LoginPage.css";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = (e) => {
     e.preventDefault();
+    console.log("Login attempt with:", username, password);
 
     // Dummy staff credentials (you can replace this with actual API logic)
     if (username === "staff@example.com" && password === "123") {
@@ -17,8 +20,9 @@ const LoginPage = () => {
         role: "staff", // role stored for protected route
       };
 
-      // Save user to localStorage
-      localStorage.setItem("user", JSON.stringify(user));
+      // Use the auth context login function
+      login(user);
+      console.log("Login successful, navigating to dashboard");
 
       // Redirect to staff dashboard
       navigate("/staff-dashboard");

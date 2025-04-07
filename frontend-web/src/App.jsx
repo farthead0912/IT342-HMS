@@ -4,24 +4,30 @@ import LazyLanding from "./pages/LandingPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import StaffDashboard from "./pages/StaffDashboard";
-import StaffAppointments from "./pages/StaffAppointments"; // ✅ Import the StaffAppointments page
+import StaffAppointments from "./pages/StaffAppointments";
+import StaffBilling from "./pages/StaffBilling";
+import StaffInventory from "./pages/StaffInventory";
+import StaffRooms from "./pages/StaffRooms"; // 🆕 Import StaffRooms Page
 import { useAuth } from "./context/AuthContext";
 
 // 🔐 Protected Route for Staff and Admin
 const StaffProtectedRoute = ({ children }) => {
-  const { user, isLoading, error } = useAuth();
+  const { user, loading, error } = useAuth();
 
-  if (isLoading) {
+  console.log("Protected route - user:", user, "loading:", loading);
+
+  if (loading) {
     return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Error: {error}</div>;
   }
 
   const isAuthorized = user && (user.role === "staff" || user.role === "admin");
 
   if (!isAuthorized) {
+    console.log("User not authorized, redirecting to login");
     return <Navigate to="/login" replace />;
   }
 
@@ -37,7 +43,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
 
-          {/* 🔐 Protected Route for Staff Dashboard */}
+          {/* 🔐 Staff Dashboard */}
           <Route
             path="/staff-dashboard"
             element={
@@ -47,12 +53,42 @@ function App() {
             }
           />
 
-          {/* 🔐 Protected Route for Staff Appointments */}
+          {/* 🔐 Staff Appointments */}
           <Route
             path="/staff-appointments"
             element={
               <StaffProtectedRoute>
                 <StaffAppointments />
+              </StaffProtectedRoute>
+            }
+          />
+
+          {/* 🔐 Staff Billing Page */}
+          <Route
+            path="/staff-billing"
+            element={
+              <StaffProtectedRoute>
+                <StaffBilling />
+              </StaffProtectedRoute>
+            }
+          />
+
+          {/* 🔐 Staff Inventory Page */}
+          <Route
+            path="/staff-inventory"
+            element={
+              <StaffProtectedRoute>
+                <StaffInventory />
+              </StaffProtectedRoute>
+            }
+          />
+
+          {/* 🔐 Staff Rooms Page */}
+          <Route
+            path="/staff-rooms"
+            element={
+              <StaffProtectedRoute>
+                <StaffRooms />
               </StaffProtectedRoute>
             }
           />

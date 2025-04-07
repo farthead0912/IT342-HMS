@@ -1,16 +1,26 @@
-import React from "react";
-import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "../styles/StaffDashboard.css";
 
 const StaffDashboard = () => {
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+  
+  // Check if user is authenticated
+  useEffect(() => {
+    console.log("Current user in dashboard:", user);
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
   const handleLogout = () => {
-    // Clear user from localStorage
-    localStorage.removeItem("user");
-
+    // Use the auth context logout function
+    logout();
+    console.log("Logging out, redirecting to home");
     // Redirect to the landing page
-    navigate("/"); // This will navigate back to the landing page
+    navigate("/");
   };
 
   return (
@@ -23,10 +33,9 @@ const StaffDashboard = () => {
           <ul>
             <li className="active">Dashboard</li>
             <li onClick={() => navigate("/staff-appointments")}>Appointments</li>
-            <li>Billings</li>
-            <li>Inventory</li>
-            <li>Rooms</li>
-          </ul>
+            <li onClick={() => navigate("/staff-billing")}>Billings</li>
+            <li onClick={() => navigate("/staff-inventory")}>Inventory</li>
+            <li onClick={() => navigate("/staff-rooms")}>Rooms</li>          </ul>
         </div>
       </aside>
 
