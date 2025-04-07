@@ -25,20 +25,21 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'STAFF')")
+    // Gets all patients
     @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of patients")
     public ResponseEntity<List<PatientEntity>> getPatients() {
         return ResponseEntity.ok(patientService.getPatients());
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'STAFF')")
+    // Gets patient by ID
     @GetMapping("/{patientId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved patient by ID")
     public ResponseEntity<PatientEntity> getPatientById(@PathVariable int patientId) {
         return ResponseEntity.ok(patientService.getPatientById(patientId));
     }
 
+    // Creates a new patient
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     @ApiResponse(responseCode = "201", description = "Successfully created patient")
@@ -46,6 +47,7 @@ public class PatientController {
         return ResponseEntity.status(201).body(patientService.createPatient(patient));
     }
 
+    // Updates patient details by ID
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{patientId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated patient")
@@ -53,6 +55,7 @@ public class PatientController {
         return ResponseEntity.ok(patientService.updatePatient(patientId, patient));
     }
 
+    // Deletes patient by ID
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{patientId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted patient")

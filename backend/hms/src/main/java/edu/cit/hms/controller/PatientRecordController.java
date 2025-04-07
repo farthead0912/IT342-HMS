@@ -25,34 +25,37 @@ public class PatientRecordController {
     @Autowired
     private PatientRecordService patientRecordService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'STAFF')")
+    // Gets all patient records
     @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of patient records")
     public ResponseEntity<List<PatientRecordEntity>> getPatientRecords() {
         return ResponseEntity.ok(patientRecordService.getPatientRecords());
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'STAFF')")
+    // Gets patient record by ID
     @GetMapping("/{patientRecordId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved patient record by ID")
     public ResponseEntity<PatientRecordEntity> getPatientRecordById(@PathVariable int patientRecordId) {
         return ResponseEntity.ok(patientRecordService.getPatientRecordById(patientRecordId));
     }
 
-    @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can create patient records
+    // Creates a new patient record
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')") // ADMINs and DOCTORs can create patient records
     @PostMapping("/")
     @ApiResponse(responseCode = "201", description = "Successfully created patient record")
     public ResponseEntity<PatientRecordEntity> createPatientRecord(@RequestBody PatientRecordEntity patientRecord) {
         return ResponseEntity.status(201).body(patientRecordService.createPatientRecord(patientRecord));
     }
 
-    @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can update patient records
+    // Updates patient record details by ID
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')") // ADMINs and DOCTORs can update patient records
     @PutMapping("/{patientRecordId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated patient record")
     public ResponseEntity<PatientRecordEntity> updatePatientRecord(@PathVariable int patientRecordId, @RequestBody PatientRecordEntity patientRecord) {
         return ResponseEntity.ok(patientRecordService.updatePatientRecord(patientRecordId, patientRecord));
     }
 
+    // Deletes patient record by ID
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can delete patient records
     @DeleteMapping("/{patientRecordId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted patient record")

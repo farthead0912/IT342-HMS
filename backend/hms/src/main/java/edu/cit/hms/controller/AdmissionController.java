@@ -25,32 +25,35 @@ public class AdmissionController {
     @Autowired
     private AdmissionService admissionService;
 
+    // Gets all admissions
     @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved admissions")
     public ResponseEntity<List<AdmissionEntity>> getAdmissions() {
         return admissionService.getAdmissions();
     }
 
+    // Gets admission by ID
     @GetMapping("/{admissionId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved admission")
     public ResponseEntity<AdmissionEntity> getAdmissionById(@PathVariable int admissionId) {
         return admissionService.getAdmissionById(admissionId);
     }
 
-    @PreAuthorize("hasRole('ADMIN')") // Method-level override for stricter access
+    // Creates new admission
     @PostMapping("/")
     @ApiResponse(responseCode = "201", description = "Successfully created admission")
     public ResponseEntity<AdmissionEntity> createAdmission(@RequestBody AdmissionEntity admission) {
         return admissionService.createAdmission(admission);
     }
 
-    @PreAuthorize("hasRole('ADMIN')") // Method-level override for stricter access
+    // Updates admission details by ID
     @PutMapping("/{admissionId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated admission")
     public ResponseEntity<AdmissionEntity> updateAdmission(@PathVariable int admissionId, @RequestBody AdmissionEntity admission) {
         return admissionService.updateAdmission(admissionId, admission);
     }
 
+    // Deletes admission by ID
     @PreAuthorize("hasRole('ADMIN')") // Method-level override for stricter access
     @DeleteMapping("/{admissionId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted admission")

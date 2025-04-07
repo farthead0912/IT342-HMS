@@ -5,6 +5,7 @@ import java.sql.Date;
 public class BillingDTO {
     private int billId;
     private int patientId;
+    private int staffId;
     private int roomId;
     private double amount;
     private Date issuedAt;
@@ -24,6 +25,14 @@ public class BillingDTO {
 
     public void setPatientId(int patientId) {
         this.patientId = patientId;
+    }
+
+    public int getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(int staffId) {
+        this.staffId = staffId;
     }
 
     public int getRoomId() {

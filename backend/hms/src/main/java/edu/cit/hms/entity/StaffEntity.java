@@ -18,11 +18,11 @@ public class StaffEntity {
     @Column(nullable = false, length = 50)
     private String position;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deptId")
     private DepartmentEntity department;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private UserEntity user;
 

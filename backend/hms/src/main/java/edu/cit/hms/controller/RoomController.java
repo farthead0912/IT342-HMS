@@ -25,18 +25,21 @@ public class RoomController {
     @Autowired
     private RoomService roomService;
 
+    // Gets all rooms
     @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of rooms")
     public List<RoomEntity> getRooms() {
         return roomService.getRooms();
     }
 
+    // Gets room by ID
     @GetMapping("/{roomId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved room by ID")
     public RoomEntity getRoomById(@PathVariable int roomId) {
         return roomService.getRoomById(roomId);
     }
 
+    // Creates a new room
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     @ApiResponse(responseCode = "201", description = "Successfully created room")
@@ -44,6 +47,7 @@ public class RoomController {
         return ResponseEntity.ok(roomService.createRoom(room));
     }
 
+    // Updates room details by ID
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{roomId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated room")
@@ -51,6 +55,7 @@ public class RoomController {
         return ResponseEntity.ok(roomService.updateRoom(roomId, room));
     }
 
+    // Deletes room by ID
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{roomId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted room")

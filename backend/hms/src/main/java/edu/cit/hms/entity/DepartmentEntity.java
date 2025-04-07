@@ -14,7 +14,7 @@ public class DepartmentEntity {
     @Column(nullable = false, length = 50)
     private String deptName;
 
-    @ManyToMany(mappedBy = "departments")
+    @ManyToMany(mappedBy = "departments", fetch = FetchType.LAZY)
     private Set<EquipmentEntity> equipments;
 
     // Getters and Setters

@@ -20,7 +20,7 @@ public class DoctorEntity {
     @Column(nullable = false, length = 50)
     private String specialization;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deptId")
     private DepartmentEntity department;
 

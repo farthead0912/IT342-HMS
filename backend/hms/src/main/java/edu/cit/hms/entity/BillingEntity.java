@@ -11,16 +11,22 @@ public class BillingEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int billId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patientId", nullable = false)
     private PatientEntity patient;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "staffId", nullable = false)
+    private StaffEntity staff;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roomId", nullable = false)
     private RoomEntity room;
 
+    @Column(nullable = false)
     private double amount;
 
+    @Column(nullable = false)
     private Date issuedAt;
 
     public double getAmount() {
@@ -37,6 +43,14 @@ public class BillingEntity {
 
     public void setPatient(PatientEntity patient) {
         this.patient = patient;
+    }
+
+    public StaffEntity getStaff() {
+        return staff;
+    }
+
+    public void setStaff(StaffEntity staff) {
+        this.staff = staff;
     }
 
     public RoomEntity getRoom() {

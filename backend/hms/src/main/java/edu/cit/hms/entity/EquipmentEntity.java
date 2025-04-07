@@ -29,12 +29,12 @@ public class EquipmentEntity {
     private String status = "Available";
 
     // this is ManyToOne because many equipment can be used in one room
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roomId", nullable = true)
     private RoomEntity room;
 
     // ManyToMany relationship with DepartmentEntity
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "DepartmentEquipment",
         joinColumns = @JoinColumn(name = "equipmentId", nullable = false),
@@ -42,7 +42,7 @@ public class EquipmentEntity {
     )
     private Set<DepartmentEntity> departments;
 
-    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Column(nullable = true)
     private List<PatientEquipment> patientUsage;
 

@@ -22,24 +22,29 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // Gets all users
     @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of users")
     public List<UserEntity> getUsers() {
         return userService.getUsers();
     }
 
+    // Gets user by ID
     @GetMapping("/{userId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved user by ID")
     public UserEntity getUserById(@PathVariable int userId) {
         return userService.getUserById(userId);
     }
 
+    // Updates user details by ID
     @PutMapping("/{userId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated user")
     public UserEntity updateUser(@PathVariable int userId, @RequestBody UserEntity user) {
         return userService.updateUser(userId, user);
     }
 
+
+    // Deletes user by ID
     @DeleteMapping("/{userId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted user")
     public String deleteUser(@PathVariable int userId) {

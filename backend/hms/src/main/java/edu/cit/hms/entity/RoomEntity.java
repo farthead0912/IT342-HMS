@@ -26,15 +26,15 @@ public class RoomEntity {
     @Column(nullable = false)
     private boolean isOccupied;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patientId", nullable = true)
     private PatientEntity patient;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "staffId", nullable = true)
     private StaffEntity staff;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private List<AdmissionEntity> admissions;
 
     // Getters and Setters

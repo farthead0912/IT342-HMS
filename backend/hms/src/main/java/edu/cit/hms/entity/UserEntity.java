@@ -2,6 +2,8 @@ package edu.cit.hms.entity;
 
 import edu.cit.hms.enums.Roles;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "users")
@@ -11,11 +13,18 @@ public class UserEntity {
     private int userId;
 
     @Column(nullable = false, length = 18)
+    @NotBlank(message = "Username is required!")
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 18)
+    @NotBlank(message = "Password is required.")
+    @Pattern(
+        regexp = "^[a-zA-Z0-9!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~]{8,18}$",
+        message = "Password must be 8-18 characters long and can include letters, numbers, and special characters."
+    )
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Roles role;
 

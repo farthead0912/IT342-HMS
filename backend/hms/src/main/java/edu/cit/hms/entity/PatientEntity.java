@@ -4,6 +4,8 @@ import java.util.List;
 
 import edu.cit.hms.junctions.PatientEquipment;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "patients")
@@ -13,43 +15,49 @@ public class PatientEntity {
     private int patientId;
 
     @Column(nullable = false, length = 50)
+    @NotBlank(message = "First name is required!")
     private String firstName;
 
     @Column(nullable = false, length = 50)
+    @NotBlank(message = "Last name is required!")
     private String lastName;
 
     @Column(nullable = false, length = 3)
+    @NotBlank(message = "Age is also required.")
     private int age;
 
     @Column(nullable = false, length = 10)
-    private String gender;
+    private String gender = "Rather not say";
 
     @Column(nullable = false, length = 3)
+    @NotBlank(message = "You can't exactly leave this blank either.")
+    @Pattern(regexp = "^(A|B|AB|O)[+-]$", message = "Invalid blood type format")
+    // Blood type format: A+, A-, B+, B-, AB+, AB-, O+, O-
     private String bloodType;
 
-    // this is ManyToOne since many patients can be in one room, like in some hospitals with 3 beds per room
-    @ManyToOne
+    // Many patients can share one room
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roomId", nullable = true)
     private RoomEntity room;
 
     // this is OneToOne since one patient can only have one user account
-    @OneToOne
-    @JoinColumn(name = "userId")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", nullable = false)
     private UserEntity user;
 
     // this is OneToMany since one patient can have many records
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
     @Column(nullable = true)
     private List<PatientRecordEntity> patientRecords;
 
     // this is OneToMany since one patient can have many schedules
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
     @Column(nullable = true)
     private List<AdmissionEntity> admissions;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Column(nullable = true)
-    private List<PatientEquipment> equipmentUsage;
+    private List<PatientEquipment> assignedEquipment;
 
     // Getters and Setters
     public int getPatientId() {

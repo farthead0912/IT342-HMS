@@ -13,15 +13,15 @@ public class PatientEquipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int paeqId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "equipmentId", nullable = true) // Allow null values
     private EquipmentEntity equipment;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patientId", nullable = false) // Patient is required
     private PatientEntity patient;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roomId", nullable = true) // Allow null values for room
     private RoomEntity room;
 

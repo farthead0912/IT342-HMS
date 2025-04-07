@@ -12,7 +12,7 @@ import io.jsonwebtoken.security.Keys;
 
 @Configuration
 public class JwtUtil {
-    private static final String SECRET_KEY = "jvnHumxyKgHSNbWb7SoFnWcW5nD0dGCx"; // testing purposes
+    private static final String SECRET_KEY = "jvnHumxyKgHSNbWb7SoFnWcW5nD0dGCx"; // testing purposes, this is 256 bits and encoded in HS256
     private static final long EXPIRATION_TIME = 86400000;
 
     private final SecretKey key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());

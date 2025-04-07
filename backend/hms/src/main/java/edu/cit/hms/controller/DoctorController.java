@@ -25,14 +25,14 @@ public class DoctorController {
     @Autowired
     private DoctorService doctorService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')")
+    // Gets all doctors
     @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of doctors")
     public ResponseEntity<List<DoctorEntity>> getAllDoctors() {
         return ResponseEntity.ok(doctorService.getAllDoctors());
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')")
+    // Gets doctor by ID
     @GetMapping("/{doctorId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved doctor by ID")
     public ResponseEntity<DoctorEntity> getDoctorById(@PathVariable int doctorId) {

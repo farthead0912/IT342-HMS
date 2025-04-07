@@ -11,11 +11,11 @@ public class DepartmentEquipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int deeqId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "equipmentId", nullable = false)
     private EquipmentEntity equipment;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deptId", nullable = false)
     private DepartmentEntity department;
 

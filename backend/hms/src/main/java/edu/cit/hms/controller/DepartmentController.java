@@ -25,20 +25,21 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
     
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    // Gets all departments
     @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved departments")
     public ResponseEntity<List<DepartmentEntity>> getAllDepartments() {
         return ResponseEntity.ok(departmentService.getAllDepartments());
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    // Gets department by ID
     @GetMapping("/{deptId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved department")
     public ResponseEntity<DepartmentEntity> getDepartmentById(@PathVariable int deptId) {
         return ResponseEntity.ok(departmentService.getDepartmentById(deptId));
     }
 
+    // Creates a new department
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can create departments
     @PostMapping("/")
     @ApiResponse(responseCode = "201", description = "Successfully created department")
@@ -46,6 +47,7 @@ public class DepartmentController {
         return ResponseEntity.status(201).body(departmentService.createDepartment(department));
     }
 
+    // Updates department details by ID
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can update departments
     @PutMapping("/{deptId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated department")
@@ -53,6 +55,7 @@ public class DepartmentController {
         return ResponseEntity.ok(departmentService.updateDepartment(deptId, department));
     }
 
+    // Deletes department by ID
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can delete departments
     @DeleteMapping("/{deptId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted department")

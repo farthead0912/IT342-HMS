@@ -25,20 +25,21 @@ public class EquipmentController {
     @Autowired
     private EquipmentService equipmentService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    // Gets all equipment
     @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of equipment")
     public ResponseEntity<List<EquipmentEntity>> getEquipments() {
         return ResponseEntity.ok(equipmentService.getEquipments());
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    // Gets equipment by ID
     @GetMapping("/{equipmentId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved equipment by ID")
     public ResponseEntity<EquipmentEntity> getEquipmentById(@PathVariable int equipmentId) {
         return ResponseEntity.ok(equipmentService.getEquipmentById(equipmentId));
     }
 
+    // Creates a new equipment
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can create equipment
     @PostMapping("/")
     @ApiResponse(responseCode = "201", description = "Successfully created equipment")
@@ -46,6 +47,7 @@ public class EquipmentController {
         return ResponseEntity.status(201).body(equipmentService.createEquipment(equipment));
     }
 
+    // Updates equipment details by ID
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can update equipment
     @PutMapping("/{equipmentId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated equipment")
@@ -53,6 +55,7 @@ public class EquipmentController {
         return ResponseEntity.ok(equipmentService.updateEquipment(equipmentId, equipment));
     }
 
+    // Deletes equipment by ID
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can delete equipment
     @DeleteMapping("/{equipmentId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted equipment")

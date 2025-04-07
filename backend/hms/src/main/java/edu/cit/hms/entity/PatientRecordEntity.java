@@ -11,7 +11,7 @@ public class PatientRecordEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int recordId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patientId", nullable = true)
     private PatientEntity patient;
 

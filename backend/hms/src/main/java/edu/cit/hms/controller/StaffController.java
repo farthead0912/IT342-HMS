@@ -25,20 +25,21 @@ public class StaffController {
     @Autowired
     private StaffService staffService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    // Gets all staff
     @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of staff")
     public ResponseEntity<List<StaffEntity>> getStaff() {
         return ResponseEntity.ok(staffService.getStaff());
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    // Gets staff by ID
     @GetMapping("/{staffId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved staff by ID")
     public ResponseEntity<StaffEntity> getStaffById(@PathVariable int staffId) {
         return ResponseEntity.ok(staffService.getStaffById(staffId));
     }
 
+    // Creates a new staff
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     @ApiResponse(responseCode = "201", description = "Successfully created staff")
@@ -46,6 +47,7 @@ public class StaffController {
         return ResponseEntity.status(201).body(staffService.createStaff(staff));
     }
 
+    // Updates staff details by ID
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{staffId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated staff")
@@ -53,6 +55,8 @@ public class StaffController {
         return ResponseEntity.ok(staffService.updateStaff(staffId, staff));
     }
 
+
+    // Deletes staff by ID
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{staffId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted staff")

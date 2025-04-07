@@ -11,15 +11,15 @@ public class AdmissionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int admissionId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctorId", nullable = false)
     private DoctorEntity doctor;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patientId", nullable = false)
     private PatientEntity patient;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roomId", nullable = true)
     private RoomEntity room;
 
