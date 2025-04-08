@@ -1,0 +1,46 @@
+package edu.cit.hms.junctions;
+
+import edu.cit.hms.entity.DepartmentEntity;
+import edu.cit.hms.entity.EquipmentEntity;
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "DepartmentEquipment")
+public class DepartmentEquipment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int deeqId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "equipmentId", nullable = false)
+    private EquipmentEntity equipment;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "deptId", nullable = false)
+    private DepartmentEntity department;
+
+    // Getters and Setters
+    public int getdeeqId() {
+        return deeqId;
+    }
+
+    public void setdeeqId(int deeqId) {
+        this.deeqId = deeqId;
+    }
+
+    public EquipmentEntity getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(EquipmentEntity equipment) {
+        this.equipment = equipment;
+    }
+
+    public DepartmentEntity getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(DepartmentEntity department) {
+        this.department = department;
+    }
+}
