@@ -1,0 +1,238 @@
+.inventory-container {
+  display: flex;
+  height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #2d3e50;
+  color: #fff;
+  padding: 20px;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.menu-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #aaa;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin-bottom: 15px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar li:hover, .sidebar li.active {
+  background-color: #1b2a38;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #f4f7fa;
+  overflow-y: auto;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+.logout-btn {
+  background-color: #d9534f;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: #c9302c;
+}
+
+.inventory-section h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Inventory Summary Cards */
+.inventory-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.summary-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  flex: 1;
+  text-align: center;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.summary-card h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #555;
+}
+
+.summary-card .count {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0;
+  color: #2d3e50;
+}
+
+.summary-card .count.low-stock {
+  color: #f0ad4e;
+}
+
+.summary-card .count.out-of-stock {
+  color: #d9534f;
+}
+
+/* Search and Add Item */
+.inventory-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.search-container {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.add-item-btn {
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.add-item-btn:hover {
+  background-color: #4cae4c;
+}
+
+/* Inventory List Header */
+.inventory-list-header {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 0;
+}
+
+.inventory-list-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+/* Table Container */
+.table-container {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #2d3e50;
+  color: white;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+  background-color: #f0f0f0;
+}
+
+/* Status styles */
+.status {
+  font-weight: bold;
+}
+
+.status.in-stock {
+  color: #5cb85c;
+}
+
+.status.low-stock {
+  color: #f0ad4e;
+}
+
+.status.out-of-stock {
+  color: #d9534f;
+}
+
+/* Action buttons */
+.action-btn {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.action-btn.update {
+  background-color: #5bc0de;
+  color: white;
+}
+
+.action-btn.update:hover {
+  background-color: #46b8da;
+}
+
+.action-btn.remove {
+  background-color: #d9534f;
+  color: white;
+}
+
+.action-btn.remove:hover {
+  background-color: #c9302c;
+}
