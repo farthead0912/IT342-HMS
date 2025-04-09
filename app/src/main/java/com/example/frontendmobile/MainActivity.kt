@@ -2,6 +2,7 @@ package com.example.frontendmobile
 
 
 import Staff.StaffHomeScreen
+import Staff.StaffProfileScreen
 import Staff.StaffScheduleScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -36,7 +37,8 @@ class MainActivity : ComponentActivity() {
                         composable("login") { LoginScreen(navController) }
                         composable("signup") { SignupScreen(navController)}
                         composable("staffhomescreen") { StaffHomeScreen(navController)}
-                        composable("staffScheduleScreen") { StaffScheduleScreen() }
+                        composable("staffScheduleScreen") { StaffScheduleScreen(navController)}
+                        composable("staffprofilescreen") { StaffProfileScreen(navController) }
 
 
                     }

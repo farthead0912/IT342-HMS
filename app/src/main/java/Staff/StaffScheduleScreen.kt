@@ -1,6 +1,5 @@
 package Staff
 
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -14,49 +13,68 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+
 
 @Composable
-fun StaffScheduleScreen() {
+fun StaffScheduleScreen(navController: NavController) {
     val primaryColor = Color(0xFF1976D2)
     val lightGray = Color(0xFFF9F9F9)
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Text("Your Schedule", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-        Spacer(modifier = Modifier.height(16.dp))
+    var selectedTab by remember { mutableStateOf(2) }
 
-        // Today's Schedule Header
-        Text("Today's Appointments", fontWeight = FontWeight.SemiBold)
-        Spacer(modifier = Modifier.height(8.dp))
+    Scaffold(
+        containerColor = lightGray,
+        bottomBar = {
+            BottomNavigationBar(selectedTab = selectedTab, onTabSelected = { selectedTab = it })
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .padding(paddingValues)
+                .verticalScroll(rememberScrollState())
+        ) {
 
-        // Sample appointments
-        AppointmentCard("Dr. John Doe", "Cardiologist", "10:00 AM", "Room 301")
-        AppointmentCard("Dr. Jane Smith", "Dermatologist", "11:30 AM", "Room 205")
-        AppointmentCard("Dr. Alex Ray", "Orthopedic", "2:00 PM", "Room 402")
+            Text("Your Schedule", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Spacer(modifier = Modifier.height(24.dp))
+            // Today's Schedule Header
+            Text("Today's Appointments", fontWeight = FontWeight.SemiBold)
+            Spacer(modifier = Modifier.height(8.dp))
 
-        // Work Shifts
-        Text("Work Shifts", fontWeight = FontWeight.SemiBold)
-        Spacer(modifier = Modifier.height(8.dp))
+            // Sample appointments
+            AppointmentCard("Dr. John Doe", "Cardiologist", "10:00 AM", "Room 301")
+            AppointmentCard("Dr. Jane Smith", "Dermatologist", "11:30 AM", "Room 205")
+            AppointmentCard("Dr. Alex Ray", "Orthopedic", "2:00 PM", "Room 402")
 
-        WorkShiftCard("Morning Shift", "8:00 AM - 4:00 PM")
-        WorkShiftCard("Evening Shift", "4:00 PM - 12:00 AM")
+            Spacer(modifier = Modifier.height(24.dp))
 
-        Spacer(modifier = Modifier.height(24.dp))
+            // Work Shifts
+            Text("Work Shifts", fontWeight = FontWeight.SemiBold)
+            Spacer(modifier = Modifier.height(8.dp))
 
-        // Notes
-        Text("Additional Notes", fontWeight = FontWeight.SemiBold)
-        Spacer(modifier = Modifier.height(8.dp))
+            WorkShiftCard("Morning Shift", "8:00 AM - 4:00 PM")
+            WorkShiftCard("Evening Shift", "4:00 PM - 12:00 AM")
 
-        Text("Ensure to take a lunch break between 12:00 PM and 1:00 PM.")
-        Text("Please confirm the availability of supplies for the 2:00 PM appointment.")
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Notes
+            Text("Additional Notes", fontWeight = FontWeight.SemiBold)
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Improved design for Additional Notes
+            NoteCard("Ensure to take a lunch break between 12:00 PM and 1:00 PM.")
+            NoteCard("Please confirm the availability of supplies for the 2:00 PM appointment.")
+        }
     }
 }
 
+// Appointment Card
 @Composable
 fun AppointmentCard(doctorName: String, specialty: String, time: String, room: String) {
     Card(
@@ -95,6 +113,7 @@ fun AppointmentCard(doctorName: String, specialty: String, time: String, room: S
     }
 }
 
+// Work Shift Card
 @Composable
 fun WorkShiftCard(shiftName: String, shiftTime: String) {
     Card(
@@ -111,8 +130,24 @@ fun WorkShiftCard(shiftName: String, shiftTime: String) {
     }
 }
 
+// Note Card for Additional Notes Section
+@Composable
+fun NoteCard(note: String) {
+    Card(
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(4.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(note, fontSize = 14.sp, color = Color.Gray)
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewStaffScheduleScreen() {
-    StaffScheduleScreen()
+    val navController = rememberNavController()
+    StaffScheduleScreen(navController)
 }

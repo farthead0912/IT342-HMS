@@ -20,7 +20,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 
-
 @Composable
 fun StaffHomeScreen(navController: NavController) {
     val primaryColor = Color(0xFF1976D2)
@@ -31,7 +30,25 @@ fun StaffHomeScreen(navController: NavController) {
     Scaffold(
         containerColor = lightGray,
         bottomBar = {
-            BottomNavigationBar(selectedTab = selectedTab, onTabSelected = { selectedTab = it })
+            BottomNavigationBar(
+                selectedTab = selectedTab,
+                onTabSelected = { index ->
+                    if (index != selectedTab) {
+                        selectedTab = index
+                        when (index) {
+                            0-> navController.navigate("staffhomescreen") {
+                                popUpTo("staffhomescreen") { inclusive = true }
+                            }
+                            2-> navController.navigate("staffScheduleScreen") {
+                                popUpTo("staffScheduleScreen") { inclusive = true }
+                            }
+                            3 -> navController.navigate("staffProfileScreen") {
+                                popUpTo("staffProfileScreen") { inclusive = true }
+                            }
+                        }
+                    }
+                }
+            )
         }
     ) { paddingValues ->
         Box(
@@ -42,7 +59,7 @@ fun StaffHomeScreen(navController: NavController) {
             when (selectedTab) {
                 0 -> HomeContent()
                 1 -> MessagesScreen()
-                2 -> {navController.navigate("staffschedulescreen")}
+                2 -> ScheduleScreen()
                 3 -> ProfileScreen()
             }
         }
