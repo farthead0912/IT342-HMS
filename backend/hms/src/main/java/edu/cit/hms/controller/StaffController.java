@@ -5,13 +5,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import edu.cit.hms.dto.StaffDTO;
 import edu.cit.hms.entity.StaffEntity;
 import edu.cit.hms.service.StaffService;
-
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @ApiResponses(value = {
     @ApiResponse(responseCode = "404", description = "Staff not found"),
@@ -43,7 +50,7 @@ public class StaffController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     @ApiResponse(responseCode = "201", description = "Successfully created staff")
-    public ResponseEntity<StaffEntity> createStaff(@RequestBody StaffEntity staff) {
+    public ResponseEntity<StaffEntity> createStaff(@RequestBody StaffDTO staff) {
         return ResponseEntity.status(201).body(staffService.createStaff(staff));
     }
 
