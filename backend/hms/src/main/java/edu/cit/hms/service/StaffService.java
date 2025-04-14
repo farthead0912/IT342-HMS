@@ -6,15 +6,39 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.cit.hms.dto.StaffDTO;
+import edu.cit.hms.entity.DepartmentEntity;
 import edu.cit.hms.entity.StaffEntity;
+import edu.cit.hms.entity.UserEntity;
+import edu.cit.hms.repository.DepartmentRepository;
 import edu.cit.hms.repository.StaffRepository;
+import edu.cit.hms.repository.UserRepository;
 
 @Service
 public class StaffService {
     @Autowired
     private StaffRepository staffRepository;
 
-    public StaffEntity createStaff(StaffEntity staff) {
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public StaffEntity createStaff(StaffDTO staffDTO) {
+        StaffEntity staff = new StaffEntity();
+        DepartmentEntity dept = departmentRepository.findById(staffDTO.getDepartmentId())
+            .orElseThrow(() -> new RuntimeException("Department not found!"));
+
+        UserEntity user = userRepository.findById(staffDTO.getUserId())
+            .orElseThrow(() -> new RuntimeException("User not found!"));
+            
+        staff.setFirstName(staffDTO.getFirstName());
+        staff.setLastName(staffDTO.getLastName());
+        staff.setPosition(staffDTO.getPosition());
+        staff.setDepartment(dept);
+        staff.setUser(user);
+
         return staffRepository.save(staff);
     }
 

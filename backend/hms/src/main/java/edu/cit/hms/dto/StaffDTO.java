@@ -5,8 +5,8 @@ public class StaffDTO {
     private String firstName;
     private String lastName;
     private String position;
-    private Integer departmentId;
-    private Integer userId;
+    private int departmentId;
+    private int userId;
 
     // Getters and Setters
     public int getStaffId() {
@@ -41,19 +41,19 @@ public class StaffDTO {
         this.position = position;
     }
 
-    public Integer getDepartmentId() {
+    public int getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(Integer departmentId) {
+    public void setDepartmentId(int departmentId) {
         this.departmentId = departmentId;
     }
 
-    public Integer getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 }
