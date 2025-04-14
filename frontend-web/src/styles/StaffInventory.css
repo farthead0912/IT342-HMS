@@ -1,47 +1,79 @@
 .inventory-container {
   display: flex;
   height: 100vh;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: sans-serif;
 }
 
+/* Sidebar */
 .sidebar {
-  width: 220px;
-  background-color: #2d3e50;
-  color: #fff;
-  padding: 20px;
+  width: 13rem;
+  background-color: #3a6ea5; /* blue shade */
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  color: white;
 }
 
 .logo {
-  font-size: 28px;
   font-weight: bold;
-  margin-bottom: 30px;
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
 .menu-title {
-  font-size: 16px;
   font-weight: bold;
-  margin-bottom: 10px;
-  color: #aaa;
+  margin-bottom: 0.5rem;
+  color: #cfdff7;
 }
 
 .sidebar ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .sidebar li {
-  margin-bottom: 15px;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
   cursor: pointer;
-  padding: 10px;
-  border-radius: 4px;
   transition: background-color 0.2s ease;
 }
 
-.sidebar li:hover, .sidebar li.active {
-  background-color: #1b2a38;
+.sidebar li.active {
+  background-color: #5f94d4;
 }
 
+.sidebar li:hover {
+  background-color: #507cb2;
+}
+
+/* Topbar */
+.topbar {
+  background-color: #2e2e2e;
+  color: white;
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logout-btn {
+  background: none;
+  border: 1px solid white;
+  padding: 0.4rem 0.8rem;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #444;
+}
+
+/* Main Content */
 .main-content {
   flex: 1;
   padding: 20px;
@@ -49,29 +81,7 @@
   overflow-y: auto;
 }
 
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #fff;
-  padding: 12px 20px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #ccc;
-}
-
-.logout-btn {
-  background-color: #d9534f;
-  color: white;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.logout-btn:hover {
-  background-color: #c9302c;
-}
-
+/* Inventory Section */
 .inventory-section h2 {
   margin-bottom: 20px;
   color: #333;

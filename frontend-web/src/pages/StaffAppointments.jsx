@@ -1,5 +1,3 @@
-// StaffAppointments.jsx
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/StaffAppointments.css";
@@ -22,9 +20,9 @@ const StaffAppointments = () => {
           <ul>
             <li onClick={() => navigate("/staff-dashboard")}>Dashboard</li>
             <li className="active">Appointments</li>
-            <li>Billings</li>
-            <li>Inventory</li>
-            <li>Rooms</li>
+            <li onClick={() => navigate("/staff-billing")}>Billings</li>
+            <li onClick={() => navigate("/staff-inventory")}>Inventory</li>
+            <li onClick={() => navigate("/staff-rooms")}>Rooms</li>
           </ul>
         </div>
       </aside>
@@ -78,14 +76,14 @@ const StaffAppointments = () => {
                   <td>2025-04-07</td>
                   <td>9:00 AM</td>
                   <td>Dr. Smith</td>
-                  <td>Confirmed</td>
+                  <td className="status-confirmed">Confirmed</td>
                 </tr>
                 <tr>
                   <td>Benjie Rivera Jr.</td>
                   <td>2025-04-07</td>
                   <td>10:30 AM</td>
                   <td>Dr. Lopez</td>
-                  <td>Pending</td>
+                  <td className="status-pending">Pending</td>
                 </tr>
               </tbody>
             </table>

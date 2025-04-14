@@ -7,7 +7,7 @@ const StaffInventory = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   // Mock inventory data
   const [inventory, setInventory] = useState([
     { id: 1, name: "Surgical Masks", category: "Medical Supplies", quantity: 500, status: "In Stock" },
@@ -86,9 +86,9 @@ const StaffInventory = () => {
           {/* Search and Add New Item */}
           <div className="inventory-actions">
             <div className="search-container">
-              <input 
-                type="text" 
-                placeholder="Search Inventory..." 
+              <input
+                type="text"
+                placeholder="Search Inventory..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="search-input"

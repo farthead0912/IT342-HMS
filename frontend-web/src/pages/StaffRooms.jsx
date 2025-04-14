@@ -50,7 +50,7 @@ const StaffRooms = () => {
     <div className="dashboard-container">
       {/* Sidebar */}
       <aside className="sidebar">
-        <div className="logo">LOGO</div>
+        <div className="logo">HMS</div>
         <div>
           <p className="menu-title">Menu</p>
           <ul>

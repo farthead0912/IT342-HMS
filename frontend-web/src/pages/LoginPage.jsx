@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "../styles/LoginPage.css";
+import loginImage from "../assets/login.jpg";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -66,10 +67,7 @@ const LoginPage = () => {
           </button>
         </div>
         <div className="healthcare-image">
-          <img
-            src="/assets/login.jpg"
-            alt="Healthcare professional"
-          />
+          <img src={loginImage} alt="Login Healthcare" />
         </div>
       </div>
     </div>

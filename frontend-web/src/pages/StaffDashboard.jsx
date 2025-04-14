@@ -6,26 +6,20 @@ import "../styles/StaffDashboard.css";
 const StaffDashboard = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  
-  // Check if user is authenticated
+
   useEffect(() => {
-    console.log("Current user in dashboard:", user);
     if (!user) {
       navigate("/login");
     }
   }, [user, navigate]);
 
   const handleLogout = () => {
-    // Use the auth context logout function
     logout();
-    console.log("Logging out, redirecting to home");
-    // Redirect to the landing page
     navigate("/");
   };
 
   return (
     <div className="dashboard-container">
-      {/* Sidebar */}
       <aside className="sidebar">
         <div className="logo">HMS</div>
         <div>
@@ -35,23 +29,20 @@ const StaffDashboard = () => {
             <li onClick={() => navigate("/staff-appointments")}>Appointments</li>
             <li onClick={() => navigate("/staff-billing")}>Billings</li>
             <li onClick={() => navigate("/staff-inventory")}>Inventory</li>
-            <li onClick={() => navigate("/staff-rooms")}>Rooms</li>          </ul>
+            <li onClick={() => navigate("/staff-rooms")}>Rooms</li>
+          </ul>
         </div>
       </aside>
 
-      {/* Main Content */}
       <div className="main-content">
-        {/* Top Bar */}
         <header className="topbar">
           <span>Staff-Dashboard-Page</span>
           <button className="logout-btn" onClick={handleLogout}>Logout</button>
         </header>
 
-        {/* Dashboard Content */}
         <section className="dashboard-section">
           <h2>Staff Dashboard</h2>
 
-          {/* Info Cards */}
           <div className="info-cards">
             <div className="card">
               <p>Appointment's Today</p>
@@ -67,7 +58,6 @@ const StaffDashboard = () => {
             </div>
           </div>
 
-          {/* Billing Transactions */}
           <h3 className="section-title">Recent Billing Transactions</h3>
           <div className="table-container">
             <table>
@@ -79,12 +69,12 @@ const StaffDashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr className="paid-status">
                   <td>Earl Owen V. Calzada</td>
                   <td>$200</td>
                   <td>Paid</td>
                 </tr>
-                <tr>
+                <tr className="pending-status">
                   <td>Benjie Rivera Jr.</td>
                   <td>$1000</td>
                   <td>Pending</td>
@@ -93,7 +83,6 @@ const StaffDashboard = () => {
             </table>
           </div>
 
-          {/* Inventory Stock */}
           <h3 className="section-title">Inventory Stock</h3>
           <div className="table-container">
             <table>
@@ -105,12 +94,12 @@ const StaffDashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr className="in-stock">
                   <td>Surgical Masks</td>
                   <td>500</td>
                   <td>In Stock</td>
                 </tr>
-                <tr>
+                <tr className="low-stock">
                   <td>IV Fluids</td>
                   <td>200</td>
                   <td>Low Stock</td>

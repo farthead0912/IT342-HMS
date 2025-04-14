@@ -14,15 +14,15 @@ const StaffBilling = () => {
     <div className="dashboard-container">
       {/* Sidebar */}
       <aside className="sidebar">
-        <div className="logo">LOGO</div>
+        <div className="logo">HMS</div>
         <div>
           <p className="menu-title">Menu</p>
           <ul>
             <li onClick={() => navigate("/staff-dashboard")}>Dashboard</li>
             <li onClick={() => navigate("/staff-appointments")}>Appointments</li>
             <li className="active">Billings</li>
-            <li>Inventory</li>
-            <li>Rooms</li>
+            <li onClick={() => navigate("/staff-inventory")}>Inventory</li>
+            <li onClick={() => navigate("/staff-rooms")}>Rooms</li>
           </ul>
         </div>
       </aside>
