@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import edu.cit.hms.dto.RoomDTO;
 import edu.cit.hms.entity.RoomEntity;
 import edu.cit.hms.service.RoomService;
 
@@ -43,7 +44,7 @@ public class RoomController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     @ApiResponse(responseCode = "201", description = "Successfully created room")
-    public ResponseEntity<RoomEntity> createRoom(@RequestBody RoomEntity room) {
+    public ResponseEntity<RoomEntity> createRoom(@RequestBody RoomDTO room) {
         return ResponseEntity.ok(roomService.createRoom(room));
     }
 

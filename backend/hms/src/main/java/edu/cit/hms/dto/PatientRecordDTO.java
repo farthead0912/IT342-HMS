@@ -10,6 +10,19 @@ public class PatientRecordDTO {
     private String severity;
     private String treatmentPlan;
 
+    // Empty Constructor
+    public PatientRecordDTO() {}
+
+    // Constructor
+    public PatientRecordDTO(int recordId, int patientId, String sickness, Date diagnosisDate, String severity, String treatmentPlan) {
+        this.recordId = recordId;
+        this.patientId = patientId;
+        this.sickness = sickness;
+        this.diagnosisDate = diagnosisDate;
+        this.severity = severity;
+        this.treatmentPlan = treatmentPlan;
+    }
+
     // Getters and Setters
     public int getRecordId() {
         return recordId;

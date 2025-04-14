@@ -7,13 +7,26 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.cit.hms.dto.BillingDTO;
 import edu.cit.hms.entity.BillingEntity;
-import edu.cit.hms.repository.BillingRepository;
+import edu.cit.hms.entity.PatientEntity;
+import edu.cit.hms.entity.RoomEntity;
+import edu.cit.hms.entity.StaffEntity;
+import edu.cit.hms.repository.*;
 
 @Service
 public class BillingService {
     @Autowired
     private BillingRepository billingRepository;
+
+    @Autowired
+    private PatientRepository patientRepository;
+
+    @Autowired
+    private StaffRepository staffRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
 
     public BillingEntity createBilling(BillingEntity billing) {
         return billingRepository.save(billing);
@@ -66,5 +79,36 @@ public class BillingService {
         } else {
             throw new RuntimeException("Billing ID: " + billingId + " not found!");
         }
+    }
+
+    private BillingEntity convertFromDTO(BillingDTO billingDTO) {
+        BillingEntity billing = new BillingEntity();
+        PatientEntity patient = patientRepository.findById(billingDTO.getPatientId())
+            .orElseThrow(() -> new RuntimeException("Patient ID: " + billingDTO.getPatientId() + " not found!"));
+        StaffEntity staff = staffRepository.findById(billingDTO.getStaffId())
+            .orElseThrow(() -> new RuntimeException("Staff ID: " + billingDTO.getStaffId() + " not found!"));
+        RoomEntity room = roomRepository.findById(billingDTO.getRoomId())
+            .orElseThrow(() -> new RuntimeException("Room ID: " + billingDTO.getRoomId() + " not found!"));
+
+        billing.setBillId(billingDTO.getBillId());
+        billing.setPatient(patient);
+        billing.setStaff(staff);
+        billing.setIssuedAt(billingDTO.getIssuedAt());
+        billing.setPatient(patient);
+        billing.setRoom(room);
+        billing.setAmount(billingDTO.getAmount());
+
+        return billing;
+    }
+
+    private BillingDTO convertToDTO(BillingEntity billing) {
+        return new BillingDTO(
+            billing.getBillId(),
+            billing.getPatient().getPatientId(),
+            billing.getStaff().getStaffId(),
+            billing.getRoom().getRoomId(),
+            billing.getAmount(),
+            billing.getIssuedAt()
+        );
     }
 }

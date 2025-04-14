@@ -9,6 +9,16 @@ public class UserDTO {
     private Roles role;
     private String email;
 
+    public UserDTO() {}
+
+    public UserDTO(int userId, String username, String password, Roles role, String email) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.email = email;
+    }
+
     public int getUserId() {
         return userId;
     }

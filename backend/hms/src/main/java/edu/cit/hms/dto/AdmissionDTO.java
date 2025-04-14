@@ -12,6 +12,21 @@ public class AdmissionDTO {
     private String admissionReason;
     private String status;
 
+    // Default constructor
+    public AdmissionDTO() {}
+
+    // Parameterized constructor
+    public AdmissionDTO(int admissionId, int doctorId, int patientId, int roomId, Date admissionDate, Date dischargeDate, String admissionReason, String status) {
+        this.admissionId = admissionId;
+        this.doctorId = doctorId;
+        this.patientId = patientId;
+        this.roomId = roomId;
+        this.admissionDate = admissionDate;
+        this.dischargeDate = dischargeDate;
+        this.admissionReason = admissionReason;
+        this.status = status;
+    }
+
     // Getters and Setters
     public int getAdmissionId() {
         return admissionId;

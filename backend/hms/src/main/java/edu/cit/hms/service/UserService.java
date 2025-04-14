@@ -1,10 +1,10 @@
 package edu.cit.hms.service;
 
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import edu.cit.hms.dto.UserDTO;
@@ -17,64 +17,68 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     public UserEntity createUser(UserDTO userDTO) {
-        UserEntity user = new UserEntity();
-        user.setUsername(userDTO.getUsername());
-        user.setPassword(userDTO.getPassword());
+        UserEntity user = convertFromDTO(userDTO);
+
         user.setRole(Roles.PATIENT); // Default role is PATIENT
-        user.setEmail(userDTO.getEmail());
 
         return userRepository.save(user); // Save the patient user to the database
     }
 
     public UserEntity createStaff(UserDTO userDTO) {
-        UserEntity user = new UserEntity();
-        user.setUsername(userDTO.getUsername());
-        user.setPassword(userDTO.getPassword());
+        UserEntity user = convertFromDTO(userDTO); // Converts DTO to entity
+
         user.setRole(Roles.STAFF); // Default role is STAFF
-        user.setEmail(userDTO.getEmail());
 
         return userRepository.save(user); // Save the staff user to the database
     }
 
     public UserEntity createDoctor(UserDTO userDTO) {
-        UserEntity user = new UserEntity();
-        user.setUsername(userDTO.getUsername());
-        user.setPassword(userDTO.getPassword());
+        UserEntity user = convertFromDTO(userDTO);
+
         user.setRole(Roles.DOCTOR); // Default role is DOCTOR
-        user.setEmail(userDTO.getEmail());
 
         return userRepository.save(user); // Save the doctor user to the database
     }
 
     public UserEntity createAdmin(UserDTO userDTO) {
-        UserEntity user = new UserEntity();
-        user.setUsername(userDTO.getUsername());
-        user.setPassword(userDTO.getPassword());
-        user.setRole(Roles.ADMIN);
-        user.setEmail(userDTO.getEmail());
+        UserEntity user = convertFromDTO(userDTO);
+
+        user.setRole(Roles.ADMIN); // Default role is ADMIN
 
         return userRepository.save(user); // Save the admin user to the database
     }
 
-    public UserEntity getUserById(int userId) {
+    public UserDTO getUserById(int userId) {
         Optional<UserEntity> user = userRepository.findById(userId);
-        return user.orElse(null); // Return the user if present, otherwise null
+        
+        return user.map(this::convertToDTO)
+            .orElseThrow(() -> new RuntimeException("User ID: " + userId + " not found!")); // Return the user if present, otherwise null
     }
 
     public UserEntity getUserByUsername(String username) {
-        return userRepository.findByUsername(username).orElse(null);
+        return userRepository.findByUsername(username)
+            .orElseThrow(() -> new RuntimeException("Username: " + username + " not found!"));
     }
 
-    public List<UserEntity> getUsers() {
+    public List<UserDTO> getUsers() {
         try {
-            return userRepository.findAll(); // Return the list of users
-        } catch (Exception e) {
-            return null; // Return null in case of an error
+            List<UserEntity> users = userRepository.findAll();
+
+            return users.stream()
+                .map(this::convertToDTO)
+                .toList();
+        } catch (DataAccessException e) {
+            // Log the exception
+            System.err.println("Database error occurred while fetching users: " + e.getMessage());
+            throw new RuntimeException("Unable to fetch users at this time. Please try again later.");
         }
     }
 
-    public UserEntity updateUser(int userId, UserEntity newUser) {
+    public UserEntity updateUser(int userId, UserDTO newUser) {
         Optional<UserEntity> userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             UserEntity user = userOptional.get();
@@ -84,7 +88,7 @@ public class UserService {
                 user.setUsername(newUser.getUsername());
             }
             if (newUser.getPassword() != null && !newUser.getPassword().isEmpty()) {
-                user.setPassword(newUser.getPassword());
+                user.setPassword(passwordEncoder.encode(newUser.getPassword())); // Encrypt the password
             }
             if (newUser.getRole() != null && EnumSet.allOf(Roles.class).contains(newUser.getRole())) {
                 user.setRole(newUser.getRole());
@@ -109,5 +113,26 @@ public class UserService {
         } else {
             return "User ID: " + userId + " not found!"; // Return not found message
         }
+    }
+
+    private UserEntity convertFromDTO(UserDTO userDTO) {
+        UserEntity user = new UserEntity();
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(userDTO.getPassword());
+        user.setRole(userDTO.getRole());
+        user.setEmail(userDTO.getEmail());
+
+        return user; // Convert DTO to entity
+    }
+
+    private UserDTO convertToDTO(UserEntity user) {
+        UserDTO userDTO = new UserDTO();
+
+        userDTO.setUsername(user.getUsername());
+        userDTO.setPassword(user.getPassword());
+        userDTO.setRole(user.getRole());
+        userDTO.setEmail(user.getEmail());
+
+        return userDTO;
     }
 }

@@ -6,16 +6,42 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.cit.hms.entity.RoomEntity;
-import edu.cit.hms.repository.RoomRepository;
+import edu.cit.hms.dto.RoomDTO;
+import edu.cit.hms.entity.*;
+import edu.cit.hms.repository.*;
 
 @Service
 public class RoomService {
     @Autowired
     private RoomRepository roomRepository;
 
-    public RoomEntity createRoom(RoomEntity roomEntity) {
-        return roomRepository.save(roomEntity);
+    @Autowired
+    private PatientRepository patientRepository;
+
+    @Autowired
+    private StaffRepository staffRepository;
+
+    @Autowired
+    private AdmissionRepository admissionRepository;
+
+    public RoomEntity createRoom(RoomDTO roomDTO) {
+        RoomEntity room = new RoomEntity();
+        PatientEntity patient = patientRepository.findById(roomDTO.getPatientId())
+                .orElseThrow(() -> new RuntimeException("Patient ID: " + roomDTO.getPatientId() + " not found!"));
+        StaffEntity staff = staffRepository.findById(roomDTO.getStaffId())
+                .orElseThrow(() -> new RuntimeException("Staff ID: " + roomDTO.getStaffId() + " not found!"));
+        // List<AdmissionEntity> admissions = admissionRepository.findBy
+
+        room.setRoomNumber(roomDTO.getRoomNumber());
+        room.setRoomType(roomDTO.getRoomType());
+        room.setOccupied(roomDTO.isOccupied()); // Default value
+        room.setRoomPrice(roomDTO.getRoomPrice());
+        room.setPatient(patient);
+        room.setFloorNumber(roomDTO.getFloorNumber());
+        room.setStaff(staff);
+        // room.getAdmissions();
+
+        return roomRepository.save(room);
     }
 
     public RoomEntity getRoomById(int roomId) {

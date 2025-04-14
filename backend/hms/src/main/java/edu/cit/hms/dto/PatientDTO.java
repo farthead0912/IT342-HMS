@@ -10,6 +10,21 @@ public class PatientDTO {
     private int roomId;
     private int userId;
 
+    // Constructor
+    public PatientDTO(int patientId, String firstName, String lastName, int age, String gender, String bloodType, int roomId, int userId) {
+        this.patientId = patientId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+        this.bloodType = bloodType;
+        this.roomId = roomId;
+        this.userId = userId;
+    }
+
+    // Empty Constructor
+    public PatientDTO() {}
+
     // Getters and Setters
     public int getPatientId() {
         return patientId;

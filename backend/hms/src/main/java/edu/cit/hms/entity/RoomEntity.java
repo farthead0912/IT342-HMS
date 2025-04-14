@@ -24,7 +24,7 @@ public class RoomEntity {
     private int floorNumber;
 
     @Column(nullable = false)
-    private boolean isOccupied;
+    private boolean isOccupied = false;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patientId", nullable = true)
@@ -34,7 +34,7 @@ public class RoomEntity {
     @JoinColumn(name = "staffId", nullable = true)
     private StaffEntity staff;
 
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "admissions", fetch = FetchType.LAZY)
     private List<AdmissionEntity> admissions;
 
     // Getters and Setters

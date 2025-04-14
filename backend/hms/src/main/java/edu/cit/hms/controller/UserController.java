@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import edu.cit.hms.dto.UserDTO;
 import edu.cit.hms.entity.UserEntity;
 import edu.cit.hms.service.UserService;
 
@@ -25,21 +26,21 @@ public class UserController {
     // Gets all users
     @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of users")
-    public List<UserEntity> getUsers() {
+    public List<UserDTO> getUsers() {
         return userService.getUsers();
     }
 
     // Gets user by ID
     @GetMapping("/{userId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved user by ID")
-    public UserEntity getUserById(@PathVariable int userId) {
+    public UserDTO getUserById(@PathVariable int userId) {
         return userService.getUserById(userId);
     }
 
     // Updates user details by ID
     @PutMapping("/{userId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated user")
-    public UserEntity updateUser(@PathVariable int userId, @RequestBody UserEntity user) {
+    public UserEntity updateUser(@PathVariable int userId, @RequestBody UserDTO user) {
         return userService.updateUser(userId, user);
     }
 

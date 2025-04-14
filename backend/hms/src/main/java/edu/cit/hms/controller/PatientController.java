@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.ResponseEntity;
 
+import edu.cit.hms.dto.PatientDTO;
 import edu.cit.hms.entity.PatientEntity;
 import edu.cit.hms.service.PatientService;
 
@@ -43,7 +44,7 @@ public class PatientController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     @ApiResponse(responseCode = "201", description = "Successfully created patient")
-    public ResponseEntity<PatientEntity> createPatient(@RequestBody PatientEntity patient) {
+    public ResponseEntity<PatientEntity> createPatient(@RequestBody PatientDTO patient) {
         return ResponseEntity.status(201).body(patientService.createPatient(patient));
     }
 

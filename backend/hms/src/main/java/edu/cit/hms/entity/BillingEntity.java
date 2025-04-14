@@ -29,6 +29,14 @@ public class BillingEntity {
     @Column(nullable = false)
     private Date issuedAt;
 
+    public int getBillId() {
+        return billId;
+    }
+
+    public void setBillId(int billId) {
+        this.billId = billId;
+    }
+
     public double getAmount() {
         return amount;
     }

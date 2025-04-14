@@ -8,6 +8,19 @@ public class StaffDTO {
     private int departmentId;
     private int userId;
 
+    // Empty Constructor
+    public StaffDTO() {}
+
+    // Constructor
+    public StaffDTO(int staffId, String firstName, String lastName, String position, int departmentId, int userId) {
+        this.staffId = staffId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.position = position;
+        this.departmentId = departmentId;
+        this.userId = userId;
+    }
+
     // Getters and Setters
     public int getStaffId() {
         return staffId;

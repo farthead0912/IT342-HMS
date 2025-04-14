@@ -35,14 +35,14 @@ public class StaffController {
     // Gets all staff
     @GetMapping("/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of staff")
-    public ResponseEntity<List<StaffEntity>> getStaff() {
+    public ResponseEntity<List<StaffDTO>> getStaff() {
         return ResponseEntity.ok(staffService.getStaff());
     }
 
     // Gets staff by ID
     @GetMapping("/{staffId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved staff by ID")
-    public ResponseEntity<StaffEntity> getStaffById(@PathVariable int staffId) {
+    public ResponseEntity<StaffDTO> getStaffById(@PathVariable int staffId) {
         return ResponseEntity.ok(staffService.getStaffById(staffId));
     }
 
@@ -58,7 +58,7 @@ public class StaffController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{staffId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated staff")
-    public ResponseEntity<StaffEntity> updateStaff(@PathVariable int staffId, @RequestBody StaffEntity staff) {
+    public ResponseEntity<StaffEntity> updateStaff(@PathVariable int staffId, @RequestBody StaffDTO staff) {
         return ResponseEntity.ok(staffService.updateStaff(staffId, staff));
     }
 

@@ -8,13 +8,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import edu.cit.hms.dto.AdmissionDTO;
 import edu.cit.hms.entity.AdmissionEntity;
+import edu.cit.hms.entity.DoctorEntity;
+import edu.cit.hms.entity.PatientEntity;
+import edu.cit.hms.entity.RoomEntity;
 import edu.cit.hms.repository.AdmissionRepository;
+import edu.cit.hms.repository.DoctorRepository;
+import edu.cit.hms.repository.PatientRepository;
+import edu.cit.hms.repository.RoomRepository;
 
 @Service
 public class AdmissionService {
     @Autowired
     private AdmissionRepository admissionRepository;
+
+    @Autowired
+    private DoctorRepository doctorRepository;
+
+    @Autowired
+    private PatientRepository patientRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
 
     public ResponseEntity<AdmissionEntity> createAdmission(AdmissionEntity admissionEntity) {
         try {
@@ -83,5 +99,39 @@ public class AdmissionService {
         } else {
             return new ResponseEntity<>("Admission ID: " + admissionId + " not found!", HttpStatus.NOT_FOUND); // 404 Not Found
         }
+    }
+
+    private AdmissionEntity convertFromDTO(AdmissionDTO admissionDTO) {
+        AdmissionEntity admission = new AdmissionEntity();
+        DoctorEntity doctor = doctorRepository.findById(admissionDTO.getDoctorId())
+            .orElseThrow(() -> new RuntimeException("Doctor ID: " + admissionDTO.getDoctorId() + " not found!"));
+        PatientEntity patient = patientRepository.findById(admissionDTO.getPatientId())
+            .orElseThrow(() -> new RuntimeException("Patient ID: " + admissionDTO.getPatientId() + " not found!"));
+        RoomEntity room = roomRepository.findById(admissionDTO.getRoomId())
+            .orElseThrow(() -> new RuntimeException("Room ID: " + admissionDTO.getRoomId() + " not found!"));
+
+        admission.setAdmissionId(admissionDTO.getAdmissionId());
+        admission.setDoctor(doctor);
+        admission.setPatient(patient);
+        admission.setRoom(room);
+        admission.setAdmissionDate(admissionDTO.getAdmissionDate());
+        admission.setDischargeDate(admissionDTO.getDischargeDate());
+        admission.setAdmissionReason(admissionDTO.getAdmissionReason());
+
+        return admission;
+    }
+
+    private AdmissionDTO convertToDTO(AdmissionEntity admission) {
+        AdmissionDTO admissionDTO = new AdmissionDTO();
+
+        admissionDTO.setAdmissionId(admission.getAdmissionId());
+        admissionDTO.setDoctorId(admission.getDoctor().getDoctorId());
+        admissionDTO.setPatientId(admission.getPatient().getPatientId());
+        admissionDTO.setRoomId(admission.getRoom().getRoomId());
+        admissionDTO.setAdmissionDate(admission.getAdmissionDate());
+        admissionDTO.setDischargeDate(admission.getDischargeDate());
+        admissionDTO.setAdmissionReason(admission.getAdmissionReason());
+
+        return admissionDTO;
     }
 }
