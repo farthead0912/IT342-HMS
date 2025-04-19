@@ -59,8 +59,21 @@ public class UserService {
             .orElseThrow(() -> new RuntimeException("User ID: " + userId + " not found!")); // Return the user if present, otherwise null
     }
 
-    public UserEntity getUserByUsername(String username) {
+    public UserDTO getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+            .map(this::convertToDTO)
+            .orElseThrow(() -> new RuntimeException("Email: " + email + " not found!"));
+    }
+
+    public UserDTO getUserByRole(Roles role) {
+        return userRepository.findByRole(role)
+            .map(this::convertToDTO)
+            .orElseThrow(() -> new RuntimeException("Role: " + role + " not found!"));
+    }
+
+    public UserDTO getUserByUsername(String username) {
         return userRepository.findByUsername(username)
+            .map(this::convertToDTO)
             .orElseThrow(() -> new RuntimeException("Username: " + username + " not found!"));
     }
 
@@ -118,7 +131,7 @@ public class UserService {
     private UserEntity convertFromDTO(UserDTO userDTO) {
         UserEntity user = new UserEntity();
         user.setUsername(userDTO.getUsername());
-        user.setPassword(userDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setRole(userDTO.getRole());
         user.setEmail(userDTO.getEmail());
 
@@ -129,7 +142,7 @@ public class UserService {
         UserDTO userDTO = new UserDTO();
 
         userDTO.setUsername(user.getUsername());
-        userDTO.setPassword(user.getPassword());
+        userDTO.setPassword(passwordEncoder.encode(user.getPassword()));
         userDTO.setRole(user.getRole());
         userDTO.setEmail(user.getEmail());
 

@@ -15,8 +15,10 @@ public class PatientRecordService {
     @Autowired
     private PatientRecordRepository patientRecordRepository;
 
-    public PatientRecordEntity createPatientRecord(PatientRecordEntity patientRecordEntity) {
-        return patientRecordRepository.save(patientRecordEntity);
+    public PatientRecordEntity createPatientRecord(PatientRecordDTO patientRecordDTO) {
+        PatientRecordEntity patientRecord = convertFromDTO(patientRecordDTO);
+
+        return patientRecordRepository.save(patientRecord);
     }
 
     public PatientRecordEntity getPatientRecordById(int patientRecordId) {
@@ -73,13 +75,13 @@ public class PatientRecordService {
     }
 
     private PatientRecordDTO convertToDTO(PatientRecordEntity patientRecord) {
-        PatientRecordDTO patientRecordDTO = new PatientRecordDTO();
-
-        patientRecordDTO.setSickness(patientRecord.getSickness());
-        patientRecordDTO.setDiagnosisDate(patientRecord.getDiagnosisDate());
-        patientRecordDTO.setSeverity(patientRecord.getSeverity());
-        patientRecordDTO.setTreatmentPlan(patientRecord.getTreatmentPlan());
-
-        return patientRecordDTO;
+        return new PatientRecordDTO(
+                patientRecord.getRecordId(),
+                patientRecord.getPatient().getPatientId(),
+                patientRecord.getSickness(),
+                patientRecord.getDiagnosisDate(),
+                patientRecord.getSeverity(),
+                patientRecord.getTreatmentPlan()
+        );
     }
 }

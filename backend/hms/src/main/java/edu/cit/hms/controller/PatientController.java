@@ -20,21 +20,21 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
     @ApiResponse(responseCode = "500", description = "Internal server error")
 })
 @RestController
-@RequestMapping("/api/patient")
+@RequestMapping(value = "/api/patient", produces = "application/json", consumes = "application/json")
 @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'STAFF')")
 public class PatientController {
     @Autowired
     private PatientService patientService;
 
     // Gets all patients
-    @GetMapping("/")
+    @GetMapping(value = "/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of patients")
     public ResponseEntity<List<PatientEntity>> getPatients() {
         return ResponseEntity.ok(patientService.getPatients());
     }
 
     // Gets patient by ID
-    @GetMapping("/{patientId}")
+    @GetMapping(value = "/{patientId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved patient by ID")
     public ResponseEntity<PatientEntity> getPatientById(@PathVariable int patientId) {
         return ResponseEntity.ok(patientService.getPatientById(patientId));
@@ -42,7 +42,7 @@ public class PatientController {
 
     // Creates a new patient
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/")
+    @PostMapping(value = "/")
     @ApiResponse(responseCode = "201", description = "Successfully created patient")
     public ResponseEntity<PatientEntity> createPatient(@RequestBody PatientDTO patient) {
         return ResponseEntity.status(201).body(patientService.createPatient(patient));
@@ -50,7 +50,7 @@ public class PatientController {
 
     // Updates patient details by ID
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{patientId}")
+    @PutMapping(value = "/{patientId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated patient")
     public ResponseEntity<PatientEntity> updatePatient(@PathVariable int patientId, @RequestBody PatientEntity patient) {
         return ResponseEntity.ok(patientService.updatePatient(patientId, patient));
@@ -58,7 +58,7 @@ public class PatientController {
 
     // Deletes patient by ID
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{patientId}")
+    @DeleteMapping(value = "/{patientId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted patient")
     public ResponseEntity<String> deletePatient(@PathVariable int patientId) {
         return ResponseEntity.ok(patientService.deletePatient(patientId));

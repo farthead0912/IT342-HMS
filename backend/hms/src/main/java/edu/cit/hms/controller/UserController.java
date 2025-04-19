@@ -18,27 +18,27 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
     @ApiResponse(responseCode = "500", description = "Internal server error")
 })
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping(value = "/api/user", produces = "application/json", consumes = "application/json")
 public class UserController {
     @Autowired
     private UserService userService;
 
     // Gets all users
-    @GetMapping("/")
+    @GetMapping(value = "/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of users")
     public List<UserDTO> getUsers() {
         return userService.getUsers();
     }
 
     // Gets user by ID
-    @GetMapping("/{userId}")
+    @GetMapping(value = "/{userId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved user by ID")
     public UserDTO getUserById(@PathVariable int userId) {
         return userService.getUserById(userId);
     }
 
     // Updates user details by ID
-    @PutMapping("/{userId}")
+    @PutMapping(value = "/{userId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated user")
     public UserEntity updateUser(@PathVariable int userId, @RequestBody UserDTO user) {
         return userService.updateUser(userId, user);
@@ -46,7 +46,7 @@ public class UserController {
 
 
     // Deletes user by ID
-    @DeleteMapping("/{userId}")
+    @DeleteMapping(value = "/{userId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted user")
     public String deleteUser(@PathVariable int userId) {
         return userService.deleteUser(userId);

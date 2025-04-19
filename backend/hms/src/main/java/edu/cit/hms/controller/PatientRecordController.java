@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import edu.cit.hms.dto.PatientRecordDTO;
 import edu.cit.hms.entity.PatientRecordEntity;
 import edu.cit.hms.service.PatientRecordService;
 
@@ -19,21 +20,21 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
     @ApiResponse(responseCode = "500", description = "Internal server error")
 })
 @RestController
-@RequestMapping("/api/patient_record")
+@RequestMapping(value = "/api/patient_record", produces = "application/json", consumes = "application/json")
 @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'STAFF')") // Class-level restriction
 public class PatientRecordController {
     @Autowired
     private PatientRecordService patientRecordService;
 
     // Gets all patient records
-    @GetMapping("/")
+    @GetMapping(value = "/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of patient records")
     public ResponseEntity<List<PatientRecordEntity>> getPatientRecords() {
         return ResponseEntity.ok(patientRecordService.getPatientRecords());
     }
 
     // Gets patient record by ID
-    @GetMapping("/{patientRecordId}")
+    @GetMapping(value = "/{patientRecordId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved patient record by ID")
     public ResponseEntity<PatientRecordEntity> getPatientRecordById(@PathVariable int patientRecordId) {
         return ResponseEntity.ok(patientRecordService.getPatientRecordById(patientRecordId));
@@ -41,15 +42,15 @@ public class PatientRecordController {
 
     // Creates a new patient record
     @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')") // ADMINs and DOCTORs can create patient records
-    @PostMapping("/")
+    @PostMapping(value = "/")
     @ApiResponse(responseCode = "201", description = "Successfully created patient record")
-    public ResponseEntity<PatientRecordEntity> createPatientRecord(@RequestBody PatientRecordEntity patientRecord) {
+    public ResponseEntity<PatientRecordEntity> createPatientRecord(@RequestBody PatientRecordDTO patientRecord) {
         return ResponseEntity.status(201).body(patientRecordService.createPatientRecord(patientRecord));
     }
 
     // Updates patient record details by ID
     @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')") // ADMINs and DOCTORs can update patient records
-    @PutMapping("/{patientRecordId}")
+    @PutMapping(value = "/{patientRecordId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated patient record")
     public ResponseEntity<PatientRecordEntity> updatePatientRecord(@PathVariable int patientRecordId, @RequestBody PatientRecordEntity patientRecord) {
         return ResponseEntity.ok(patientRecordService.updatePatientRecord(patientRecordId, patientRecord));
@@ -57,7 +58,7 @@ public class PatientRecordController {
 
     // Deletes patient record by ID
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can delete patient records
-    @DeleteMapping("/{patientRecordId}")
+    @DeleteMapping(value = "/{patientRecordId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted patient record")
     public ResponseEntity<String> deletePatientRecord(@PathVariable int patientRecordId) {
         return ResponseEntity.ok(patientRecordService.deletePatientRecord(patientRecordId));

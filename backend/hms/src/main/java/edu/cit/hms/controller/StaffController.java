@@ -27,20 +27,20 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 })
 @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
 @RestController
-@RequestMapping("/api/staff")
+@RequestMapping(value = "/api/staff", produces = "application/json", consumes = "application/json")
 public class StaffController {
     @Autowired
     private StaffService staffService;
 
     // Gets all staff
-    @GetMapping("/")
+    @GetMapping(value = "/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of staff")
     public ResponseEntity<List<StaffDTO>> getStaff() {
         return ResponseEntity.ok(staffService.getStaff());
     }
 
     // Gets staff by ID
-    @GetMapping("/{staffId}")
+    @GetMapping(value = "/{staffId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved staff by ID")
     public ResponseEntity<StaffDTO> getStaffById(@PathVariable int staffId) {
         return ResponseEntity.ok(staffService.getStaffById(staffId));
@@ -48,7 +48,7 @@ public class StaffController {
 
     // Creates a new staff
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/")
+    @PostMapping(value = "/")
     @ApiResponse(responseCode = "201", description = "Successfully created staff")
     public ResponseEntity<StaffEntity> createStaff(@RequestBody StaffDTO staff) {
         return ResponseEntity.status(201).body(staffService.createStaff(staff));
@@ -56,7 +56,7 @@ public class StaffController {
 
     // Updates staff details by ID
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{staffId}")
+    @PutMapping(value = "/{staffId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated staff")
     public ResponseEntity<StaffEntity> updateStaff(@PathVariable int staffId, @RequestBody StaffDTO staff) {
         return ResponseEntity.ok(staffService.updateStaff(staffId, staff));
@@ -65,7 +65,7 @@ public class StaffController {
 
     // Deletes staff by ID
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{staffId}")
+    @DeleteMapping(value = "/{staffId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted staff")
     public ResponseEntity<String> deleteStaff(@PathVariable int staffId) {
         return ResponseEntity.ok(staffService.deleteStaff(staffId));

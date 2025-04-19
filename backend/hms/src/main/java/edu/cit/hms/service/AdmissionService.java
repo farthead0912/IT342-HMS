@@ -101,6 +101,20 @@ public class AdmissionService {
         }
     }
 
+    private AdmissionDTO convertToDTO(AdmissionEntity admission) {
+        AdmissionDTO admissionDTO = new AdmissionDTO();
+
+        admissionDTO.setAdmissionId(admission.getAdmissionId());
+        admissionDTO.setDoctorId(admission.getDoctor().getDoctorId());
+        admissionDTO.setPatientId(admission.getPatient().getPatientId());
+        admissionDTO.setRoomId(admission.getRoom().getRoomId());
+        admissionDTO.setAdmissionDate(admission.getAdmissionDate());
+        admissionDTO.setDischargeDate(admission.getDischargeDate());
+        admissionDTO.setAdmissionReason(admission.getAdmissionReason());
+
+        return admissionDTO;
+    }
+
     private AdmissionEntity convertFromDTO(AdmissionDTO admissionDTO) {
         AdmissionEntity admission = new AdmissionEntity();
         DoctorEntity doctor = doctorRepository.findById(admissionDTO.getDoctorId())
@@ -119,19 +133,5 @@ public class AdmissionService {
         admission.setAdmissionReason(admissionDTO.getAdmissionReason());
 
         return admission;
-    }
-
-    private AdmissionDTO convertToDTO(AdmissionEntity admission) {
-        AdmissionDTO admissionDTO = new AdmissionDTO();
-
-        admissionDTO.setAdmissionId(admission.getAdmissionId());
-        admissionDTO.setDoctorId(admission.getDoctor().getDoctorId());
-        admissionDTO.setPatientId(admission.getPatient().getPatientId());
-        admissionDTO.setRoomId(admission.getRoom().getRoomId());
-        admissionDTO.setAdmissionDate(admission.getAdmissionDate());
-        admissionDTO.setDischargeDate(admission.getDischargeDate());
-        admissionDTO.setAdmissionReason(admission.getAdmissionReason());
-
-        return admissionDTO;
     }
 }

@@ -20,21 +20,21 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
     @ApiResponse(responseCode = "500", description = "Internal server error")
 })
 @RestController
-@RequestMapping("/api/room")
+@RequestMapping(value = "/api/room", produces = "application/json", consumes = "application/json")
 @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
 public class RoomController {
     @Autowired
     private RoomService roomService;
 
     // Gets all rooms
-    @GetMapping("/")
+    @GetMapping(value = "/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of rooms")
-    public List<RoomEntity> getRooms() {
+    public List<RoomDTO> getRooms() {
         return roomService.getRooms();
     }
 
     // Gets room by ID
-    @GetMapping("/{roomId}")
+    @GetMapping(value = "/{roomId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved room by ID")
     public RoomEntity getRoomById(@PathVariable int roomId) {
         return roomService.getRoomById(roomId);
@@ -42,7 +42,7 @@ public class RoomController {
 
     // Creates a new room
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/")
+    @PostMapping(value = "/")
     @ApiResponse(responseCode = "201", description = "Successfully created room")
     public ResponseEntity<RoomEntity> createRoom(@RequestBody RoomDTO room) {
         return ResponseEntity.ok(roomService.createRoom(room));
@@ -50,15 +50,15 @@ public class RoomController {
 
     // Updates room details by ID
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{roomId}")
+    @PutMapping(value = "/{roomId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated room")
-    public ResponseEntity<RoomEntity> updateRoom(@PathVariable int roomId, @RequestBody RoomEntity room) {
+    public ResponseEntity<RoomEntity> updateRoom(@PathVariable int roomId, @RequestBody RoomDTO room) {
         return ResponseEntity.ok(roomService.updateRoom(roomId, room));
     }
 
     // Deletes room by ID
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{roomId}")
+    @DeleteMapping(value = "/{roomId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted room")
     public ResponseEntity<String> deleteRoom(@PathVariable int roomId) {
         return ResponseEntity.ok(roomService.deleteRoom(roomId));

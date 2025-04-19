@@ -96,7 +96,7 @@ public class AuthenticationController {
     @ApiResponse(responseCode = "200", description = "Successfully logged in")
     @PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
-        UserEntity user = userService.getUserByUsername(loginDTO.getUsername());
+        UserDTO user = userService.getUserByUsername(loginDTO.getUsername());
 
         if(user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
             String token = jwtUtil.generateToken(user.getUsername(), user.getRole().toString(), user.getUserId());

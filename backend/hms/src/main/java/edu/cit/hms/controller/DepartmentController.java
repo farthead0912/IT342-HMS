@@ -26,14 +26,14 @@ public class DepartmentController {
     private DepartmentService departmentService;
     
     // Gets all departments
-    @GetMapping("/")
+    @GetMapping(value = "/", produces = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved departments")
     public ResponseEntity<List<DepartmentEntity>> getAllDepartments() {
         return ResponseEntity.ok(departmentService.getAllDepartments());
     }
 
     // Gets department by ID
-    @GetMapping("/{deptId}")
+    @GetMapping(value = "/{deptId}", produces = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved department")
     public ResponseEntity<DepartmentEntity> getDepartmentById(@PathVariable int deptId) {
         return ResponseEntity.ok(departmentService.getDepartmentById(deptId));
@@ -41,7 +41,7 @@ public class DepartmentController {
 
     // Creates a new department
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can create departments
-    @PostMapping("/")
+    @PostMapping(value = "/", produces = "application/json", consumes = "application/json")
     @ApiResponse(responseCode = "201", description = "Successfully created department")
     public ResponseEntity<DepartmentEntity> createDepartment(@RequestBody DepartmentEntity department) {
         return ResponseEntity.status(201).body(departmentService.createDepartment(department));
@@ -49,7 +49,7 @@ public class DepartmentController {
 
     // Updates department details by ID
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can update departments
-    @PutMapping("/{deptId}")
+    @PutMapping(value = "/{deptId}", produces = "application/json", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated department")
     public ResponseEntity<DepartmentEntity> updateDepartment(@PathVariable int deptId, @RequestBody DepartmentEntity department) {
         return ResponseEntity.ok(departmentService.updateDepartment(deptId, department));
@@ -57,7 +57,7 @@ public class DepartmentController {
 
     // Deletes department by ID
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can delete departments
-    @DeleteMapping("/{deptId}")
+    @DeleteMapping(value = "/{deptId}", produces = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully deleted department")
     public ResponseEntity<String> deleteDepartment(@PathVariable int deptId) {
         return ResponseEntity.ok(departmentService.deleteDepartment(deptId));
