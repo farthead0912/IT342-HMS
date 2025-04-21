@@ -29,28 +29,32 @@ public class AdmissionController {
     @GetMapping(value = "/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved admissions")
     public ResponseEntity<List<AdmissionEntity>> getAdmissions() {
-        return admissionService.getAdmissions();
+        List<AdmissionEntity> admissions = admissionService.getAdmissions();
+        return ResponseEntity.ok(admissions); // Wrap the list in ResponseEntity
     }
 
     // Gets admission by ID
     @GetMapping(value = "/{admissionId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved admission")
     public ResponseEntity<AdmissionEntity> getAdmissionById(@PathVariable int admissionId) {
-        return admissionService.getAdmissionById(admissionId);
+        AdmissionEntity admission = admissionService.getAdmissionById(admissionId); // Ensure this returns AdmissionEntity
+        return ResponseEntity.ok(admission);
     }
 
     // Creates new admission
     @PostMapping(value = "/")
     @ApiResponse(responseCode = "201", description = "Successfully created admission")
     public ResponseEntity<AdmissionEntity> createAdmission(@RequestBody AdmissionEntity admission) {
-        return admissionService.createAdmission(admission);
+        AdmissionEntity createdAdmission = admissionService.createAdmission(admission); // Ensure this returns AdmissionEntity
+        return ResponseEntity.status(201).body(createdAdmission);
     }
 
     // Updates admission details by ID
     @PutMapping(value = "/{admissionId}")
     @ApiResponse(responseCode = "200", description = "Successfully updated admission")
     public ResponseEntity<AdmissionEntity> updateAdmission(@PathVariable int admissionId, @RequestBody AdmissionEntity admission) {
-        return admissionService.updateAdmission(admissionId, admission);
+        AdmissionEntity updatedAdmission = admissionService.updateAdmission(admissionId, admission); // Ensure this returns AdmissionEntity
+        return ResponseEntity.ok(updatedAdmission);
     }
 
     // Deletes admission by ID
@@ -58,6 +62,7 @@ public class AdmissionController {
     @DeleteMapping(value = "/{admissionId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted admission")
     public ResponseEntity<String> deleteAdmission(@PathVariable int admissionId) {
-        return admissionService.deleteAdmission(admissionId);
+        admissionService.deleteAdmission(admissionId); // Ensure this returns void
+        return ResponseEntity.ok("Admission deleted successfully");
     }
 }

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import edu.cit.hms.dto.LoginDTO;
 import edu.cit.hms.dto.UserDTO;
-import edu.cit.hms.entity.UserEntity;
 import edu.cit.hms.service.UserService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

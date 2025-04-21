@@ -2,13 +2,11 @@ package edu.cit.hms.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.cit.hms.dto.EquipmentDTO;
-import edu.cit.hms.entity.DepartmentEntity;
 import edu.cit.hms.entity.EquipmentEntity;
 import edu.cit.hms.entity.RoomEntity;
 import edu.cit.hms.repository.EquipmentRepository;

@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import edu.cit.hms.dto.AdmissionDTO;
@@ -32,73 +30,54 @@ public class AdmissionService {
     @Autowired
     private RoomRepository roomRepository;
 
-    public ResponseEntity<AdmissionEntity> createAdmission(AdmissionEntity admissionEntity) {
+    public AdmissionEntity createAdmission(AdmissionEntity admissionEntity) {
         try {
-            AdmissionEntity createdAdmission = admissionRepository.save(admissionEntity);
-            return new ResponseEntity<>(createdAdmission, HttpStatus.CREATED); // 201 Created
+            return admissionRepository.save(admissionEntity);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // 500 Internal Server Error
+            throw new RuntimeException("Error creating admission", e);
         }
     }
 
-    public ResponseEntity<AdmissionEntity> getAdmissionById(int admissionId) {
-        Optional<AdmissionEntity> admission = admissionRepository.findById(admissionId);
-        if (admission.isPresent()) {
-            return new ResponseEntity<>(admission.get(), HttpStatus.OK); // 200 OK
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 Not Found
-        }
+    public AdmissionEntity getAdmissionById(int admissionId) {
+        return admissionRepository.findById(admissionId)
+            .orElseThrow(() -> new RuntimeException("Admission ID: " + admissionId + " not found!"));
     }
 
-    public ResponseEntity<List<AdmissionEntity>> getAdmissions() {
-        try {
-            List<AdmissionEntity> admissions = admissionRepository.findAll();
-            return new ResponseEntity<>(admissions, HttpStatus.OK); // 200 OK
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // 500 Internal Server Error
-        }
+    public List<AdmissionEntity> getAdmissions() {
+        return admissionRepository.findAll();
     }
 
-    public ResponseEntity<AdmissionEntity> updateAdmission(int admissionId, AdmissionEntity newAdmission) {
-        Optional<AdmissionEntity> admissionOptional = admissionRepository.findById(admissionId);
-        if (admissionOptional.isPresent()) {
-            AdmissionEntity admission = admissionOptional.get();
+    public AdmissionEntity updateAdmission(int admissionId, AdmissionEntity newAdmission) {
+        AdmissionEntity admission = admissionRepository.findById(admissionId)
+            .orElseThrow(() -> new RuntimeException("Admission ID: " + admissionId + " not found!"));
 
-            // Validate and update fields
-            if (newAdmission.getDoctor() != null) {
-                admission.setDoctor(newAdmission.getDoctor());
-            }
-            if (newAdmission.getPatient() != null) {
-                admission.setPatient(newAdmission.getPatient());
-            }
-            if (newAdmission.getRoom() != null) {
-                admission.setRoom(newAdmission.getRoom());
-            }
-            if (newAdmission.getAdmissionDate() != null) {
-                admission.setAdmissionDate(newAdmission.getAdmissionDate());
-            }
-            if (newAdmission.getDischargeDate() != null) {
-                admission.setDischargeDate(newAdmission.getDischargeDate());
-            }
-            if (newAdmission.getAdmissionReason() != null) {
-                admission.setAdmissionReason(newAdmission.getAdmissionReason());
-            }
-
-            AdmissionEntity updatedAdmission = admissionRepository.save(admission);
-            return new ResponseEntity<>(updatedAdmission, HttpStatus.OK); // 200 OK
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 Not Found
+        // Validate and update fields
+        if (newAdmission.getDoctor() != null) {
+            admission.setDoctor(newAdmission.getDoctor());
         }
+        if (newAdmission.getPatient() != null) {
+            admission.setPatient(newAdmission.getPatient());
+        }
+        if (newAdmission.getRoom() != null) {
+            admission.setRoom(newAdmission.getRoom());
+        }
+        if (newAdmission.getAdmissionDate() != null) {
+            admission.setAdmissionDate(newAdmission.getAdmissionDate());
+        }
+        if (newAdmission.getDischargeDate() != null) {
+            admission.setDischargeDate(newAdmission.getDischargeDate());
+        }
+        if (newAdmission.getAdmissionReason() != null) {
+            admission.setAdmissionReason(newAdmission.getAdmissionReason());
+        }
+
+        return admissionRepository.save(admission);
     }
 
-    public ResponseEntity<String> deleteAdmission(int admissionId) {
-        Optional<AdmissionEntity> admission = admissionRepository.findById(admissionId);
-        if (admission.isPresent()) {
-            admissionRepository.delete(admission.get());
-            return new ResponseEntity<>("Admission ID: " + admissionId + " deleted successfully!", HttpStatus.OK); // 200 OK
-        } else {
-            return new ResponseEntity<>("Admission ID: " + admissionId + " not found!", HttpStatus.NOT_FOUND); // 404 Not Found
-        }
+    public void deleteAdmission(int admissionId) {
+        AdmissionEntity admission = admissionRepository.findById(admissionId)
+            .orElseThrow(() -> new RuntimeException("Admission ID: " + admissionId + " not found!"));
+        admissionRepository.delete(admission);
     }
 
     private AdmissionDTO convertToDTO(AdmissionEntity admission) {
