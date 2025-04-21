@@ -19,7 +19,7 @@ const StaffBilling = () => {
           <p className="menu-title">Menu</p>
           <ul>
             <li onClick={() => navigate("/staff-dashboard")}>Dashboard</li>
-            <li onClick={() => navigate("/staff-appointments")}>Appointments</li>
+            <li onClick={() => navigate("/staff-addmision")}>Addmission</li>
             <li className="active">Billings</li>
             <li onClick={() => navigate("/staff-inventory")}>Inventory</li>
             <li onClick={() => navigate("/staff-rooms")}>Rooms</li>
@@ -29,8 +29,8 @@ const StaffBilling = () => {
 
       {/* Main Content */}
       <div className="main-content">
-        <header className="topbar">
-          <span>Staff-Billing-Page</span>
+        <header className="topbar-StaffBilling">
+          <span>Staff Billing Page</span>
           <button className="logout-btn" onClick={handleLogout}>
             Logout
           </button>

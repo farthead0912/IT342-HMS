@@ -26,7 +26,7 @@ const StaffDashboard = () => {
           <p className="menu-title">Menu</p>
           <ul>
             <li className="active">Dashboard</li>
-            <li onClick={() => navigate("/staff-appointments")}>Appointments</li>
+            <li onClick={() => navigate("/staff-addmision")}>Addmission</li>
             <li onClick={() => navigate("/staff-billing")}>Billings</li>
             <li onClick={() => navigate("/staff-inventory")}>Inventory</li>
             <li onClick={() => navigate("/staff-rooms")}>Rooms</li>
@@ -35,8 +35,8 @@ const StaffDashboard = () => {
       </aside>
 
       <div className="main-content">
-        <header className="topbar">
-          <span>Staff-Dashboard-Page</span>
+        <header className="topbar-StaffDashboard">
+          <span>Staff Dashboard Page</span>
           <button className="logout-btn" onClick={handleLogout}>Logout</button>
         </header>
 

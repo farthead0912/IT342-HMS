@@ -61,3 +61,12 @@ td {
     padding: 0.75rem;
     text-align: left;
 }
+
+.topbar-StaffBilling {
+    background-color: #777777;
+    color: white;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -156,6 +156,15 @@
     padding: 0.5rem;
     text-align: left;
   }
+
+  .topbar-StaffDashboard {
+    background-color: #777777;
+    color: white;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   
   /* Billing Status */
   .paid-status td:last-child {

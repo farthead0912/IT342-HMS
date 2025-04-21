@@ -49,7 +49,7 @@ const StaffInventory = () => {
           <p className="menu-title">Menu</p>
           <ul>
             <li onClick={() => navigate("/staff-dashboard")}>Dashboard</li>
-            <li onClick={() => navigate("/staff-appointments")}>Appointments</li>
+            <li onClick={() => navigate("/staff-addmision")}>Addmission</li>
             <li onClick={() => navigate("/staff-billing")}>Billings</li>
             <li className="active">Inventory</li>
             <li onClick={() => navigate("/staff-rooms")}>Rooms</li>
@@ -59,8 +59,8 @@ const StaffInventory = () => {
 
       {/* Main Content */}
       <div className="main-content">
-        <header className="topbar">
-          <span>Staff-Inventory-Page</span>
+        <header className="topbar-StaffInventory">
+          <span>Staff Inventory Page</span>
           <button className="logout-btn" onClick={handleLogout}>Logout</button>
         </header>
 

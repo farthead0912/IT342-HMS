@@ -4,10 +4,10 @@ import LazyLanding from "./pages/LandingPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import StaffDashboard from "./pages/StaffDashboard";
-import StaffAppointments from "./pages/StaffAppointments";
+import StaffAppointments from "./pages/StaffAddmision";
 import StaffBilling from "./pages/StaffBilling";
 import StaffInventory from "./pages/StaffInventory";
-import StaffRooms from "./pages/StaffRooms"; // 🆕 Import StaffRooms Page
+import StaffRooms from "./pages/StaffRooms";
 import { useAuth } from "./context/AuthContext";
 
 // 🔐 Protected Route for Staff and Admin
@@ -55,7 +55,7 @@ function App() {
 
           {/* 🔐 Staff Appointments */}
           <Route
-            path="/staff-appointments"
+            path="/staff-addmision"
             element={
               <StaffProtectedRoute>
                 <StaffAppointments />

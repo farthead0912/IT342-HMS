@@ -16,8 +16,8 @@
 
 .logo {
   font-weight: bold;
-  font-size: 1.3rem;
-  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
   text-align: center;
 }
 
@@ -200,6 +200,15 @@ th, td {
 
 tbody tr:hover {
   background-color: #f0f0f0;
+}
+
+.topbar-StaffInventory {
+    background-color: #777777;
+    color: white;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* Status styles */

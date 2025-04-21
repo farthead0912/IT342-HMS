@@ -6,44 +6,65 @@ import "../styles/StaffRooms.css";
 const StaffRooms = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  
-  // Sample room data
+
   const [rooms, setRooms] = useState([
     { id: 1, number: "101", type: "ICU", status: "Occupied" },
     { id: 2, number: "300", type: "Private", status: "Available" },
-    // Add more rooms as needed
   ]);
-  
+
   const [searchTerm, setSearchTerm] = useState("");
-  
-  // Total rooms count
+
   const totalRooms = 120;
   const occupiedRooms = 75;
-  const availableRooms = 35;
-  
+  const availableRooms = 45;
+
   const handleLogout = () => {
     logout();
     navigate("/");
   };
-  
+
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
-  
-  const filteredRooms = rooms.filter(room => 
-    room.number.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    room.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    room.status.toLowerCase().includes(searchTerm.toLowerCase())
+
+  const filteredRooms = rooms.filter((room) =>
+    [room.number, room.type, room.status]
+      .join(" ")
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
   );
-  
+
   const handleAddRoom = () => {
-    // Add logic to open a modal or navigate to add room form
-    console.log("Add new room clicked");
+    const newRoom = {
+      id: rooms.length + 1,
+      number: prompt("Enter Room Number:"),
+      type: prompt("Enter Room Type:"),
+      status: prompt("Enter Status (Available/Occupied):"),
+    };
+    if (newRoom.number && newRoom.type && newRoom.status) {
+      setRooms([...rooms, newRoom]);
+    }
   };
-  
-  const handleUpdateOrRemove = (roomId, action) => {
-    console.log(`${action} room with ID: ${roomId}`);
-    // Add logic for updating or removing rooms
+
+  const handleUpdateRoom = (roomId) => {
+    const updated = rooms.map((room) =>
+      room.id === roomId
+        ? {
+            ...room,
+            number: prompt("Update Room Number:", room.number),
+            type: prompt("Update Room Type:", room.type),
+            status: prompt("Update Status:", room.status),
+          }
+        : room
+    );
+    setRooms(updated);
+  };
+
+  const handleRemoveRoom = (roomId) => {
+    const confirmDelete = window.confirm("Are you sure to delete this room?");
+    if (confirmDelete) {
+      setRooms(rooms.filter((room) => room.id !== roomId));
+    }
   };
 
   return (
@@ -55,7 +76,7 @@ const StaffRooms = () => {
           <p className="menu-title">Menu</p>
           <ul>
             <li onClick={() => navigate("/staff-dashboard")}>Dashboard</li>
-            <li onClick={() => navigate("/staff-appointments")}>Appointments</li>
+            <li onClick={() => navigate("/staff-addmision")}>Addmission</li>
             <li onClick={() => navigate("/staff-billing")}>Billings</li>
             <li onClick={() => navigate("/staff-inventory")}>Inventory</li>
             <li className="active">Rooms</li>
@@ -65,17 +86,14 @@ const StaffRooms = () => {
 
       {/* Main Content */}
       <div className="main-content">
-        {/* Top Bar */}
-        <header className="topbar">
-          <span>Staff-Rooms-Page</span>
+        <header className="topbar-StaffAddmision">
+          <span>Staff Rooms Page</span>
           <button className="logout-btn" onClick={handleLogout}>Logout</button>
         </header>
 
-        {/* Room Management Content */}
         <section className="room-management-section">
           <h2>Room Management</h2>
 
-          {/* Room Statistics Cards */}
           <div className="room-stats-cards">
             <div className="room-card">
               <h3>Total Rooms</h3>
@@ -91,11 +109,10 @@ const StaffRooms = () => {
             </div>
           </div>
 
-          {/* Search and Add Room */}
           <div className="room-actions">
-            <input 
-              type="text" 
-              placeholder="Search Room..." 
+            <input
+              type="text"
+              placeholder="Search Room..."
               value={searchTerm}
               onChange={handleSearch}
               className="search-input"
@@ -105,7 +122,6 @@ const StaffRooms = () => {
             </button>
           </div>
 
-          {/* Room List */}
           <div className="room-list-container">
             <h3 className="room-list-title">Room List</h3>
             <div className="table-container">
@@ -129,12 +145,8 @@ const StaffRooms = () => {
                         {room.status}
                       </td>
                       <td>
-                        <button 
-                          className="action-btn"
-                          onClick={() => handleUpdateOrRemove(room.id, "Update")}
-                        >
-                          Update or Remove
-                        </button>
+                        <button className="action-btn update-btn" onClick={() => handleUpdateRoom(room.id)}>Update</button>
+                        <button className="action-btn remove-btn" onClick={() => handleRemoveRoom(room.id)}>Remove</button>
                       </td>
                     </tr>
                   ))}
