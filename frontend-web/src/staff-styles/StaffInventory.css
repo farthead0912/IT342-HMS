@@ -1,13 +1,14 @@
 .inventory-container {
   display: flex;
   height: 100vh;
-  font-family: sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Sidebar */
 .sidebar {
-  width: 13rem;
-  background-color: #3a6ea5; /* blue shade */
+  width: 200px;
+  background-color: #3b82f6;
+  /* blue-500 */
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -15,16 +16,20 @@
 }
 
 .logo {
+  font-size: 1.8rem;
   font-weight: bold;
-  font-size: 1.5rem;
   margin-bottom: 2rem;
   text-align: center;
 }
 
 .menu-title {
+  font-size: 0.9rem;
   font-weight: bold;
+  margin-top: 2.5rem;
   margin-bottom: 0.5rem;
-  color: #cfdff7;
+  text-transform: uppercase;
+  color: #dbeafe;
+  text-align: left;
 }
 
 .sidebar ul {
@@ -34,24 +39,24 @@
 }
 
 .sidebar li {
-  padding: 0.5rem;
-  border-radius: 5px;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
   margin-bottom: 0.5rem;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.sidebar li.active {
-  background-color: #5f94d4;
+  transition: background-color 0.3s ease;
 }
 
 .sidebar li:hover {
-  background-color: #507cb2;
+  background-color: #2563eb;
+}
+
+.sidebar li.active {
+  background-color: #1d4ed8;
 }
 
 /* Topbar */
-.topbar {
-  background-color: #2e2e2e;
+.topbar-StaffInventory {
+  background-color: #777777;
   color: white;
   padding: 0.75rem 1rem;
   display: flex;
@@ -60,7 +65,7 @@
 }
 
 .logout-btn {
-  background: none;
+  background-color: #ef4444;
   border: 1px solid white;
   padding: 0.4rem 0.8rem;
   color: white;
@@ -70,21 +75,21 @@
 }
 
 .logout-btn:hover {
-  background-color: #444;
+  background-color: #334155;
 }
 
 /* Main Content */
 .main-content {
   flex: 1;
   padding: 20px;
-  background-color: #f4f7fa;
+  background-color: #f1f5f9;
   overflow-y: auto;
 }
 
 /* Inventory Section */
 .inventory-section h2 {
   margin-bottom: 20px;
-  color: #333;
+  color: #1e293b;
 }
 
 /* Inventory Summary Cards */
@@ -108,14 +113,14 @@
   margin-top: 0;
   margin-bottom: 15px;
   font-size: 16px;
-  color: #555;
+  color: #475569;
 }
 
 .summary-card .count {
   font-size: 32px;
   font-weight: bold;
   margin: 0;
-  color: #2d3e50;
+  color: #1e293b;
 }
 
 .summary-card .count.low-stock {
@@ -141,23 +146,23 @@
 .search-input {
   width: 100%;
   padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
   font-size: 14px;
 }
 
 .add-item-btn {
-  background-color: #5cb85c;
+  background-color: #22c55e;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 10px 20px;
   cursor: pointer;
   font-weight: bold;
 }
 
 .add-item-btn:hover {
-  background-color: #4cae4c;
+  background-color: #16a34a;
 }
 
 /* Inventory List Header */
@@ -171,13 +176,13 @@
 
 .inventory-list-header h3 {
   margin: 0;
-  color: #333;
+  color: #1e293b;
 }
 
 /* Table Container */
 .table-container {
   background-color: #fff;
-  padding: 15px;
+  padding: 1px;
   border-radius: 0 0 8px 8px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -188,27 +193,19 @@ table {
 }
 
 thead {
-  background-color: #2d3e50;
+  background-color: #1e293b;
   color: white;
 }
 
-th, td {
+th,
+td {
   padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 tbody tr:hover {
   background-color: #f0f0f0;
-}
-
-.topbar-StaffInventory {
-    background-color: #777777;
-    color: white;
-    padding: 0.75rem 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 /* Status styles */
@@ -217,7 +214,7 @@ tbody tr:hover {
 }
 
 .status.in-stock {
-  color: #5cb85c;
+  color: #22c55e;
 }
 
 .status.low-stock {
@@ -239,19 +236,46 @@ tbody tr:hover {
 }
 
 .action-btn.update {
-  background-color: #5bc0de;
+  background-color: #3b82f6;
   color: white;
 }
 
 .action-btn.update:hover {
-  background-color: #46b8da;
+  background-color: #2563eb;
 }
 
 .action-btn.remove {
-  background-color: #d9534f;
+  background-color: #ef4444;
   color: white;
 }
 
 .action-btn.remove:hover {
-  background-color: #c9302c;
+  background-color: #dc2626;
+}
+
+.save-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.save-btn:hover {
+  background-color: #45a049;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #e53935;
+}
+
+table input,
+table select {
+  width: 100%;
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #cbd5e1;
 }

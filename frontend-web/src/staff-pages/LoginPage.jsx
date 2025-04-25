@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import "../styles/LoginPage.css";
+import "../staff-styles/LoginPage.css";
 import loginImage from "../assets/login.jpg";
 
 const LoginPage = () => {
@@ -14,7 +14,7 @@ const LoginPage = () => {
     e.preventDefault();
     console.log("Login attempt with:", username, password);
 
-    // Dummy staff credentials (you can replace this with actual API logic)
+    // Dummy staff credentials
     if (username === "staff@example.com" && password === "123") {
       const user = {
         username,
@@ -23,10 +23,24 @@ const LoginPage = () => {
 
       // Use the auth context login function
       login(user);
-      console.log("Login successful, navigating to dashboard");
+      console.log("Login successful, navigating to staff dashboard");
 
       // Redirect to staff dashboard
       navigate("/staff-dashboard");
+    } 
+    // Dummy doctor credentials
+    else if (username === "doctor@example.com" && password === "456") {
+      const user = {
+        username,
+        role: "doctor", // role stored for protected route
+      };
+
+      // Use the auth context login function
+      login(user);
+      console.log("Login successful, navigating to doctor dashboard");
+
+      // Redirect to doctor dashboard
+      navigate("/doctor-dashboard");
     } else {
       alert("Invalid credentials. Please try again.");
     }

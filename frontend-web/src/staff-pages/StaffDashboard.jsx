@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import "../styles/StaffDashboard.css";
+import "../staff-styles/StaffDashboard.css";
 
 const StaffDashboard = () => {
   const navigate = useNavigate();
@@ -26,7 +26,8 @@ const StaffDashboard = () => {
           <p className="menu-title">Menu</p>
           <ul>
             <li className="active">Dashboard</li>
-            <li onClick={() => navigate("/staff-addmision")}>Addmission</li>
+            <li onClick={() => navigate("/staff-admission")}>Admissions</li>
+            <li onClick={() => navigate("/staff-patient-records")}>Patient Records</li>
             <li onClick={() => navigate("/staff-billing")}>Billings</li>
             <li onClick={() => navigate("/staff-inventory")}>Inventory</li>
             <li onClick={() => navigate("/staff-rooms")}>Rooms</li>
@@ -45,7 +46,7 @@ const StaffDashboard = () => {
 
           <div className="info-cards">
             <div className="card">
-              <p>Appointment's Today</p>
+              <p>Admission's Today</p>
               <h3>35</h3>
             </div>
             <div className="card">

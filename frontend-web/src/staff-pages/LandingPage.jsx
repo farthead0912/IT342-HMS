@@ -1,6 +1,6 @@
 import React, { Suspense, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../styles/index.css"; // Ensure styles are applied
+import "../staff-styles/index.css"; // Ensure styles are applied
 
 const LandingPage = () => {
   const [isVisible, setIsVisible] = useState(true);

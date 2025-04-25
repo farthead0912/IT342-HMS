@@ -1,4 +1,6 @@
-/*StaffBilling.jsx*/
+.billing-records {
+    margin-left: 10px;
+}
 
 .filter-controls {
     display: flex;
@@ -69,4 +71,14 @@ td {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.logout-btn {
+    background-color: #ef4444;
+    border: 1px solid white;
+    padding: 0.4rem 0.8rem;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/RegisterPage.css";
+import "../staff-styles/RegisterPage.css";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -84,7 +84,7 @@ const RegisterPage = () => {
     <div className="register-page-container">
       <div className="register-layout">
         <div className="left-panel">
-          <div className="logo">LOGO</div>
+          <div className="logo">HMS</div>
           <div className="welcome-content">
             <h1>Welcome to Hospital Management System</h1>
             <p>

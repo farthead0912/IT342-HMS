@@ -96,7 +96,7 @@
 
 .room-table th,
 .room-table td {
-  padding: 0.75rem 1rem;
+  padding: 0.65rem 1rem;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
@@ -136,12 +136,12 @@
 }
 
 .action-btn.update-btn {
-  background-color: #5bc0de;
+  background-color: #3b82f6;
   color: white;
 }
 
 .update-btn:hover {
-  background-color: #46b8da;
+  background-color: #2563eb;
 }
 
 .remove-btn {
@@ -151,4 +151,33 @@
 
 .delete-btn:hover {
   background-color: #c9302c;
+}
+
+.logout-btn {
+  background-color: #ef4444;
+  border: 1px solid white;
+  padding: 0.4rem 0.8rem;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* New button styles for Save and Cancel */
+.save-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.save-btn:hover {
+  background-color: #45a049;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #e53935;
 }

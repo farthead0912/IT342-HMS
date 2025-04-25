@@ -7,8 +7,8 @@
   
   /* Sidebar */
   .sidebar {
-    width: 13rem;
-    background-color: #3a6ea5;
+    width: 200px;
+    background-color: #3b82f6;
     padding: 1rem;
     display: flex;
     flex-direction: column;
@@ -50,8 +50,8 @@
   }
   
   /* Topbar */
-  .topbar {
-    background-color: #2e2e2e;
+  .topbar-StaffDashboard {
+    background-color: #777777;
     color: white;
     padding: 0.75rem 1rem;
     display: flex;
@@ -60,7 +60,7 @@
   }
   
   .logout-btn {
-    background: none;
+    background-color: #ef4444;
     border: 1px solid white;
     padding: 0.4rem 0.8rem;
     color: white;

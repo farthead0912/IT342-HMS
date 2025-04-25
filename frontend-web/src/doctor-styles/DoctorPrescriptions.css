@@ -1,0 +1,186 @@
+/* Overall layout */
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Sidebar styles */
+.sidebar {
+  width: 250px;
+  background-color: #3b82f6;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  min-height: 100vh;
+}
+
+.sidebar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.menu-title {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.sidebar li {
+  padding: 12px;
+  border-radius: 5px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s, padding-left 0.3s;
+}
+
+.sidebar li:hover {
+  background-color: #3d4b56;
+  padding-left: 15px;
+}
+
+.sidebar .active {
+  background-color: #1d2a32;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+/* Main content area */
+.main-content {
+  flex-grow: 1;
+  padding: 30px;
+  width: 100%;
+}
+
+.topbar-DoctorPrescription {
+  background-color: #777777;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar-DoctorDashboard span {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.logout-btn {
+  background-color: #d9534f;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #c9302c;
+}
+
+/* Section & Header Bar */
+.dashboard-section {
+  padding: 2rem;
+}
+
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Add button */
+.add-btn {
+  padding: 0.75rem 1.25rem;
+  font-size: 14px;
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-btn:hover {
+  background-color: #16a34a;
+}
+
+/* Delete button */
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Order status styling */
+.order-yes {
+  background-color: #2ecc71;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.order-no {
+  background-color: #f1c40f;
+  color: black;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* Table */
+.table-container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+thead {
+  background-color: #f7f7f7;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}

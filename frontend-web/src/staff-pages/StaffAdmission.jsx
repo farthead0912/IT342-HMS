@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/StaffAddmision.css";
+import "../staff-styles/StaffAdmission.css";
 
-const StaffAddmision = () => {
+const StaffAdmission = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -10,6 +10,7 @@ const StaffAddmision = () => {
     date: "",
     time: "",
     doctor: "",
+    reason: "",
     status: "pending",
   });
 
@@ -19,6 +20,7 @@ const StaffAddmision = () => {
       date: "2025-04-07",
       time: "9:00 AM",
       doctor: "Dr. Smith",
+      reason: "High fever and weakness",
       status: "confirmed",
     },
     {
@@ -26,6 +28,7 @@ const StaffAddmision = () => {
       date: "2025-04-07",
       time: "10:30 AM",
       doctor: "Dr. Lopez",
+      reason: "Follow-up for diabetes management",
       status: "pending",
     },
   ]);
@@ -48,20 +51,21 @@ const StaffAddmision = () => {
       date: "",
       time: "",
       doctor: "",
+      reason: "",
       status: "pending",
     });
   };
 
   return (
     <div className="dashboard-container">
-      {/* Sidebar */}
       <aside className="sidebar">
         <div className="logo">HMS</div>
         <div>
           <p className="menu-title">Menu</p>
           <ul>
             <li onClick={() => navigate("/staff-dashboard")}>Dashboard</li>
-            <li className="active">Admission</li>
+            <li className="active">Admissions</li>
+            <li onClick={() => navigate("/staff-patient-records")}>Patient Records</li>
             <li onClick={() => navigate("/staff-billing")}>Billings</li>
             <li onClick={() => navigate("/staff-inventory")}>Inventory</li>
             <li onClick={() => navigate("/staff-rooms")}>Rooms</li>
@@ -69,10 +73,9 @@ const StaffAddmision = () => {
         </div>
       </aside>
 
-      {/* Main Content */}
       <div className="main-content">
         <header className="topbar-StaffAddmision">
-          <span>Walk-in Patient Admission</span>
+          <span>Staff Access Walk-in Patient Admission</span>
           <button className="logout-btn" onClick={handleLogout}>
             Logout
           </button>
@@ -81,7 +84,6 @@ const StaffAddmision = () => {
         <section className="dashboard-section">
           <h2>Today's Admissions</h2>
 
-          {/* Walk-in Admission Form */}
           <form className="filter-controls" onSubmit={handleAddAdmission}>
             <label>
               Patient Name:
@@ -124,6 +126,17 @@ const StaffAddmision = () => {
               />
             </label>
             <label>
+              Reason:
+              <input
+                type="text"
+                name="reason"
+                value={formData.reason}
+                onChange={handleChange}
+                placeholder="e.g. Chest pain, fever, check-up..."
+                required
+              />
+            </label>
+            <label>
               Status:
               <select
                 name="status"
@@ -140,7 +153,6 @@ const StaffAddmision = () => {
             </button>
           </form>
 
-          {/* Admissions Table */}
           <div className="table-container">
             <table>
               <thead>
@@ -149,6 +161,7 @@ const StaffAddmision = () => {
                   <th>Date</th>
                   <th>Time</th>
                   <th>Doctor</th>
+                  <th>Reason</th>
                   <th>Status</th>
                 </tr>
               </thead>
@@ -159,6 +172,7 @@ const StaffAddmision = () => {
                     <td>{entry.date}</td>
                     <td>{entry.time}</td>
                     <td>{entry.doctor}</td>
+                    <td>{entry.reason}</td>
                     <td
                       className={
                         entry.status === "confirmed"
@@ -181,4 +195,4 @@ const StaffAddmision = () => {
   );
 };
 
-export default StaffAddmision;
+export default StaffAdmission;
