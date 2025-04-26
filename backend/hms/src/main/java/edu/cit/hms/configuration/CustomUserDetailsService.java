@@ -1,5 +1,5 @@
 // filepath: c:\Users\L14X18W03\Documents\IT342-HMS\backend\hms\src\main\java\edu\cit\hms\security\CustomUserDetailsService.java
-package edu.cit.hms.security;
+package edu.cit.hms.configuration;
 
 import edu.cit.hms.entity.UserEntity;
 import edu.cit.hms.repository.UserRepository;
