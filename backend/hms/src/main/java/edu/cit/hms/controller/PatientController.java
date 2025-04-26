@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
     @ApiResponse(responseCode = "500", description = "Internal server error")
 })
 @RestController
-@RequestMapping(value = "/api/patient", produces = "application/json", consumes = "application/json")
+@RequestMapping(value = "/api/patient", produces = "application/json")
 @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'STAFF')")
 public class PatientController {
     @Autowired
@@ -42,7 +42,7 @@ public class PatientController {
 
     // Creates a new patient
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping(value = "/")
+    @PostMapping(value = "/", consumes = "application/json")
     @ApiResponse(responseCode = "201", description = "Successfully created patient")
     public ResponseEntity<PatientEntity> createPatient(@RequestBody PatientDTO patient) {
         return ResponseEntity.status(201).body(patientService.createPatient(patient));
@@ -50,7 +50,7 @@ public class PatientController {
 
     // Updates patient details by ID
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping(value = "/{patientId}")
+    @PutMapping(value = "/{patientId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated patient")
     public ResponseEntity<PatientEntity> updatePatient(@PathVariable int patientId, @RequestBody PatientEntity patient) {
         return ResponseEntity.ok(patientService.updatePatient(patientId, patient));

@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 })
 @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')") // Class-level restriction
 @RestController
-@RequestMapping(value = "/api/department", consumes = "application/json", produces = "application/json")
+@RequestMapping(value = "/api/department", produces = "application/json")
 public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
@@ -41,7 +41,7 @@ public class DepartmentController {
 
     // Creates a new department
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can create departments
-    @PostMapping(value = "/")
+    @PostMapping(value = "/", consumes = "application/json")
     @ApiResponse(responseCode = "201", description = "Successfully created department")
     public ResponseEntity<DepartmentEntity> createDepartment(@RequestBody DepartmentEntity department) {
         return ResponseEntity.status(201).body(departmentService.createDepartment(department));
@@ -49,7 +49,7 @@ public class DepartmentController {
 
     // Updates department details by ID
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can update departments
-    @PutMapping(value = "/{deptId}")
+    @PutMapping(value = "/{deptId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated department")
     public ResponseEntity<DepartmentEntity> updateDepartment(@PathVariable int deptId, @RequestBody DepartmentEntity department) {
         return ResponseEntity.ok(departmentService.updateDepartment(deptId, department));

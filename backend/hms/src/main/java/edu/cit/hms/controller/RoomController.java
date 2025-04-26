@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
     @ApiResponse(responseCode = "500", description = "Internal server error")
 })
 @RestController
-@RequestMapping(value = "/api/room", produces = "application/json", consumes = "application/json")
+@RequestMapping(value = "/api/room", produces = "application/json")
 @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
 public class RoomController {
     @Autowired
@@ -42,7 +42,7 @@ public class RoomController {
 
     // Creates a new room
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping(value = "/")
+    @PostMapping(value = "/", consumes = "application/json")
     @ApiResponse(responseCode = "201", description = "Successfully created room")
     public ResponseEntity<RoomEntity> createRoom(@RequestBody RoomDTO room) {
         return ResponseEntity.ok(roomService.createRoom(room));
@@ -50,7 +50,7 @@ public class RoomController {
 
     // Updates room details by ID
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping(value = "/{roomId}")
+    @PutMapping(value = "/{roomId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated room")
     public ResponseEntity<RoomEntity> updateRoom(@PathVariable int roomId, @RequestBody RoomDTO room) {
         return ResponseEntity.ok(roomService.updateRoom(roomId, room));

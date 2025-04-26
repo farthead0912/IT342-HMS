@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
     @ApiResponse(responseCode = "500", description = "Internal server error")
 })
 @RestController
-@RequestMapping(value = "/api/patient_record", produces = "application/json", consumes = "application/json")
+@RequestMapping(value = "/api/patient_record", produces = "application/json")
 @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'STAFF')") // Class-level restriction
 public class PatientRecordController {
     @Autowired
@@ -42,7 +42,7 @@ public class PatientRecordController {
 
     // Creates a new patient record
     @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')") // ADMINs and DOCTORs can create patient records
-    @PostMapping(value = "/")
+    @PostMapping(value = "/", consumes = "application/json")
     @ApiResponse(responseCode = "201", description = "Successfully created patient record")
     public ResponseEntity<PatientRecordEntity> createPatientRecord(@RequestBody PatientRecordDTO patientRecord) {
         return ResponseEntity.status(201).body(patientRecordService.createPatientRecord(patientRecord));
@@ -50,7 +50,7 @@ public class PatientRecordController {
 
     // Updates patient record details by ID
     @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')") // ADMINs and DOCTORs can update patient records
-    @PutMapping(value = "/{patientRecordId}")
+    @PutMapping(value = "/{patientRecordId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated patient record")
     public ResponseEntity<PatientRecordEntity> updatePatientRecord(@PathVariable int patientRecordId, @RequestBody PatientRecordEntity patientRecord) {
         return ResponseEntity.ok(patientRecordService.updatePatientRecord(patientRecordId, patientRecord));

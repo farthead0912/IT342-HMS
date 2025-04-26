@@ -20,7 +20,7 @@ import java.util.List;
 })
 @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')") // Class-level restriction
 @RestController
-@RequestMapping(value = "/api/patient-equipment", consumes = "application/json", produces = "application/json")
+@RequestMapping(value = "/api/patient-equipment", consumes = "application/json")
 public class PatientEquipmentController {
 
     @Autowired
@@ -45,7 +45,7 @@ public class PatientEquipmentController {
         return ResponseEntity.ok(patientEquipmentService.getAllPatientEquipments());
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}", consumes = "application/json")
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can update
     @ApiResponse(responseCode = "200", description = "Successfully updated PatientEquipment")
     public ResponseEntity<PatientEquipment> updatePatientEquipment(@PathVariable int id, @RequestBody PatientEquipment patientEquipment) {

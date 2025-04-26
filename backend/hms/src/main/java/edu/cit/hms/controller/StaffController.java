@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 })
 @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
 @RestController
-@RequestMapping(value = "/api/staff", produces = "application/json", consumes = "application/json")
+@RequestMapping(value = "/api/staff", produces = "application/json")
 public class StaffController {
     @Autowired
     private StaffService staffService;
@@ -48,7 +48,7 @@ public class StaffController {
 
     // Creates a new staff
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping(value = "/")
+    @PostMapping(value = "/", consumes = "application/json")
     @ApiResponse(responseCode = "201", description = "Successfully created staff")
     public ResponseEntity<StaffEntity> createStaff(@RequestBody StaffDTO staff) {
         return ResponseEntity.status(201).body(staffService.createStaff(staff));
@@ -56,7 +56,7 @@ public class StaffController {
 
     // Updates staff details by ID
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping(value = "/{staffId}")
+    @PutMapping(value = "/{staffId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated staff")
     public ResponseEntity<StaffEntity> updateStaff(@PathVariable int staffId, @RequestBody StaffDTO staff) {
         return ResponseEntity.ok(staffService.updateStaff(staffId, staff));

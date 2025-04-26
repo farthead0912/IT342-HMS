@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
     @ApiResponse(responseCode = "500", description = "Internal server error")
 })
 @RestController
-@RequestMapping(value = "/api/user", produces = "application/json", consumes = "application/json")
+@RequestMapping(value = "/api/user", produces = "application/json")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     // Updates user details by ID
-    @PutMapping(value = "/{userId}")
+    @PutMapping(value = "/{userId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated user")
     public UserEntity updateUser(@PathVariable int userId, @RequestBody UserDTO user) {
         return userService.updateUser(userId, user);

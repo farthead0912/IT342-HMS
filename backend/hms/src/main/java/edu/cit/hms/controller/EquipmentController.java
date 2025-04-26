@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
     @ApiResponse(responseCode = "500", description = "Internal server error")
 })
 @RestController
-@RequestMapping(value = "/api/equipment", produces = "application/json", consumes = "application/json")
+@RequestMapping(value = "/api/equipment", produces = "application/json")
 @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')") // Class-level restriction
 public class EquipmentController {
     @Autowired
@@ -49,7 +49,7 @@ public class EquipmentController {
 
     // Updates equipment details by ID
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can update equipment
-    @PutMapping(value = "/{equipmentId}")
+    @PutMapping(value = "/{equipmentId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated equipment")
     public ResponseEntity<EquipmentEntity> updateEquipment(@PathVariable int equipmentId, @RequestBody EquipmentEntity equipment) {
         return ResponseEntity.ok(equipmentService.updateEquipment(equipmentId, equipment));

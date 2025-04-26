@@ -34,7 +34,7 @@ public class RoomEntity {
     @JoinColumn(name = "staffId", nullable = true)
     private StaffEntity staff;
 
-    @OneToMany(mappedBy = "admissions", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private List<AdmissionEntity> admissions;
 
     // Getters and Setters

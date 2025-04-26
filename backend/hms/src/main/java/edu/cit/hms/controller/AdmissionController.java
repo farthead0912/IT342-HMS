@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
     @ApiResponse(responseCode = "500", description = "Internal server error")
 })
 @RestController
-@RequestMapping(value = "/api/admission", produces = "application/json", consumes = "application/json")
+@RequestMapping(value = "/api/admission", produces = "application/json")
 @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')") // Class-level restriction
 public class AdmissionController {
     @Autowired
@@ -42,7 +42,7 @@ public class AdmissionController {
     }
 
     // Creates new admission
-    @PostMapping(value = "/")
+    @PostMapping(value = "/", consumes = "application/json")
     @ApiResponse(responseCode = "201", description = "Successfully created admission")
     public ResponseEntity<AdmissionEntity> createAdmission(@RequestBody AdmissionEntity admission) {
         AdmissionEntity createdAdmission = admissionService.createAdmission(admission); // Ensure this returns AdmissionEntity
@@ -50,7 +50,7 @@ public class AdmissionController {
     }
 
     // Updates admission details by ID
-    @PutMapping(value = "/{admissionId}")
+    @PutMapping(value = "/{admissionId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated admission")
     public ResponseEntity<AdmissionEntity> updateAdmission(@PathVariable int admissionId, @RequestBody AdmissionEntity admission) {
         AdmissionEntity updatedAdmission = admissionService.updateAdmission(admissionId, admission); // Ensure this returns AdmissionEntity

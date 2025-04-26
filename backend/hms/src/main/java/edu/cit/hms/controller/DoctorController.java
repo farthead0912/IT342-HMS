@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
     @ApiResponse(responseCode = "500", description = "Internal server error")
 })
 @RestController
-@RequestMapping(value = "/api/doctor", produces = "application/json", consumes = "application/json")
+@RequestMapping(value = "/api/doctor", produces = "application/json")
 @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')") // Class-level restriction
 public class DoctorController {
     @Autowired
@@ -40,14 +40,14 @@ public class DoctorController {
     }
 
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can create doctors
-    @PostMapping(value = "/")
+    @PostMapping(value = "/", consumes = "application/json")
     @ApiResponse(responseCode = "201", description = "Successfully created doctor")
     public ResponseEntity<DoctorEntity> createDoctor(@RequestBody DoctorEntity doctor) {
         return ResponseEntity.status(201).body(doctorService.createDoctor(doctor));
     }
 
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can update doctors
-    @PutMapping(value = "/{doctorId}")
+    @PutMapping(value = "/{doctorId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated doctor")
     public ResponseEntity<DoctorEntity> updateDoctor(@PathVariable int doctorId, @RequestBody DoctorEntity doctor) {
         return ResponseEntity.ok(doctorService.updateDoctor(doctorId, doctor));

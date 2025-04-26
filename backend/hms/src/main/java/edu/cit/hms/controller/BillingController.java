@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
     @ApiResponse(responseCode = "500", description = "Internal server error")
 })
 @RestController
-@RequestMapping(value = "/api/billing", produces = "application/json", consumes = "application/json")
+@RequestMapping(value = "/api/billing", produces = "application/json")
 @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')") // Class-level restriction
 public class BillingController {
     @Autowired
@@ -39,14 +39,14 @@ public class BillingController {
     }
 
     // Adds new billing record
-    @PostMapping(value = "/")
+    @PostMapping(value = "/", consumes = "application/json")
     @ApiResponse(responseCode = "201", description = "Successfully created billing record")
     public ResponseEntity<BillingEntity> createBilling(@RequestBody BillingEntity newBilling) {
         return ResponseEntity.status(201).body(billingService.createBilling(newBilling));
     }
 
     // Updates billing record details by ID
-    @PutMapping(value = "/{billingId}")
+    @PutMapping(value = "/{billingId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated billing record")
     public ResponseEntity<BillingEntity> updateBilling(@PathVariable int billingId, @RequestBody BillingEntity billing) {
         return ResponseEntity.ok(billingService.updateBilling(billingId, billing));

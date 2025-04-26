@@ -1,8 +1,13 @@
 package edu.cit.hms.configuration;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +33,9 @@ public class AuthenticationController {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @ApiResponse(responseCode = "201", description = "Successfully registered patient")
     @PostMapping(value = "/register", produces = "application/json", consumes = "application/json")
@@ -95,14 +103,26 @@ public class AuthenticationController {
     @ApiResponse(responseCode = "200", description = "Successfully logged in")
     @PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
-        UserDTO user = userService.getUserByUsername(loginDTO.getUsername());
+        try {
+            // Authenticate the user
+            authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword())
+            );
 
-        if(user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
+            // Generate JWT token
+            UserDTO user = userService.getUserByUsername(loginDTO.getUsername());
             String token = jwtUtil.generateToken(user.getUsername(), user.getRole().toString(), user.getUserId());
 
             return ResponseEntity.ok(new JwtResponse(token));
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password.");
+        } catch (BadCredentialsException e) {
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Invalid username or password."));
+        }
+        catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Login failed, server error most likely."));
         }
     }
 }

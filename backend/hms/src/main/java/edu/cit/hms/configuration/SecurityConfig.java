@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -36,9 +37,8 @@ public class SecurityConfig {
                         // Allow all other requests (e.g., public endpoints)
                         .anyRequest().permitAll()
                 )
-                .formLogin(form -> form.defaultSuccessUrl("/dashboard", true)) // Redirect after login
-                .logout(logout -> logout.logoutSuccessUrl("/")) // Redirect after logout
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for simplicity (not recommended for production)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless session management
                 .build();
     }
 
