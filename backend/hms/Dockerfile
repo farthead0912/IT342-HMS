@@ -1,14 +1,20 @@
-# Use OpenJDK 17 base image
+# === Stage 1: Build the app ===
+FROM maven:3.9.4-eclipse-temurin-17 AS builder
+
+WORKDIR /build
+
+COPY . .
+
+RUN mvn clean package -DskipTests
+
+# === Stage 2: Run the app ===
 FROM openjdk:17-jdk-slim
 
-# Set working directory
 WORKDIR /app
 
-# Copy the exact jar file
-COPY target/hms-0.0.1-SNAPSHOT.jar app.jar
+# Copy built jar from stage 1
+COPY --from=builder /build/target/hms-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose port 8080 (Spring Boot default)
 EXPOSE 8080
 
-# Start the application
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
