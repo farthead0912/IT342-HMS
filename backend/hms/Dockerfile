@@ -4,11 +4,11 @@ FROM openjdk:17-jdk-slim
 # Set working directory
 WORKDIR /app
 
-# Copy the Maven build output JAR file into the container
-COPY target/*.jar app.jar
+# Copy the exact jar file
+COPY target/hms-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose port 8080 (Spring Boot default)
 EXPOSE 8080
 
 # Start the application
-ENTRYPOINT ["java","-jar","/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
