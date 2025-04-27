@@ -2,7 +2,6 @@
 
 package Staff
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -20,9 +19,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun StaffRoomScreen(navController: NavController? = null) {
+fun StaffBillingScreen(navController: NavController? = null) {
     val primaryColor = Color(0xFF1976D2)
     val backgroundColor = Color(0xFFF9F9F9)
 
@@ -30,7 +30,7 @@ fun StaffRoomScreen(navController: NavController? = null) {
         containerColor = backgroundColor,
         topBar = {
             TopAppBar(
-                title = { Text("Room Overview") },
+                title = { Text("Billing Overview") },
                 navigationIcon = {
                     IconButton(onClick = { navController?.popBackStack() }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
@@ -47,42 +47,46 @@ fun StaffRoomScreen(navController: NavController? = null) {
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp)
         ) {
-            Text("Available Rooms", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+            Text("Pending Bills", fontWeight = FontWeight.Bold, fontSize = 18.sp)
             Spacer(modifier = Modifier.height(8.dp))
 
-            RoomCard(
-                roomNumber = "101",
-                service = "General Ward",
-                availability = "Available",
-                occupancy = "2/4",
-                statusColor = Color(0xFFC8E6C9)
-            )
-
-            RoomCard(
-                roomNumber = "102",
-                service = "ICU",
-                availability = "Not Available",
-                occupancy = "4/4",
+            BillingCard(
+                name = "John Doe",
+                service = "MRI Scan",
+                amount = "$1,200",
+                dueDate = "20 Apr 2025",
+                status = "Unpaid",
                 statusColor = Color(0xFFFFCDD2)
             )
 
-            RoomCard(
-                roomNumber = "103",
-                service = "Surgical Ward",
-                availability = "Available",
-                occupancy = "1/3",
+            BillingCard(
+                name = "Jane Smith",
+                service = "Blood Test",
+                amount = "$250",
+                dueDate = "18 Apr 2025",
+                status = "Partially Paid",
                 statusColor = Color(0xFFFFF9C4)
             )
 
+            BillingCard(
+                name = "Ali Rahman",
+                service = "Surgery Charges",
+                amount = "$5,600",
+                dueDate = "25 Apr 2025",
+                status = "Paid",
+                statusColor = Color(0xFFC8E6C9)
+            )
+
             Spacer(modifier = Modifier.height(24.dp))
-            Text("Room Requests", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+            Text("Insurance Claims", fontWeight = FontWeight.Bold, fontSize = 18.sp)
             Spacer(modifier = Modifier.height(8.dp))
 
-            RoomCard(
-                roomNumber = "104",
-                service = "Private Room",
-                availability = "Pending Request",
-                occupancy = "1/1",
+            BillingCard(
+                name = "Farah Khan",
+                service = "ICU Stay",
+                amount = "$3,400",
+                dueDate = "Pending Approval",
+                status = "Under Insurance Review",
                 statusColor = Color(0xFFBBDEFB)
             )
         }
@@ -90,11 +94,12 @@ fun StaffRoomScreen(navController: NavController? = null) {
 }
 
 @Composable
-fun RoomCard(
-    roomNumber: String,
+fun BillingCard(
+    name: String,
     service: String,
-    availability: String,
-    occupancy: String,
+    amount: String,
+    dueDate: String,
+    status: String,
     statusColor: Color
 ) {
     Card(
@@ -107,10 +112,10 @@ fun RoomCard(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Default.Home, contentDescription = null, tint = Color(0xFF1976D2))
+                Icon(Icons.Default.Person, contentDescription = null, tint = Color(0xFF1976D2))
                 Spacer(modifier = Modifier.width(8.dp))
                 Column {
-                    Text("Room #$roomNumber", fontWeight = FontWeight.Bold)
+                    Text(name, fontWeight = FontWeight.Bold)
                     Text(service, color = Color.Gray, fontSize = 12.sp)
                 }
                 Spacer(modifier = Modifier.weight(1f))
@@ -119,7 +124,7 @@ fun RoomCard(
                         .background(statusColor, shape = RoundedCornerShape(8.dp))
                         .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
-                    Text(availability, fontSize = 12.sp)
+                    Text(status, fontSize = 12.sp)
                 }
             }
 
@@ -130,27 +135,33 @@ fun RoomCard(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Default.Group, contentDescription = null, tint = Color.Gray)
+                    Icon(Icons.Default.AttachMoney, contentDescription = null, tint = Color.Gray)
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("Occupancy: $occupancy")
+                    Text(amount)
                 }
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Default.DateRange, contentDescription = null, tint = Color.Gray)
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("Request Status: $availability")
+                    Text(dueDate)
                 }
             }
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
-                if (availability == "Available") {
-                    Button(onClick = { /* TODO: Implement booking or room request logic */ }) {
-                        Text("Request Room")
+                if (status != "Paid") {
+                    Button(onClick = { /* TODO: Implement payment logic */ }) {
+                        Text("Mark as Paid")
                     }
                 }
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewStaffBillingScreen() {
+    StaffBillingScreen()
 }
