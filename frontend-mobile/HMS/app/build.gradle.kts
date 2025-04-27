@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.hms"
+    namespace = "com.example.frontendmobile"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.hms"
+        applicationId = "com.example.frontendmobile"
         minSdk = 27
         targetSdk = 35
         versionCode = 1
@@ -40,7 +40,13 @@ android {
 }
 
 dependencies {
-
+    implementation("androidx.compose.material3:material3:1.1.2")
+    implementation("androidx.compose.material:material:1.3.1")
+    implementation("androidx.compose.ui:ui:1.3.0")
+    implementation("androidx.compose.animation:animation:1.3.0")
+    implementation("androidx.compose.material3:material3:1.1.0")
+    implementation("androidx.compose.material:material-icons-extended:1.0.1")
+    implementation("androidx.navigation:navigation-compose:2.5.3")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -56,4 +62,6 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+
 }

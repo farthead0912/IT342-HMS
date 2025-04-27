@@ -1,5 +1,13 @@
 package com.example.hms
 
+
+import Staff.StaffBillingScreen
+import Staff.StaffHomeScreen
+import Staff.StaffInventoryScreen
+import Staff.StaffMessageScreen
+import Staff.StaffProfileScreen
+import Staff.StaffRoomScreen
+import Staff.StaffScheduleScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -7,41 +15,49 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.hms.ui.theme.HMSTheme
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.frontendmobile.ui.theme.FrontendTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            HMSTheme {
+            FrontendTheme {
+                val navController = rememberNavController()
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    NavHost(
+                        navController = navController,
+                        startDestination = "login", // Set Login screen as the start screen
                         modifier = Modifier.padding(innerPadding)
-                    )
+                    ) {
+                        composable("login") { LoginScreen(navController) }
+                        composable("signup") { SignupScreen(navController)}
+                        composable("StaffHomeScreen") { StaffHomeScreen(navController)}
+                        composable("StaffScheduleScreen") { StaffScheduleScreen(navController)}
+                        composable("StaffProfileScreen") { StaffProfileScreen(navController) }
+                        composable("StaffMessageScreen") { StaffMessageScreen(navController)}
+                        composable("StaffBillingScreen") { StaffBillingScreen(navController) }
+                        composable("StaffRoomScreen") { StaffRoomScreen(navController)}
+                        composable("StaffInventoryScreen") { StaffInventoryScreen(navController)}
+
+                    }
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    HMSTheme {
-        Greeting("Android")
+fun MainActivityPreview() {
+    FrontendTheme {
+        // Preview the MainActivity
     }
 }
