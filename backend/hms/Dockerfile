@@ -5,7 +5,7 @@ WORKDIR /build
 
 COPY . .
 
-RUN mvn clean package -DskipTests
+RUN mvn clean package -DskipTests -Dspring.main.web-application-type=none
 
 # === Stage 2: Run the app ===
 FROM openjdk:17-jdk-slim
