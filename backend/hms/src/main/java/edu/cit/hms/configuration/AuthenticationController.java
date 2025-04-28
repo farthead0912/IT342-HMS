@@ -104,6 +104,8 @@ public class AuthenticationController {
     @PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
         try {
+                UserDTO user = userService.getUserByUsername(loginDTO.getUsername());
+
                 if(user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
                     // Authenticate the user
                     authenticationManager.authenticate(
@@ -111,7 +113,6 @@ public class AuthenticationController {
                 );
 
                 // Generate JWT token
-                UserDTO user = userService.getUserByUsername(loginDTO.getUsername());
                 String token = jwtUtil.generateToken(user.getUsername(), user.getRole().toString(), user.getUserId());
 
                 return ResponseEntity.ok(new JwtResponse(token));
