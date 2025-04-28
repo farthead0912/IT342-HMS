@@ -1,6 +1,8 @@
 package edu.cit.hms.dto;
 
 import edu.cit.hms.enums.Roles;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 public class UserDTO {
     private int userId;
