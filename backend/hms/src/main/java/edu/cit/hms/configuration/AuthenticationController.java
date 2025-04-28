@@ -116,6 +116,11 @@ public class AuthenticationController {
                 String token = jwtUtil.generateToken(user.getUsername(), user.getRole().toString(), user.getUserId());
 
                 return ResponseEntity.ok(new JwtResponse(token));
+            } else {
+                // Return 401 if authentication fails
+                return ResponseEntity
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("error", "Invalid username or password."));
             }
         } catch (BadCredentialsException e) {
             return ResponseEntity
