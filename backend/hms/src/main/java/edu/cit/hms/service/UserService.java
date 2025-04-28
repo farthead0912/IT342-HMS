@@ -130,7 +130,7 @@ public class UserService {
     private UserEntity convertFromDTO(UserDTO userDTO) {
         UserEntity user = new UserEntity();
         user.setUsername(userDTO.getUsername());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.setPassword(userDTO.getPassword());
         user.setRole(userDTO.getRole());
         user.setEmail(userDTO.getEmail());
 
@@ -141,7 +141,7 @@ public class UserService {
         UserDTO userDTO = new UserDTO();
 
         userDTO.setUsername(user.getUsername());
-        userDTO.setPassword(passwordEncoder.encode(user.getPassword()));
+        userDTO.setPassword(user.getPassword());
         userDTO.setRole(user.getRole());
         userDTO.setEmail(user.getEmail());
 
