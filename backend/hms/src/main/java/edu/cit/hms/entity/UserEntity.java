@@ -16,12 +16,7 @@ public class UserEntity {
     @NotBlank(message = "Username is required!")
     private String username;
 
-    @Column(nullable = false, length = 18)
-    @NotBlank(message = "Password is required.")
-    @Pattern(
-        regexp = "^[a-zA-Z0-9!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~]{8,18}$",
-        message = "Password must be 8-18 characters long and can include letters, numbers, and special characters."
-    )
+    @Column(nullable = false, length = 60)
     private String password;
 
     @Enumerated(EnumType.STRING)
