@@ -2,6 +2,7 @@ package edu.cit.hms.entity;
 
 import edu.cit.hms.enums.Roles;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")
