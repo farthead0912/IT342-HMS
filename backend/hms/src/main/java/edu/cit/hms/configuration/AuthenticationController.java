@@ -104,7 +104,7 @@ public class AuthenticationController {
     @PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
         try {
-                if(user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword()) {
+                if(user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
                     // Authenticate the user
                     authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword())
