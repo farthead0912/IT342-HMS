@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 import edu.cit.hms.dto.LoginDTO;
 import edu.cit.hms.dto.UserDTO;
+import edu.cit.hms.entity.UserEntity;
 import edu.cit.hms.service.UserService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ApiResponses(value = {
     @ApiResponse(responseCode = "400", description = "Bad request"),
@@ -25,6 +28,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {
+    private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
+
     @Autowired
     private UserService userService;
 
@@ -104,32 +109,31 @@ public class AuthenticationController {
     @PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
         try {
-                UserDTO user = userService.getUserByUsername(loginDTO.getUsername());
+            log.debug("Attempting to authenticate user: {}", loginDTO.getUsername());
+            UserEntity user = userService.getUserByUsername(loginDTO.getUsername());
 
-                if(user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-                    // Authenticate the user
-                    authenticationManager.authenticate(
+            if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
+                authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword())
                 );
 
-                // Generate JWT token
                 String token = jwtUtil.generateToken(user.getUsername(), user.getRole().toString(), user.getUserId());
-
                 return ResponseEntity.ok(new JwtResponse(token));
             } else {
-                // Return 401 if authentication fails
+                log.warn("Authentication failed for user: {}", loginDTO.getUsername());
                 return ResponseEntity
                         .status(HttpStatus.UNAUTHORIZED)
                         .body(Map.of("error", "Invalid username or password."));
             }
         } catch (BadCredentialsException e) {
+            log.error("Bad credentials for user: {}", loginDTO.getUsername(), e);
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("error", "Invalid username or password."));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
+            log.error("Login failed for user: {}", loginDTO.getUsername(), e);
             return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Login failed, server error most likely."));
         }
     }

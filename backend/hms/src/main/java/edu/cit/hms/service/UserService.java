@@ -71,9 +71,8 @@ public class UserService {
             .orElseThrow(() -> new RuntimeException("Role: " + role + " not found!"));
     }
 
-    public UserDTO getUserByUsername(String username) {
+    public UserEntity getUserByUsername(String username) {
         return userRepository.findByUsername(username)
-            .map(this::convertToDTO)
             .orElseThrow(() -> new RuntimeException("Username: " + username + " not found!"));
     }
 
