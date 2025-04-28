@@ -104,16 +104,18 @@ public class AuthenticationController {
     @PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
         try {
-            // Authenticate the user
-            authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword())
-            );
+                if(user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword()) {
+                    // Authenticate the user
+                    authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword())
+                );
 
-            // Generate JWT token
-            UserDTO user = userService.getUserByUsername(loginDTO.getUsername());
-            String token = jwtUtil.generateToken(user.getUsername(), user.getRole().toString(), user.getUserId());
+                // Generate JWT token
+                UserDTO user = userService.getUserByUsername(loginDTO.getUsername());
+                String token = jwtUtil.generateToken(user.getUsername(), user.getRole().toString(), user.getUserId());
 
-            return ResponseEntity.ok(new JwtResponse(token));
+                return ResponseEntity.ok(new JwtResponse(token));
+            }
         } catch (BadCredentialsException e) {
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
