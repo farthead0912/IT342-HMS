@@ -23,14 +23,15 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // Login function
-  const login = (userData) => {
+  const login = async (username, password) => {
     try {
+      const userData = await loginUser(username, password);
       setUser(userData);
       localStorage.setItem("user", JSON.stringify(userData));
       setError(null);
     } catch (e) {
       console.error("Login error:", e);
-      setError("Login failed. Please try again.");
+      setError(e.message);
     }
   };
 
@@ -49,12 +50,11 @@ export const AuthProvider = ({ children }) => {
   // Register function (dummy)
   const register = async (userData) => {
     try {
-      console.log("Registering user:", userData);
-      // Replace with real registration API logic
-      return { success: true };
+      const response = await registerUser(userData);
+      return { success: true, data: response };
     } catch (e) {
       console.error("Registration failed:", e);
-      setError("Registration failed. Please try again.");
+      setError(e.message);
       return { success: false, error: e.message };
     }
   };

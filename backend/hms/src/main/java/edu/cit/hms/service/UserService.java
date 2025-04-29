@@ -129,8 +129,10 @@ public class UserService {
 
     private UserEntity convertFromDTO(UserDTO userDTO) {
         UserEntity user = new UserEntity();
+		
+		user.setUserId(userDTO.getUserId());
         user.setUsername(userDTO.getUsername());
-        user.setPassword(userDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setRole(userDTO.getRole());
         user.setEmail(userDTO.getEmail());
 
@@ -140,11 +142,12 @@ public class UserService {
     private UserDTO convertToDTO(UserEntity user) {
         UserDTO userDTO = new UserDTO();
 
+		userDTO.setUserId(user.getUserId());
         userDTO.setUsername(user.getUsername());
         userDTO.setPassword(user.getPassword());
         userDTO.setRole(user.getRole());
         userDTO.setEmail(user.getEmail());
 
-        return userDTO;
+        return userDTO; // Convert entity to DTO
     }
 }
