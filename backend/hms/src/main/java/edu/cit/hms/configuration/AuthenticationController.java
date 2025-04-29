@@ -46,9 +46,6 @@ public class AuthenticationController {
     @PostMapping(value = "/register", produces = "application/json", consumes = "application/json")
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
         try {
-            String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
-            userDTO.setPassword(encryptedPassword);
-
             userService.createUser(userDTO);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully.");
@@ -61,10 +58,6 @@ public class AuthenticationController {
     @PostMapping(value = "/admin/register", produces = "application/json", consumes = "application/json")
     public ResponseEntity<String> registerAdmin(@RequestBody UserDTO userDTO) {
         try {
-            // Encrypt the password before saving
-            String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
-            userDTO.setPassword(encryptedPassword);
-
             userService.createAdmin(userDTO);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Admin registered successfully.");
@@ -77,10 +70,6 @@ public class AuthenticationController {
     @PostMapping(value = "/doctor/register", produces = "application/json", consumes = "application/json")
     public ResponseEntity<String> registerDoctor(@RequestBody UserDTO userDTO) {
         try {
-            // Encrypt the password before saving
-            String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
-            userDTO.setPassword(encryptedPassword);
-
             userService.createDoctor(userDTO);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Doctor registered successfully.");
@@ -93,10 +82,6 @@ public class AuthenticationController {
     @PostMapping(value = "/staff/register", produces = "application/json", consumes = "application/json")
     public ResponseEntity<String> registerStaff(@RequestBody UserDTO userDTO) {
         try {
-            // Encrypt the password before saving
-            String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
-            userDTO.setPassword(encryptedPassword);
-
             userService.createStaff(userDTO);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Staff registered successfully.");
