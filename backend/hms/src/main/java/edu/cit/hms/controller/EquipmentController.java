@@ -19,21 +19,21 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
     @ApiResponse(responseCode = "500", description = "Internal server error")
 })
 @RestController
-@RequestMapping("/api/equipment")
+@RequestMapping(value = "/api/equipment", produces = "application/json")
 @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')") // Class-level restriction
 public class EquipmentController {
     @Autowired
     private EquipmentService equipmentService;
 
     // Gets all equipment
-    @GetMapping("/")
+    @GetMapping(value = "/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of equipment")
     public ResponseEntity<List<EquipmentEntity>> getEquipments() {
         return ResponseEntity.ok(equipmentService.getEquipments());
     }
 
     // Gets equipment by ID
-    @GetMapping("/{equipmentId}")
+    @GetMapping(value = "/{equipmentId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved equipment by ID")
     public ResponseEntity<EquipmentEntity> getEquipmentById(@PathVariable int equipmentId) {
         return ResponseEntity.ok(equipmentService.getEquipmentById(equipmentId));
@@ -41,7 +41,7 @@ public class EquipmentController {
 
     // Creates a new equipment
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can create equipment
-    @PostMapping("/")
+    @PostMapping(value = "/")
     @ApiResponse(responseCode = "201", description = "Successfully created equipment")
     public ResponseEntity<EquipmentEntity> createEquipment(@RequestBody EquipmentEntity equipment) {
         return ResponseEntity.status(201).body(equipmentService.createEquipment(equipment));
@@ -49,7 +49,7 @@ public class EquipmentController {
 
     // Updates equipment details by ID
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can update equipment
-    @PutMapping("/{equipmentId}")
+    @PutMapping(value = "/{equipmentId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated equipment")
     public ResponseEntity<EquipmentEntity> updateEquipment(@PathVariable int equipmentId, @RequestBody EquipmentEntity equipment) {
         return ResponseEntity.ok(equipmentService.updateEquipment(equipmentId, equipment));
@@ -57,7 +57,7 @@ public class EquipmentController {
 
     // Deletes equipment by ID
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can delete equipment
-    @DeleteMapping("/{equipmentId}")
+    @DeleteMapping(value = "/{equipmentId}")
     @ApiResponse(responseCode = "200", description = "Successfully deleted equipment")
     public ResponseEntity<String> deleteEquipment(@PathVariable int equipmentId) {
         return ResponseEntity.ok(equipmentService.deleteEquipment(equipmentId));

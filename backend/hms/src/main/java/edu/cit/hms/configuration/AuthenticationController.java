@@ -1,10 +1,23 @@
+/*AuthenticationContoller.java */
+
 package edu.cit.hms.configuration;
 
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import edu.cit.hms.dto.LoginDTO;
 import edu.cit.hms.dto.UserDTO;
@@ -21,6 +34,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {
+    private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
+
     @Autowired
     private UserService userService;
 
@@ -30,13 +45,13 @@ public class AuthenticationController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     @ApiResponse(responseCode = "201", description = "Successfully registered patient")
     @PostMapping(value = "/register", produces = "application/json", consumes = "application/json")
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
         try {
-            String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
-            userDTO.setPassword(encryptedPassword);
-
             userService.createUser(userDTO);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully.");
@@ -49,10 +64,6 @@ public class AuthenticationController {
     @PostMapping(value = "/admin/register", produces = "application/json", consumes = "application/json")
     public ResponseEntity<String> registerAdmin(@RequestBody UserDTO userDTO) {
         try {
-            // Encrypt the password before saving
-            String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
-            userDTO.setPassword(encryptedPassword);
-
             userService.createAdmin(userDTO);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Admin registered successfully.");
@@ -65,10 +76,6 @@ public class AuthenticationController {
     @PostMapping(value = "/doctor/register", produces = "application/json", consumes = "application/json")
     public ResponseEntity<String> registerDoctor(@RequestBody UserDTO userDTO) {
         try {
-            // Encrypt the password before saving
-            String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
-            userDTO.setPassword(encryptedPassword);
-
             userService.createDoctor(userDTO);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Doctor registered successfully.");
@@ -81,10 +88,6 @@ public class AuthenticationController {
     @PostMapping(value = "/staff/register", produces = "application/json", consumes = "application/json")
     public ResponseEntity<String> registerStaff(@RequestBody UserDTO userDTO) {
         try {
-            // Encrypt the password before saving
-            String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
-            userDTO.setPassword(encryptedPassword);
-
             userService.createStaff(userDTO);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Staff registered successfully.");
@@ -96,14 +99,33 @@ public class AuthenticationController {
     @ApiResponse(responseCode = "200", description = "Successfully logged in")
     @PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
-        UserEntity user = userService.getUserByUsername(loginDTO.getUsername());
+        try {
+            log.debug("Attempting to authenticate user: {}", loginDTO.getUsername());
+            UserEntity user = userService.getUserByUsername(loginDTO.getUsername());
 
-        if(user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-            String token = jwtUtil.generateToken(user.getUsername(), user.getRole().toString(), user.getUserId());
+            if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
+                authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword())
+                );
 
-            return ResponseEntity.ok(new JwtResponse(token));
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password.");
+                String token = jwtUtil.generateToken(user.getUsername(), user.getRole().toString(), user.getUserId());
+                return ResponseEntity.ok(new JwtResponse(token));
+            } else {
+                log.warn("Authentication failed for user: {}", loginDTO.getUsername());
+                return ResponseEntity
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("error", "Invalid username or password."));
+            }
+        } catch (BadCredentialsException e) {
+            log.error("Bad credentials for user: {}", loginDTO.getUsername(), e);
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Invalid username or password."));
+        } catch (Exception e) {
+            log.error("Login failed for user: {}", loginDTO.getUsername(), e);
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Login failed, server error most likely."));
         }
     }
 }

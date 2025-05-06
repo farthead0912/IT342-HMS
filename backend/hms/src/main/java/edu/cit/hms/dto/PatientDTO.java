@@ -1,5 +1,7 @@
 package edu.cit.hms.dto;
 
+import java.util.List;
+
 public class PatientDTO {
     private int patientId;
     private String firstName;
@@ -9,6 +11,27 @@ public class PatientDTO {
     private String bloodType;
     private int roomId;
     private int userId;
+    private List<Integer> patientRecordIds;
+    private List<Integer> admissionIds;
+    private List<Integer> assignedEquipmentIds;
+
+    // Constructor
+    public PatientDTO(int patientId, String firstName, String lastName, int age, String gender, String bloodType, int roomId, int userId, List<Integer> patientRecordIds, List<Integer> admissionIds, List<Integer> assignedEquipmentIds) {
+        this.patientId = patientId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+        this.bloodType = bloodType;
+        this.roomId = roomId;
+        this.userId = userId;
+        this.patientRecordIds = patientRecordIds;
+        this.admissionIds = admissionIds;
+        this.assignedEquipmentIds = assignedEquipmentIds;
+    }
+
+    // Empty Constructor
+    public PatientDTO() {}
 
     // Getters and Setters
     public int getPatientId() {
@@ -73,5 +96,29 @@ public class PatientDTO {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public List<Integer> getPatientRecordIds() {
+        return patientRecordIds;
+    }
+
+    public void setPatientRecordIds(List<Integer> patientRecordIds) {
+        this.patientRecordIds = patientRecordIds;
+    }
+
+    public List<Integer> getAdmissionIds() {
+        return admissionIds;
+    }
+
+    public void setAdmissionIds(List<Integer> admissionIds) {
+        this.admissionIds = admissionIds;
+    }
+
+    public List<Integer> getAssignedEquipmentIds() {
+        return assignedEquipmentIds;
+    }
+
+    public void setAssignedEquipmentIds(List<Integer> assignedEquipmentIds) {
+        this.assignedEquipmentIds = assignedEquipmentIds;
     }
 }

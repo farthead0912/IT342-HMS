@@ -10,6 +10,19 @@ public class BillingDTO {
     private double amount;
     private Date issuedAt;
 
+    // Empty Constructor
+    public BillingDTO() {}
+
+    // Constructor
+    public BillingDTO(int billId, int patientId, int staffId, int roomId, double amount, Date issuedAt) {
+        this.billId = billId;
+        this.patientId = patientId;
+        this.staffId = staffId;
+        this.roomId = roomId;
+        this.amount = amount;
+        this.issuedAt = issuedAt;
+    }
+
     // Getters and Setters
     public int getBillId() {
         return billId;

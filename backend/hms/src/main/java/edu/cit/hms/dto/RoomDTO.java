@@ -1,14 +1,31 @@
 package edu.cit.hms.dto;
 
+import java.util.List;
+
 public class RoomDTO {
     private int roomId;
     private String roomType;
     private int roomNumber;
     private double roomPrice;
     private int floorNumber;
-    private boolean isOccupied;
+    private boolean isOccupied = false;
     private int patientId; // Assuming only IDs are needed for relations
     private int staffId;
+    private List<Integer> admissionIdList;
+
+    public RoomDTO() {}
+
+    public RoomDTO(int roomId, String roomType, int roomNumber, double roomPrice, int floorNumber, boolean isOccupied, int patientId, int staffId, List<Integer> admissionIdList) {
+        this.roomId = roomId;
+        this.roomType = roomType;
+        this.roomNumber = roomNumber;
+        this.roomPrice = roomPrice;
+        this.floorNumber = floorNumber;
+        this.isOccupied = isOccupied;
+        this.patientId = patientId;
+        this.staffId = staffId;
+        this.admissionIdList = admissionIdList;
+    }
 
     public int getRoomId() {
         return roomId;
@@ -72,5 +89,13 @@ public class RoomDTO {
 
     public void setStaffId(int staffId) {
         this.staffId = staffId;
+    }
+
+    public List<Integer> getAdmissionIdList() {
+        return admissionIdList;
+    }
+
+    public void setAdmissionIdList(List<Integer> admissionIdList) {
+        this.admissionIdList = admissionIdList;
     }
 }

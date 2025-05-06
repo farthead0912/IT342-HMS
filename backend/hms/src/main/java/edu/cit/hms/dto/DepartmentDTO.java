@@ -4,6 +4,15 @@ public class DepartmentDTO {
     private int deptId;
     private String deptName;
 
+    // Empty Constructor
+    public DepartmentDTO() {}
+
+    // Constructor
+    public DepartmentDTO(int deptId, String deptName) {
+        this.deptId = deptId;
+        this.deptName = deptName;
+    }
+
     // Getters and Setters
     public int getDeptId() {
         return deptId;

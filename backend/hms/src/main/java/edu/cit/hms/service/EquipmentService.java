@@ -6,13 +6,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.cit.hms.dto.EquipmentDTO;
 import edu.cit.hms.entity.EquipmentEntity;
+import edu.cit.hms.entity.RoomEntity;
 import edu.cit.hms.repository.EquipmentRepository;
+import edu.cit.hms.repository.RoomRepository;
 
 @Service
 public class EquipmentService {
     @Autowired
     private EquipmentRepository equipmentRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
 
     public EquipmentEntity createEquipment(EquipmentEntity equipment) {
         return equipmentRepository.save(equipment);
@@ -65,5 +71,36 @@ public class EquipmentService {
         } else {
             throw new RuntimeException("Equipment ID: " + equipmentId + " not found!");
         }
+    }
+
+    private EquipmentEntity convertFromDTO(EquipmentEntity equipmentDTO) {
+        EquipmentEntity equipment = new EquipmentEntity();
+
+        equipment.setEquipmentName(equipmentDTO.getEquipmentName());
+        equipment.setEquipmentType(equipmentDTO.getEquipmentType());
+        equipment.setStock(equipmentDTO.getStock());
+        equipment.setPrice(equipmentDTO.getPrice());
+        equipment.setStatus(equipmentDTO.getStatus());
+        equipment.setRoom(equipmentDTO.getRoom());
+        equipment.setDepartments(equipmentDTO.getDepartments());
+
+        return equipment;
+    }
+
+    private EquipmentDTO convertToDTO(EquipmentEntity equipment) {
+        EquipmentDTO equipmentDTO = new EquipmentDTO();
+        RoomEntity room = roomRepository.findById(equipment.getRoom().getRoomId())
+                .orElseThrow(() -> new RuntimeException("Room ID: " + equipment.getRoom() + " not found!"));
+        // Set<DepartmentEntity> departments = 
+
+        equipmentDTO.setEquipmentName(equipment.getEquipmentName());
+        equipmentDTO.setEquipmentType(equipment.getEquipmentType());
+        equipmentDTO.setStock(equipment.getStock());
+        equipmentDTO.setPrice(equipment.getPrice());
+        equipmentDTO.setStatus(equipment.getStatus());
+        equipmentDTO.setRoomId(room.getRoomId());
+        // equipmentDTO.setDepartments(equipment.getDepartments());
+
+        return equipmentDTO;
     }
 }

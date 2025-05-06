@@ -24,7 +24,7 @@ public class RoomEntity {
     private int floorNumber;
 
     @Column(nullable = false)
-    private boolean isOccupied;
+    private boolean isOccupied = false;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patientId", nullable = true)

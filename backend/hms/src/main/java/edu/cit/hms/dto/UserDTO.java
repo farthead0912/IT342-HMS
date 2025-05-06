@@ -1,13 +1,34 @@
+/*UserDTO.java */
+
 package edu.cit.hms.dto;
 
 import edu.cit.hms.enums.Roles;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 public class UserDTO {
     private int userId;
     private String username;
+
+    @NotBlank(message = "Password is required.")
+    @Pattern(
+        regexp = "^[a-zA-Z0-9!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~]{8,18}$",
+        message = "Password must be 8-18 characters long and can include letters, numbers, and special characters."
+    )
     private String password;
+
     private Roles role;
     private String email;
+
+    public UserDTO() {}
+
+    public UserDTO(int userId, String username, String password, Roles role, String email) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.email = email;
+    }
 
     public int getUserId() {
         return userId;

@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.cit.hms.dto.DepartmentDTO;
 import edu.cit.hms.entity.DepartmentEntity;
 import edu.cit.hms.repository.DepartmentRepository;
 
@@ -56,5 +57,21 @@ public class DepartmentService {
         } else {
             throw new RuntimeException("Department ID: " + deptId + " not found!");
         }
+    }
+
+    private DepartmentEntity convertFromDTO(DepartmentDTO departmentDTO) {
+        DepartmentEntity dept = new DepartmentEntity();
+
+        dept.setDeptId(departmentDTO.getDeptId());
+        dept.setDeptName(departmentDTO.getDeptName());
+
+        return dept;
+    }
+
+    private DepartmentDTO convertToDTO(DepartmentEntity department) {
+        return new DepartmentDTO(
+            department.getDeptId(),
+            department.getDeptName()
+        );
     }
 }

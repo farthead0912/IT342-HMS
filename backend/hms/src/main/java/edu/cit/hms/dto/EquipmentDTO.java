@@ -9,6 +9,20 @@ public class EquipmentDTO {
     private String status;
     private int roomId;
 
+    // Constructor
+    public EquipmentDTO(int equipmentId, String equipmentName, String equipmentType, int stock, double price, String status, int roomId) {
+        this.equipmentId = equipmentId;
+        this.equipmentName = equipmentName;
+        this.equipmentType = equipmentType;
+        this.stock = stock;
+        this.price = price;
+        this.status = status;
+        this.roomId = roomId;
+    }
+
+    // Empty Constructor
+    public EquipmentDTO() {}
+
     // Getters and Setters
     public int getEquipmentId() {
         return equipmentId;

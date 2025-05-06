@@ -8,6 +8,19 @@ public class DoctorDTO {
     private int departmentId;
     private int userId;
 
+    // Empty Constructor
+    public DoctorDTO() {}
+
+    // Constructor
+    public DoctorDTO(int doctorId, String firstName, String lastName, String specialization, int departmentId, int userId) {
+        this.doctorId = doctorId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.specialization = specialization;
+        this.departmentId = departmentId;
+        this.userId = userId;
+    }
+
     // Getters and Setters
     public int getDoctorId() {
         return doctorId;

@@ -139,4 +139,12 @@ public class PatientEntity {
     public void setAdmissions(List<AdmissionEntity> admissions) {
         this.admissions = admissions;
     }
+
+    public List<PatientEquipment> getAssignedEquipment() {
+        return assignedEquipment;
+    }
+
+    public void setAssignedEquipment(List<PatientEquipment> assignedEquipment) {
+        this.assignedEquipment = assignedEquipment;
+    }
 }

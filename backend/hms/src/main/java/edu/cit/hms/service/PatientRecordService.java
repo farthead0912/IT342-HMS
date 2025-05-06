@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.cit.hms.dto.PatientRecordDTO;
 import edu.cit.hms.entity.PatientRecordEntity;
 import edu.cit.hms.repository.PatientRecordRepository;
 
@@ -14,8 +15,10 @@ public class PatientRecordService {
     @Autowired
     private PatientRecordRepository patientRecordRepository;
 
-    public PatientRecordEntity createPatientRecord(PatientRecordEntity patientRecordEntity) {
-        return patientRecordRepository.save(patientRecordEntity);
+    public PatientRecordEntity createPatientRecord(PatientRecordDTO patientRecordDTO) {
+        PatientRecordEntity patientRecord = convertFromDTO(patientRecordDTO);
+
+        return patientRecordRepository.save(patientRecord);
     }
 
     public PatientRecordEntity getPatientRecordById(int patientRecordId) {
@@ -58,5 +61,27 @@ public class PatientRecordService {
         } else {
             throw new RuntimeException("Patient Record ID: " + patientRecordId + " not found!");
         }
+    }
+
+    private PatientRecordEntity convertFromDTO(PatientRecordDTO patientRecordDTO) {
+        PatientRecordEntity patientRecord = new PatientRecordEntity();
+        
+        patientRecord.setSickness(patientRecordDTO.getSickness());
+        patientRecord.setDiagnosisDate(patientRecordDTO.getDiagnosisDate());
+        patientRecord.setSeverity(patientRecordDTO.getSeverity());
+        patientRecord.setTreatmentPlan(patientRecordDTO.getTreatmentPlan());
+
+        return patientRecord;
+    }
+
+    private PatientRecordDTO convertToDTO(PatientRecordEntity patientRecord) {
+        return new PatientRecordDTO(
+                patientRecord.getRecordId(),
+                patientRecord.getPatient().getPatientId(),
+                patientRecord.getSickness(),
+                patientRecord.getDiagnosisDate(),
+                patientRecord.getSeverity(),
+                patientRecord.getTreatmentPlan()
+        );
     }
 }

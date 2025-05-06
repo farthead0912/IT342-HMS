@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://your-api-url.com",
+  baseURL: "https://it342-hms-medisync.onrender.com/",
   headers: {
     "Content-Type": "application/json",
   },
