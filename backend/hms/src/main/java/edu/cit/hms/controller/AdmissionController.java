@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 })
 @RestController
 @RequestMapping(value = "/api/admission", produces = "application/json")
-@PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')") // Class-level restriction
+@PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'PATIENT')") // Class-level restriction
 public class AdmissionController {
     @Autowired
     private AdmissionService admissionService;
@@ -39,6 +39,13 @@ public class AdmissionController {
     public ResponseEntity<AdmissionEntity> getAdmissionById(@PathVariable int admissionId) {
         AdmissionEntity admission = admissionService.getAdmissionById(admissionId); // Ensure this returns AdmissionEntity
         return ResponseEntity.ok(admission);
+    }
+
+    @GetMapping(value = "/patient/{patientId}")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved admissions by patient ID")
+    public ResponseEntity<List<AdmissionEntity>> getAdmissionsByPatientId(@PathVariable int patientId) {
+        List<AdmissionEntity> admissions = admissionService.getAdmissionsByPatientId(patientId); // Ensure this returns List<AdmissionEntity>
+        return ResponseEntity.ok(admissions);
     }
 
     // Creates new admission

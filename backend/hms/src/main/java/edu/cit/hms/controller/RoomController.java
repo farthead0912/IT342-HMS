@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 })
 @RestController
 @RequestMapping(value = "/api/room", produces = "application/json")
-@PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+@PreAuthorize("hasAnyRole('ADMIN', 'STAFF', 'PATIENT')")
 public class RoomController {
     @Autowired
     private RoomService roomService;

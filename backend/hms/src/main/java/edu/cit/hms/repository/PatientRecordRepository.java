@@ -17,4 +17,5 @@ public interface PatientRecordRepository extends JpaRepository<PatientRecordEnti
     public List<PatientRecordEntity> findBySeverity(String severity);
     public List<PatientRecordEntity> findByTreatmentPlan(String treatmentPlan);
     public List<PatientRecordEntity> findByDiagnosisDate(Date diagnosisDate);
+    public Optional<PatientRecordEntity> findByPatientId(int patientId);
 }

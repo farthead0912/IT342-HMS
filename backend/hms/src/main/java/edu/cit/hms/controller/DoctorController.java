@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 })
 @RestController
 @RequestMapping(value = "/api/doctor", produces = "application/json")
-@PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')") // Class-level restriction
+@PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'PATIENT')") // Class-level restriction
 public class DoctorController {
     @Autowired
     private DoctorService doctorService;
