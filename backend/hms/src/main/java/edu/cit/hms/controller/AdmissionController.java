@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import edu.cit.hms.dto.AdmissionDTO;
 import edu.cit.hms.entity.AdmissionEntity;
 import edu.cit.hms.service.AdmissionService;
 
@@ -28,39 +29,39 @@ public class AdmissionController {
     // Gets all admissions
     @GetMapping(value = "/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved admissions")
-    public ResponseEntity<List<AdmissionEntity>> getAdmissions() {
-        List<AdmissionEntity> admissions = admissionService.getAdmissions();
+    public ResponseEntity<List<AdmissionDTO>> getAdmissions() {
+        List<AdmissionDTO> admissions = admissionService.getAdmissions();
         return ResponseEntity.ok(admissions); // Wrap the list in ResponseEntity
     }
 
     // Gets admission by ID
     @GetMapping(value = "/{admissionId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved admission")
-    public ResponseEntity<AdmissionEntity> getAdmissionById(@PathVariable int admissionId) {
-        AdmissionEntity admission = admissionService.getAdmissionById(admissionId); // Ensure this returns AdmissionEntity
+    public ResponseEntity<AdmissionDTO> getAdmissionById(@PathVariable int admissionId) {
+        AdmissionDTO admission = admissionService.getAdmissionById(admissionId); // Ensure this returns AdmissionEntity
         return ResponseEntity.ok(admission);
     }
 
     @GetMapping(value = "/patient/{patientId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved admissions by patient ID")
-    public ResponseEntity<List<AdmissionEntity>> getAdmissionsByPatientId(@PathVariable int patientId) {
-        List<AdmissionEntity> admissions = admissionService.getAdmissionsByPatientId(patientId); // Ensure this returns List<AdmissionEntity>
+    public ResponseEntity<List<AdmissionDTO>> getAdmissionsByPatientId(@PathVariable int patientId) {
+        List<AdmissionDTO> admissions = admissionService.getAdmissionsByPatientId(patientId); // Ensure this returns List<AdmissionEntity>
         return ResponseEntity.ok(admissions);
     }
 
     // Creates new admission
     @PostMapping(value = "/", consumes = "application/json")
     @ApiResponse(responseCode = "201", description = "Successfully created admission")
-    public ResponseEntity<AdmissionEntity> createAdmission(@RequestBody AdmissionEntity admission) {
-        AdmissionEntity createdAdmission = admissionService.createAdmission(admission); // Ensure this returns AdmissionEntity
+    public ResponseEntity<AdmissionDTO> createAdmission(@RequestBody AdmissionDTO admission) {
+        AdmissionDTO createdAdmission = admissionService.createAdmission(admission); // Ensure this returns AdmissionEntity
         return ResponseEntity.status(201).body(createdAdmission);
     }
 
     // Updates admission details by ID
     @PutMapping(value = "/{admissionId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated admission")
-    public ResponseEntity<AdmissionEntity> updateAdmission(@PathVariable int admissionId, @RequestBody AdmissionEntity admission) {
-        AdmissionEntity updatedAdmission = admissionService.updateAdmission(admissionId, admission); // Ensure this returns AdmissionEntity
+    public ResponseEntity<AdmissionDTO> updateAdmission(@PathVariable int admissionId, @RequestBody AdmissionDTO admission) {
+        AdmissionDTO updatedAdmission = admissionService.updateAdmission(admissionId, admission); // Ensure this returns AdmissionEntity
         return ResponseEntity.ok(updatedAdmission);
     }
 

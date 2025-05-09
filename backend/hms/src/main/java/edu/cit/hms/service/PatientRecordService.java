@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import edu.cit.hms.dto.PatientRecordDTO;
 import edu.cit.hms.entity.PatientEntity;
 import edu.cit.hms.entity.PatientRecordEntity;
+import edu.cit.hms.entity.RoomEntity;
 import edu.cit.hms.repository.PatientRecordRepository;
 import edu.cit.hms.repository.PatientRepository;
 
@@ -20,28 +22,41 @@ public class PatientRecordService {
     @Autowired
     private PatientRepository patientRepository;
 
-    public PatientRecordEntity createPatientRecord(PatientRecordDTO patientRecordDTO) {
-        PatientRecordEntity patientRecord = convertFromDTO(patientRecordDTO);
+    public PatientRecordDTO createPatientRecord(PatientRecordDTO patientRecordDTO) {
+        PatientRecordEntity patientRecord = patientRecordRepository.save(convertFromDTO(patientRecordDTO));
 
-        return patientRecordRepository.save(patientRecord);
+        return convertToDTO(patientRecord);
     }
 
-    public PatientRecordEntity getPatientRecordById(int patientRecordId) {
-        return patientRecordRepository.findById(patientRecordId).orElse(null);
+    public PatientRecordDTO getPatientRecordById(int patientRecordId) {
+        Optional<PatientRecordEntity> patientRecord = patientRecordRepository.findById(patientRecordId);
+
+        return patientRecord.map(this::convertToDTO)
+            .orElseThrow(() -> new RuntimeException("Patient Record ID: " + patientRecordId + " not found!"));
     }
 
-    public PatientRecordEntity getPatientRecordByPatientId(int patientId) {
+    public PatientRecordDTO getPatientRecordByPatientId(int patientId) {
         PatientEntity patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new RuntimeException("Patient ID: " + patientId + " not found!"));
 
-        return patientRecordRepository.findByPatient(patient).orElse(null);
+        return patientRecordRepository.findByPatient(patient)
+            .map(this::convertToDTO)
+            .orElseThrow(() -> new RuntimeException("No patient record found for Patient ID: " + patientId));
     }
 
-    public List<PatientRecordEntity> getPatientRecords() {
-        return patientRecordRepository.findAll();
+    public List<PatientRecordDTO> getPatientRecords() {
+        try {
+            List<PatientRecordEntity> patientRecords = patientRecordRepository.findAll();
+            return patientRecords.stream()
+                    .map(this::convertToDTO)
+                    .toList();
+        } catch (DataAccessException e) {
+            System.err.println("Error retrieving rooms: " + e.getMessage());
+            throw new RuntimeException("Error retrieving rooms at this moment. Please try again later.");
+        }
     }
 
-    public PatientRecordEntity updatePatientRecord(int patientRecordId, PatientRecordEntity newPatientRecord) {
+    public PatientRecordDTO updatePatientRecord(int patientRecordId, PatientRecordDTO newPatientRecord) {
         PatientRecordEntity patientRecord = patientRecordRepository.findById(patientRecordId)
                 .orElseThrow(() -> new RuntimeException("Patient Record ID: " + patientRecordId + " not found!"));
 
@@ -60,7 +75,7 @@ public class PatientRecordService {
         }
 
         // Save the updated record
-        return patientRecordRepository.save(patientRecord);
+        return convertToDTO(patientRecordRepository.save(patientRecord));
     }
 
     public String deletePatientRecord(int patientRecordId) {

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import edu.cit.hms.dto.DoctorDTO;
 import edu.cit.hms.entity.DoctorEntity;
 import edu.cit.hms.service.DoctorService;
 
@@ -28,28 +29,28 @@ public class DoctorController {
     // Gets all doctors
     @GetMapping(value = "/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of doctors")
-    public ResponseEntity<List<DoctorEntity>> getAllDoctors() {
-        return ResponseEntity.ok(doctorService.getAllDoctors());
+    public ResponseEntity<List<DoctorDTO>> getAllDoctors() {
+        return ResponseEntity.ok(doctorService.getDoctorDTOs());
     }
 
     // Gets doctor by ID
     @GetMapping(value = "/{doctorId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved doctor by ID")
-    public ResponseEntity<DoctorEntity> getDoctorById(@PathVariable int doctorId) {
-        return ResponseEntity.ok(doctorService.getDoctorById(doctorId));
+    public ResponseEntity<DoctorDTO> getDoctorById(@PathVariable int doctorId) {
+        return ResponseEntity.ok(doctorService.getDoctorDTOById(doctorId));
     }
 
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can create doctors
     @PostMapping(value = "/", consumes = "application/json")
     @ApiResponse(responseCode = "201", description = "Successfully created doctor")
-    public ResponseEntity<DoctorEntity> createDoctor(@RequestBody DoctorEntity doctor) {
+    public ResponseEntity<DoctorDTO> createDoctor(@RequestBody DoctorDTO doctor) {
         return ResponseEntity.status(201).body(doctorService.createDoctor(doctor));
     }
 
     @PreAuthorize("hasRole('ADMIN')") // Only ADMIN can update doctors
     @PutMapping(value = "/{doctorId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated doctor")
-    public ResponseEntity<DoctorEntity> updateDoctor(@PathVariable int doctorId, @RequestBody DoctorEntity doctor) {
+    public ResponseEntity<DoctorDTO> updateDoctor(@PathVariable int doctorId, @RequestBody DoctorDTO doctor) {
         return ResponseEntity.ok(doctorService.updateDoctor(doctorId, doctor));
     }
 

@@ -26,74 +26,78 @@ public class DoctorService {
     @Autowired
     private UserRepository userRepository;
     
-    public DoctorEntity createDoctor(DoctorEntity doctor) {
-        return doctorRepository.save(doctor);
+    public DoctorDTO createDoctor(DoctorDTO doctorDTO) {
+        DoctorEntity doctor = convertFromDTO(doctorDTO);
+        DoctorEntity savedDoctor = doctorRepository.save(doctor);
+
+        return convertToDTO(savedDoctor);
     }
 
-    public DoctorEntity getDoctorById(int doctorId) {
-        return doctorRepository.findById(doctorId).orElse(null);
+    public DoctorDTO getDoctorById(int doctorId) {
+        return doctorRepository.findById(doctorId)
+                .map(this::convertToDTO)
+                .orElseThrow(() -> new RuntimeException("Doctor ID: " + doctorId + " not found!"));
     }
 
-    public List<DoctorEntity> getDoctorByFirstName(String firstName) {
-        return doctorRepository.findByFirstName(firstName).orElse(null);
+    public List<DoctorDTO> getDoctorByFirstName(String firstName) {
+        List<DoctorEntity> doctors = doctorRepository.findByFirstName(firstName);
+        return doctors.stream().map(this::convertToDTO).toList();
     }
 
-    public List<DoctorEntity> getDoctorByLastName(String lastName) {
-        return doctorRepository.findByLastName(lastName).orElse(null);
+    public List<DoctorDTO> getDoctorByLastName(String lastName) {
+        List<DoctorEntity> doctors = doctorRepository.findByLastName(lastName);
+        return doctors.stream().map(this::convertToDTO).toList();
     }
 
-    public List<DoctorEntity> getDoctorBySpecialization(String specialization) {
-        return doctorRepository.findBySpecialization(specialization).orElse(null);
+    public List<DoctorDTO> getDoctorBySpecialization(String specialization) {
+        List<DoctorEntity> doctors = doctorRepository.findBySpecialization(specialization);
+        return doctors.stream().map(this::convertToDTO).toList();
     }
 
-    public List<DoctorEntity> getDoctorByDepartmentId(int departmentId) {
+    public List<DoctorDTO> getDoctorByDepartmentId(int departmentId) {
         DepartmentEntity department = departmentRepository.findById(departmentId)
-            .orElseThrow(() -> new RuntimeException("Department ID: " + departmentId + " not found!"));
-
-        return doctorRepository.findByDepartment(department).orElse(null);
+                .orElseThrow(() -> new RuntimeException("Department ID: " + departmentId + " not found!"));
+        List<DoctorEntity> doctors = doctorRepository.findByDepartment(department);
+        return doctors.stream().map(this::convertToDTO).toList();
     }
 
-    public List<DoctorEntity> getAllDoctors() {
-        return doctorRepository.findAll();
+    public List<DoctorDTO> getAllDoctors() {
+        return doctorRepository.findAll().stream()
+                .map(this::convertToDTO)
+                .toList();
     }
 
-    public Optional<DoctorEntity> getDoctor(int doctorId) {
-        return doctorRepository.findById(doctorId);
-    }
-
-    public DoctorEntity updateDoctor(int doctorId, DoctorEntity newDoctor) {
-        DoctorEntity doctor;
-
-        try {
-            doctor = doctorRepository.findById(doctorId)
+    public DoctorDTO updateDoctor(int doctorId, DoctorDTO doctorDTO) {
+        DoctorEntity doctor = doctorRepository.findById(doctorId)
                 .orElseThrow(() -> new RuntimeException("Doctor ID: " + doctorId + " not found!"));
 
-            if(doctor.getFirstName() != null && newDoctor.getFirstName().isEmpty()) {
-                doctor.setFirstName(newDoctor.getFirstName());
-            }
-            if(doctor.getLastName() != null && newDoctor.getLastName().isEmpty()) {
-                doctor.setLastName(newDoctor.getLastName());
-            }
-            if(doctor.getSpecialization() != null && newDoctor.getSpecialization().isEmpty()) {
-                doctor.setSpecialization(newDoctor.getSpecialization());
-            }
-            if(doctor.getDepartment() != null && newDoctor.getDepartment() != null) {
-                doctor.setDepartment(newDoctor.getDepartment());
-            }
-            if(doctor.getUser() != null && newDoctor.getUser() != null) {
-                doctor.setUser(newDoctor.getUser());
-            }
-
-            return doctorRepository.save(doctor);
-        } catch (NoSuchElementException nex) {
-            throw new RuntimeException("Doctor ID: " + doctorId + " not found!");
+        if (doctorDTO.getFirstName() != null && !doctorDTO.getFirstName().isEmpty()) {
+            doctor.setFirstName(doctorDTO.getFirstName());
         }
+        if (doctorDTO.getLastName() != null && !doctorDTO.getLastName().isEmpty()) {
+            doctor.setLastName(doctorDTO.getLastName());
+        }
+        if (doctorDTO.getSpecialization() != null && !doctorDTO.getSpecialization().isEmpty()) {
+            doctor.setSpecialization(doctorDTO.getSpecialization());
+        }
+
+        if (doctorDTO.getDepartmentId() > 0) {
+            DepartmentEntity department = departmentRepository.findById(doctorDTO.getDepartmentId())
+                    .orElseThrow(() -> new RuntimeException("Department ID: " + doctorDTO.getDepartmentId() + " not found!"));
+            doctor.setDepartment(department);
+        }
+
+        if (doctorDTO.getUserId() > 0) {
+            UserEntity user = userRepository.findById(doctorDTO.getUserId())
+                    .orElseThrow(() -> new RuntimeException("User ID: " + doctorDTO.getUserId() + " not found!"));
+            doctor.setUser(user);
+        }
+
+        return convertToDTO(doctorRepository.save(doctor));
     }
 
     public String deleteDoctor(int doctorId) {
-        Optional<DoctorEntity> doctor = doctorRepository.findById(doctorId);
-
-        if(doctor.isPresent()) {
+        if(doctorRepository.existsById(doctorId)) {
             doctorRepository.deleteById(doctorId);
 
             return "Doctor ID: " + doctorId + " deleted successfully!";
@@ -102,7 +106,7 @@ public class DoctorService {
         }
     }
 
-    private DoctorEntity convertFromDTO(DoctorDTO doctorDTO) {
+    public DoctorEntity convertFromDTO(DoctorDTO doctorDTO) {
         DoctorEntity doctor = new DoctorEntity();
         DepartmentEntity department = departmentRepository.findById(doctorDTO.getDepartmentId())
             .orElseThrow(() -> new RuntimeException("Department not found!"));
@@ -119,7 +123,7 @@ public class DoctorService {
         return doctor;
     }
 
-    private DoctorDTO convertToDTO(DoctorEntity doctor) {
+    public DoctorDTO convertToDTO(DoctorEntity doctor) {
         return new DoctorDTO(
             doctor.getDoctorId(),
             doctor.getFirstName(),
@@ -128,5 +132,19 @@ public class DoctorService {
             doctor.getDepartment().getDeptId(),
             doctor.getUser().getUserId()
         );
+    }
+
+    public List<DoctorDTO> getDoctorDTOs() {
+        List<DoctorEntity> doctors = doctorRepository.findAll();
+
+        return doctors.stream()
+            .map(this::convertToDTO)
+            .toList();
+    }
+
+    public DoctorDTO getDoctorDTOById(int doctorId) {
+        return doctorRepository.findById(doctorId)
+            .map(this::convertToDTO)
+            .orElseThrow(() -> new RuntimeException("Doctor not found"));
     }
 }

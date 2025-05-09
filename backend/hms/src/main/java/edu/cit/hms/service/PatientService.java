@@ -20,9 +20,6 @@ public class PatientService {
     private PatientRepository patientRepository;
 
     @Autowired
-    private RoomRepository roomRepository;
-
-    @Autowired
     private AdmissionRepository admissionRepository;
 
     @Autowired
@@ -68,9 +65,6 @@ public class PatientService {
         if(newPatient.getBloodType() != null && !newPatient.getBloodType().isEmpty()) {
             patient.setBloodType(newPatient.getBloodType());
         }
-        if(newPatient.getRoom() != null) {
-            patient.setRoom(newPatient.getRoom());
-        }
         if(newPatient.getAdmissions() != null) {
             patient.setAdmissions(newPatient.getAdmissions());
         }
@@ -105,8 +99,6 @@ public class PatientService {
         patient.setGender(patientDTO.getGender());
         patient.setAge(patientDTO.getAge());
         patient.setBloodType(patientDTO.getBloodType());
-        patient.setRoom(roomRepository.findById(patientDTO.getRoomId())
-                .orElseThrow(() -> new RuntimeException("Room ID: " + patientDTO.getRoomId() + " not found!")));
         patient.setUser(userRepository.findById(patientDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("User ID: " + patientDTO.getUserId() + " not found!")));
         patient.setPatientRecords(patientRecordRepository.findAllById(patientDTO.getPatientRecordIds()));
@@ -125,7 +117,6 @@ public class PatientService {
         patientDTO.setGender(patient.getGender());
         patientDTO.setAge(patient.getAge());
         patientDTO.setBloodType(patient.getBloodType());
-        patientDTO.setRoomId(patient.getRoom() != null ? patient.getRoom().getRoomId() : 0);
         patientDTO.setUserId(patient.getUser() != null ? patient.getUser().getUserId() : 0);
         patientDTO.setPatientRecordIds(patient.getPatientRecords().stream()
                 .map(record -> record.getRecordId()).toList());
@@ -136,5 +127,13 @@ public class PatientService {
                 .toList());
 
         return patientDTO;
+    }
+
+    public List<PatientDTO> getPatientDTOs() {
+        List<PatientEntity> patients = patientRepository.findAll();
+        
+        return patients.stream()
+                .map(this::convertToDTO)
+                .toList();
     }
 }

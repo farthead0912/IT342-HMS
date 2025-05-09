@@ -22,7 +22,7 @@ public class StaffEntity {
     @JoinColumn(name = "deptId")
     private DepartmentEntity department;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private UserEntity user;
 

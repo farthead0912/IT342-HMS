@@ -17,23 +17,22 @@ public class RoomService {
     private RoomRepository roomRepository;
 
     @Autowired
-    private PatientRepository patientRepository;
-
-    @Autowired
     private StaffRepository staffRepository;
 
     @Autowired
     private AdmissionRepository admissionRepository;
 
-    public RoomEntity createRoom(RoomDTO roomDTO) {
-        RoomEntity room = convertFromDTO(roomDTO);
+    public RoomDTO createRoom(RoomDTO roomDTO) {
+        RoomEntity room = roomRepository.save(convertFromDTO(roomDTO));
 
-        return roomRepository.save(room);
+        return convertToDTO(room);
     }
 
-    public RoomEntity getRoomById(int roomId) {
-        return roomRepository.findById(roomId)
-                .orElseThrow(() -> new RuntimeException("Room ID: " + roomId + " not found!"));
+    public RoomDTO getRoomById(int roomId) {
+        Optional<RoomEntity> room = roomRepository.findById(roomId);
+
+        return room.map(this::convertToDTO)
+            .orElseThrow(() -> new RuntimeException("Room ID: " + roomId + " not found!"));
     }
 
     public List<RoomDTO> getRooms() {
@@ -48,12 +47,12 @@ public class RoomService {
         }
     }
 
-    public RoomEntity updateRoom(int roomId, RoomDTO newRoomDTO) {
+    public RoomDTO updateRoom(int roomId, RoomDTO newRoomDTO) {
         RoomEntity room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new RuntimeException("Room ID: " + roomId + " not found!"));
 
         // Validate and update fields
-        if (newRoomDTO.getRoomNumber() != 0) {
+        if (newRoomDTO.getRoomNumber() > 0) {
             room.setRoomNumber(newRoomDTO.getRoomNumber());
         }
         if (newRoomDTO.getRoomType() != null && !newRoomDTO.getRoomType().isEmpty()) {
@@ -65,16 +64,12 @@ public class RoomService {
         if (newRoomDTO.getRoomPrice() > 0) {
             room.setRoomPrice(newRoomDTO.getRoomPrice());
         }
-        if (newRoomDTO.getPatientId() != 0) {
-            room.setPatient(patientRepository.findById(newRoomDTO.getPatientId())
-                    .orElseThrow(() -> new RuntimeException("Patient ID: " + newRoomDTO.getPatientId() + " not found!")));
-        }
         if (newRoomDTO.getStaffId() != 0) {
             room.setStaff(staffRepository.findById(newRoomDTO.getStaffId())
                     .orElseThrow(() -> new RuntimeException("Staff ID: " + newRoomDTO.getStaffId() + " not found!")));
         }
 
-        return roomRepository.save(room);
+        return convertToDTO(roomRepository.save(room));
     }
 
     public String deleteRoom(int roomId) {
@@ -95,7 +90,6 @@ public class RoomService {
         roomDTO.setRoomType(room.getRoomType());
         roomDTO.setOccupied(room.isOccupied());
         roomDTO.setRoomPrice(room.getRoomPrice());
-        roomDTO.setPatientId(room.getPatient().getPatientId());
         roomDTO.setFloorNumber(room.getFloorNumber());
         roomDTO.setStaffId(room.getStaff().getStaffId());
 
@@ -117,12 +111,6 @@ public class RoomService {
         room.setOccupied(roomDTO.isOccupied());
         room.setRoomPrice(roomDTO.getRoomPrice());
         room.setFloorNumber(roomDTO.getFloorNumber());
-
-        if (roomDTO.getPatientId() != 0) {
-            PatientEntity patient = patientRepository.findById(roomDTO.getPatientId())
-                    .orElseThrow(() -> new RuntimeException("Patient ID: " + roomDTO.getPatientId() + " not found!"));
-            room.setPatient(patient);
-        }
 
         if (roomDTO.getStaffId() != 0) {
             StaffEntity staff = staffRepository.findById(roomDTO.getStaffId())

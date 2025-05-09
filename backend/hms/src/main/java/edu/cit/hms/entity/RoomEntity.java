@@ -25,10 +25,6 @@ public class RoomEntity {
 
     @Column(nullable = false)
     private boolean isOccupied = false;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "patientId", nullable = true)
-    private PatientEntity patient;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "staffId", nullable = true)
@@ -84,14 +80,6 @@ public class RoomEntity {
 
     public void setOccupied(boolean isOccupied) {
         this.isOccupied = isOccupied;
-    }
-
-    public PatientEntity getPatient() {
-        return patient;
-    }
-
-    public void setPatient(PatientEntity patient) {
-        this.patient = patient;
     }
 
     public StaffEntity getStaff() {

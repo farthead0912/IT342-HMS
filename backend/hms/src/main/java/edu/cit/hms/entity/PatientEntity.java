@@ -35,11 +35,6 @@ public class PatientEntity {
     // Blood type format: A+, A-, B+, B-, AB+, AB-, O+, O-
     private String bloodType;
 
-    // Many patients can share one room
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "roomId", nullable = true)
-    private RoomEntity room;
-
     // this is OneToOne since one patient can only have one user account
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", nullable = false)
@@ -50,7 +45,7 @@ public class PatientEntity {
     @Column(nullable = true)
     private List<PatientRecordEntity> patientRecords;
 
-    // this is OneToMany since one patient can have many schedules
+    // this is OneToMany since one patient can have many admissions
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
     @Column(nullable = true)
     private List<AdmissionEntity> admissions;
@@ -106,14 +101,6 @@ public class PatientEntity {
 
     public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
-    }
-
-    public RoomEntity getRoom() {
-        return room;
-    }
-    
-    public void setRoom(RoomEntity room) {
-        this.room = room;
     }
 
     public UserEntity getUser() {

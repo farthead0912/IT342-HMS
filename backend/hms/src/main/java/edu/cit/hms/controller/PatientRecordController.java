@@ -28,20 +28,20 @@ public class PatientRecordController {
     // Gets all patient records
     @GetMapping(value = "/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of patient records")
-    public ResponseEntity<List<PatientRecordEntity>> getPatientRecords() {
+    public ResponseEntity<List<PatientRecordDTO>> getPatientRecords() {
         return ResponseEntity.ok(patientRecordService.getPatientRecords());
     }
 
     // Gets patient record by ID
     @GetMapping(value = "/{patientRecordId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved patient record by ID")
-    public ResponseEntity<PatientRecordEntity> getPatientRecordById(@PathVariable int patientRecordId) {
+    public ResponseEntity<PatientRecordDTO> getPatientRecordById(@PathVariable int patientRecordId) {
         return ResponseEntity.ok(patientRecordService.getPatientRecordById(patientRecordId));
     }
 
     @GetMapping(value = "/patient/{patientId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved patient record by patient ID")
-    public ResponseEntity<PatientRecordEntity> getPatientRecordByPatientId(@PathVariable int patientId) {
+    public ResponseEntity<PatientRecordDTO> getPatientRecordByPatientId(@PathVariable int patientId) {
         return ResponseEntity.ok(patientRecordService.getPatientRecordByPatientId(patientId));
     }
 
@@ -49,7 +49,7 @@ public class PatientRecordController {
     @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'STAFF')") // ADMINs and DOCTORs can create patient records
     @PostMapping(value = "/", consumes = "application/json")
     @ApiResponse(responseCode = "201", description = "Successfully created patient record")
-    public ResponseEntity<PatientRecordEntity> createPatientRecord(@RequestBody PatientRecordDTO patientRecord) {
+    public ResponseEntity<PatientRecordDTO> createPatientRecord(@RequestBody PatientRecordDTO patientRecord) {
         return ResponseEntity.status(201).body(patientRecordService.createPatientRecord(patientRecord));
     }
 
@@ -57,7 +57,7 @@ public class PatientRecordController {
     @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'STAFF')") // ADMINs and DOCTORs can update patient records
     @PutMapping(value = "/{patientRecordId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated patient record")
-    public ResponseEntity<PatientRecordEntity> updatePatientRecord(@PathVariable int patientRecordId, @RequestBody PatientRecordEntity patientRecord) {
+    public ResponseEntity<PatientRecordDTO> updatePatientRecord(@PathVariable int patientRecordId, @RequestBody PatientRecordDTO patientRecord) {
         return ResponseEntity.ok(patientRecordService.updatePatientRecord(patientRecordId, patientRecord));
     }
 

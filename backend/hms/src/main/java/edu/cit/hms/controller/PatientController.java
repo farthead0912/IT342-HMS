@@ -29,8 +29,8 @@ public class PatientController {
     // Gets all patients
     @GetMapping(value = "/")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved list of patients")
-    public ResponseEntity<List<PatientEntity>> getPatients() {
-        return ResponseEntity.ok(patientService.getPatients());
+    public ResponseEntity<List<PatientDTO>> getPatients() {
+        return ResponseEntity.ok(patientService.getPatientDTOs());
     }
 
     // Gets patient by ID

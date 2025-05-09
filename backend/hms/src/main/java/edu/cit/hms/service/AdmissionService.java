@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import edu.cit.hms.dto.AdmissionDTO;
@@ -30,44 +31,59 @@ public class AdmissionService {
     @Autowired
     private RoomRepository roomRepository;
 
-    public AdmissionEntity createAdmission(AdmissionEntity admissionEntity) {
-        try {
-            return admissionRepository.save(admissionEntity);
-        } catch (Exception e) {
-            throw new RuntimeException("Error creating admission", e);
-        }
+    public AdmissionDTO createAdmission(AdmissionDTO admission) {
+        AdmissionEntity admissionEntity = admissionRepository.save(convertFromDTO(admission));
+
+        return convertToDTO(admissionEntity);
     }
 
-    public AdmissionEntity getAdmissionById(int admissionId) {
-        return admissionRepository.findById(admissionId)
+    public AdmissionDTO getAdmissionById(int admissionId) {
+        Optional<AdmissionEntity> admission = admissionRepository.findById(admissionId);
+
+        return admission.map(this::convertToDTO)
             .orElseThrow(() -> new RuntimeException("Admission ID: " + admissionId + " not found!"));
     }
 
-    public List<AdmissionEntity> getAdmissions() {
-        return admissionRepository.findAll();
+    public List<AdmissionDTO> getAdmissions() {
+        try {
+            List<AdmissionEntity> admissions = admissionRepository.findAll();
+            return admissions.stream()
+                    .map(this::convertToDTO)
+                    .toList();
+        } catch (DataAccessException e) {
+            System.err.println("Error retrieving admissions: " + e.getMessage());
+            throw new RuntimeException("Error retrieving admissions at this moment. Please try again later.");
+        }
     }
 
-    public List<AdmissionEntity> getAdmissionsByPatientId(int patientId) {
+    public List<AdmissionDTO> getAdmissionsByPatientId(int patientId) {
         PatientEntity patient = patientRepository.findById(patientId)
             .orElseThrow(() -> new RuntimeException("Patient ID: " + patientId + " not found!"));
+
+        List<AdmissionEntity> admissions = admissionRepository.findByPatient(patient);
         
-        return admissionRepository.findByPatient(patient)
-            .orElseThrow(() -> new RuntimeException("No admission found for Patient ID: " + patientId));
+        return admissions.stream().map(this::convertToDTO).toList();
     }
 
-    public AdmissionEntity updateAdmission(int admissionId, AdmissionEntity newAdmission) {
+    public AdmissionDTO updateAdmission(int admissionId, AdmissionDTO newAdmission) {
         AdmissionEntity admission = admissionRepository.findById(admissionId)
             .orElseThrow(() -> new RuntimeException("Admission ID: " + admissionId + " not found!"));
 
         // Validate and update fields
-        if (newAdmission.getDoctor() != null) {
-            admission.setDoctor(newAdmission.getDoctor());
+        if (newAdmission.getDoctorId() > 0) {
+            DoctorEntity doctor = doctorRepository.findById(newAdmission.getDoctorId())
+                .orElseThrow(() -> new RuntimeException("Doctor ID: " + newAdmission.getDoctorId() + " not found!"));
+            admission.setDoctor(doctor);
         }
-        if (newAdmission.getPatient() != null) {
-            admission.setPatient(newAdmission.getPatient());
+        if (newAdmission.getPatientId() > 0) {
+            PatientEntity patient = patientRepository.findById(newAdmission.getPatientId())
+                .orElseThrow(() -> new RuntimeException("Patient ID: " + newAdmission.getPatientId() + " not found!"));
+            admission.setPatient(patient);
         }
-        if (newAdmission.getRoom() != null) {
-            admission.setRoom(newAdmission.getRoom());
+        if (newAdmission.getRoomId() > 0) {
+            RoomEntity room = roomRepository.findById(newAdmission.getRoomId())
+                .orElseThrow(() -> new RuntimeException("Room ID: " + newAdmission.getRoomId() + " not found!"));
+            admission.setRoom(room);
         }
         if (newAdmission.getAdmissionDate() != null) {
             admission.setAdmissionDate(newAdmission.getAdmissionDate());
@@ -79,13 +95,17 @@ public class AdmissionService {
             admission.setAdmissionReason(newAdmission.getAdmissionReason());
         }
 
-        return admissionRepository.save(admission);
+        return convertToDTO(admissionRepository.save(admission));
     }
 
-    public void deleteAdmission(int admissionId) {
-        AdmissionEntity admission = admissionRepository.findById(admissionId)
-            .orElseThrow(() -> new RuntimeException("Admission ID: " + admissionId + " not found!"));
-        admissionRepository.delete(admission);
+    public String deleteAdmission(int admissionId) {
+        if(admissionRepository.existsById(admissionId)) {
+            admissionRepository.deleteById(admissionId);
+
+            return "Admission ID: " + admissionId + " deleted successfully!";
+        } else {
+            throw new RuntimeException("Admission ID: " + admissionId + " not found!");
+        }
     }
 
     private AdmissionDTO convertToDTO(AdmissionEntity admission) {

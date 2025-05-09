@@ -36,7 +36,7 @@ public class RoomController {
     // Gets room by ID
     @GetMapping(value = "/{roomId}")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved room by ID")
-    public RoomEntity getRoomById(@PathVariable int roomId) {
+    public RoomDTO getRoomById(@PathVariable int roomId) {
         return roomService.getRoomById(roomId);
     }
 
@@ -44,7 +44,7 @@ public class RoomController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/", consumes = "application/json")
     @ApiResponse(responseCode = "201", description = "Successfully created room")
-    public ResponseEntity<RoomEntity> createRoom(@RequestBody RoomDTO room) {
+    public ResponseEntity<RoomDTO> createRoom(@RequestBody RoomDTO room) {
         return ResponseEntity.ok(roomService.createRoom(room));
     }
 
@@ -52,7 +52,7 @@ public class RoomController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value = "/{roomId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated room")
-    public ResponseEntity<RoomEntity> updateRoom(@PathVariable int roomId, @RequestBody RoomDTO room) {
+    public ResponseEntity<RoomDTO> updateRoom(@PathVariable int roomId, @RequestBody RoomDTO room) {
         return ResponseEntity.ok(roomService.updateRoom(roomId, room));
     }
 

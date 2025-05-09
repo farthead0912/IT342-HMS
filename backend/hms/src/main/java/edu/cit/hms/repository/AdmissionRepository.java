@@ -14,7 +14,7 @@ import edu.cit.hms.entity.AdmissionEntity;
 @Repository
 public interface AdmissionRepository extends JpaRepository<AdmissionEntity, Integer> {
     public Optional<AdmissionEntity> findByDoctor(DoctorEntity doctor);
-    public Optional<List<AdmissionEntity>> findByPatient(PatientEntity patient);
+    public List<AdmissionEntity> findByPatient(PatientEntity patient);
     public Optional<AdmissionEntity> findByRoom(RoomEntity room);
     public List<AdmissionEntity> findByStatus(String status);
 }

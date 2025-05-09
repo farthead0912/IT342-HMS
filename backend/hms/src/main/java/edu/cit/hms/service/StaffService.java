@@ -26,10 +26,9 @@ public class StaffService {
     @Autowired
     private UserRepository userRepository;
 
-    public StaffEntity createStaff(StaffDTO staffDTO) {
-        StaffEntity staff = convertFromDTO(staffDTO);
-
-        return staffRepository.save(staff);
+    public StaffDTO createStaff(StaffDTO staffDTO) {
+        StaffEntity saved = staffRepository.save(convertFromDTO(staffDTO));
+        return convertToDTO(saved);
     }
 
     public StaffDTO getStaffById(int staffId) {
@@ -52,34 +51,27 @@ public class StaffService {
         }
     }
 
-    public StaffEntity updateStaff(int staffId, StaffDTO newStaff) {
+    public StaffDTO updateStaff(int staffId, StaffDTO newStaff) {
         StaffEntity staff = staffRepository.findById(staffId)
             .orElseThrow(() -> new RuntimeException("Staff ID: " + staffId + " not found!"));
 
-        // Validate new data
-        if (newStaff.getFirstName() != null) {
-            staff.setFirstName(newStaff.getFirstName());
-        }
-        if (newStaff.getLastName() != null) {
-            staff.setLastName(newStaff.getLastName());
-        }
-        if (newStaff.getPosition() != null) {
-            staff.setPosition(newStaff.getPosition());
-        }
-        if (newStaff.getDepartmentId() != 0) { // Assuming newStaff contains the department ID
+        if (newStaff.getFirstName() != null) staff.setFirstName(newStaff.getFirstName());
+        if (newStaff.getLastName() != null) staff.setLastName(newStaff.getLastName());
+        if (newStaff.getPosition() != null) staff.setPosition(newStaff.getPosition());
+
+        if (newStaff.getDepartmentId() > 0) {
             DepartmentEntity department = departmentRepository.findById(newStaff.getDepartmentId())
                 .orElseThrow(() -> new RuntimeException("Department ID: " + newStaff.getDepartmentId() + " not found!"));
-                
             staff.setDepartment(department);
         }
-        if (newStaff.getUserId() != 0) {
+
+        if (newStaff.getUserId() > 0) {
             UserEntity user = userRepository.findById(newStaff.getUserId())
                 .orElseThrow(() -> new RuntimeException("User ID: " + newStaff.getUserId() + " not found!"));
-
             staff.setUser(user);
         }
 
-        return staffRepository.save(staff);
+        return convertToDTO(staffRepository.save(staff));
     }
 
     public String deleteStaff(int staffId) {

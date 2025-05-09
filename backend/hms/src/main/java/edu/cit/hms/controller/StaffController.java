@@ -50,7 +50,7 @@ public class StaffController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/", consumes = "application/json")
     @ApiResponse(responseCode = "201", description = "Successfully created staff")
-    public ResponseEntity<StaffEntity> createStaff(@RequestBody StaffDTO staff) {
+    public ResponseEntity<StaffDTO> createStaff(@RequestBody StaffDTO staff) {
         return ResponseEntity.status(201).body(staffService.createStaff(staff));
     }
 
@@ -58,10 +58,9 @@ public class StaffController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value = "/{staffId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated staff")
-    public ResponseEntity<StaffEntity> updateStaff(@PathVariable int staffId, @RequestBody StaffDTO staff) {
+    public ResponseEntity<StaffDTO> updateStaff(@PathVariable int staffId, @RequestBody StaffDTO staff) {
         return ResponseEntity.ok(staffService.updateStaff(staffId, staff));
     }
-
 
     // Deletes staff by ID
     @PreAuthorize("hasRole('ADMIN')")
