@@ -68,6 +68,13 @@ public class RoomService {
             room.setStaff(staffRepository.findById(newRoomDTO.getStaffId())
                     .orElseThrow(() -> new RuntimeException("Staff ID: " + newRoomDTO.getStaffId() + " not found!")));
         }
+        if (newRoomDTO.getAdmissionIdList() != null && !newRoomDTO.getAdmissionIdList().isEmpty()) {
+            List<AdmissionEntity> admissions = newRoomDTO.getAdmissionIdList().stream()
+                    .map(admissionId -> admissionRepository.findById(admissionId)
+                            .orElseThrow(() -> new RuntimeException("Admission ID: " + admissionId + " not found!")))
+                    .toList();
+            room.setAdmissions(admissions);
+        }
 
         return convertToDTO(roomRepository.save(room));
     }

@@ -6,6 +6,7 @@ public class AdmissionDTO {
     private int admissionId;
     private int doctorId;
     private int patientId;
+    private int roomId; // Nullable
     private Date admissionDate;
     private Date dischargeDate;
     private String admissionReason;
@@ -15,10 +16,11 @@ public class AdmissionDTO {
     public AdmissionDTO() {}
 
     // Parameterized constructor
-    public AdmissionDTO(int admissionId, int doctorId, int patientId, Date admissionDate, Date dischargeDate, String admissionReason, String status) {
+    public AdmissionDTO(int admissionId, int doctorId, int patientId, int roomId, Date admissionDate, Date dischargeDate, String admissionReason, String status) {
         this.admissionId = admissionId;
         this.doctorId = doctorId;
         this.patientId = patientId;
+        this.roomId = roomId;
         this.admissionDate = admissionDate;
         this.dischargeDate = dischargeDate;
         this.admissionReason = admissionReason;
@@ -48,6 +50,14 @@ public class AdmissionDTO {
 
     public void setPatientId(int patientId) {
         this.patientId = patientId;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
     }
 
     public Date getAdmissionDate() {
