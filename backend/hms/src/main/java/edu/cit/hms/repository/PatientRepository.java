@@ -15,8 +15,7 @@ public interface PatientRepository extends JpaRepository<PatientEntity, Integer>
     public List<PatientEntity> findByAge(int age);
     public List<PatientEntity> findByGender(String gender);
     public List<PatientEntity> findByBloodType(String bloodType);
-
-    public Optional<PatientEntity> findByRoom(RoomEntity room);
+    
     public Optional<PatientEntity> findByUser(UserEntity user);
     public List<PatientEntity> findByPatientRecords(PatientRecordEntity patientRecord);
     public List<PatientEntity> findByAdmissions(AdmissionEntity admissions);

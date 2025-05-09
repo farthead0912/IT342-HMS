@@ -28,9 +28,6 @@ public class AdmissionService {
     @Autowired
     private PatientRepository patientRepository;
 
-    @Autowired
-    private RoomRepository roomRepository;
-
     public AdmissionDTO createAdmission(AdmissionDTO admission) {
         AdmissionEntity admissionEntity = admissionRepository.save(convertFromDTO(admission));
 
@@ -80,11 +77,6 @@ public class AdmissionService {
                 .orElseThrow(() -> new RuntimeException("Patient ID: " + newAdmission.getPatientId() + " not found!"));
             admission.setPatient(patient);
         }
-        if (newAdmission.getRoomId() > 0) {
-            RoomEntity room = roomRepository.findById(newAdmission.getRoomId())
-                .orElseThrow(() -> new RuntimeException("Room ID: " + newAdmission.getRoomId() + " not found!"));
-            admission.setRoom(room);
-        }
         if (newAdmission.getAdmissionDate() != null) {
             admission.setAdmissionDate(newAdmission.getAdmissionDate());
         }
@@ -114,7 +106,6 @@ public class AdmissionService {
         admissionDTO.setAdmissionId(admission.getAdmissionId());
         admissionDTO.setDoctorId(admission.getDoctor().getDoctorId());
         admissionDTO.setPatientId(admission.getPatient().getPatientId());
-        admissionDTO.setRoomId(admission.getRoom().getRoomId());
         admissionDTO.setAdmissionDate(admission.getAdmissionDate());
         admissionDTO.setDischargeDate(admission.getDischargeDate());
         admissionDTO.setAdmissionReason(admission.getAdmissionReason());
@@ -128,13 +119,10 @@ public class AdmissionService {
             .orElseThrow(() -> new RuntimeException("Doctor ID: " + admissionDTO.getDoctorId() + " not found!"));
         PatientEntity patient = patientRepository.findById(admissionDTO.getPatientId())
             .orElseThrow(() -> new RuntimeException("Patient ID: " + admissionDTO.getPatientId() + " not found!"));
-        RoomEntity room = roomRepository.findById(admissionDTO.getRoomId())
-            .orElseThrow(() -> new RuntimeException("Room ID: " + admissionDTO.getRoomId() + " not found!"));
 
         admission.setAdmissionId(admissionDTO.getAdmissionId());
         admission.setDoctor(doctor);
         admission.setPatient(patient);
-        admission.setRoom(room);
         admission.setAdmissionDate(admissionDTO.getAdmissionDate());
         admission.setDischargeDate(admissionDTO.getDischargeDate());
         admission.setAdmissionReason(admissionDTO.getAdmissionReason());

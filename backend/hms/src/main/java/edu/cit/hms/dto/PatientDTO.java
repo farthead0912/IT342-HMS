@@ -9,21 +9,19 @@ public class PatientDTO {
     private int age;
     private String gender;
     private String bloodType;
-    private int roomId;
     private int userId;
     private List<Integer> patientRecordIds;
     private List<Integer> admissionIds;
     private List<Integer> assignedEquipmentIds;
 
     // Constructor
-    public PatientDTO(int patientId, String firstName, String lastName, int age, String gender, String bloodType, int roomId, int userId, List<Integer> patientRecordIds, List<Integer> admissionIds, List<Integer> assignedEquipmentIds) {
+    public PatientDTO(int patientId, String firstName, String lastName, int age, String gender, String bloodType, int userId, List<Integer> patientRecordIds, List<Integer> admissionIds, List<Integer> assignedEquipmentIds) {
         this.patientId = patientId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.gender = gender;
         this.bloodType = bloodType;
-        this.roomId = roomId;
         this.userId = userId;
         this.patientRecordIds = patientRecordIds;
         this.admissionIds = admissionIds;
@@ -80,14 +78,6 @@ public class PatientDTO {
 
     public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
-    }
-
-    public int getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
     }
 
     public int getUserId() {
