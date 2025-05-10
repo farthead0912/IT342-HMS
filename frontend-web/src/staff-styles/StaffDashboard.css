@@ -1,0 +1,190 @@
+/* General Layout */
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+    font-family: sans-serif;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 200px;
+    background-color: #3b82f6;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    color: white;
+  }
+  
+  .sidebar .logo {
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .sidebar .menu-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #cfdff7;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar li {
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .sidebar li.active {
+    background-color: #5f94d4;
+  }
+  
+  .sidebar li:hover {
+    background-color: #507cb2;
+  }
+  
+  /* Topbar */
+  .topbar-StaffDashboard {
+    background-color: #777777;
+    color: white;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logout-btn {
+    background-color: #ef4444;
+    border: 1px solid white;
+    padding: 0.4rem 0.8rem;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logout-btn:hover {
+    background-color: #444;
+  }
+  
+  /* Main content */
+  .main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .dashboard-section {
+    padding: 1.5rem;
+    overflow-y: auto;
+  }
+  
+  .dashboard-section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  /* Info cards */
+  .info-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .card {
+    background-color: #f0f6ff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #c6d5f3;
+  }
+  
+  .card p {
+    font-size: 0.95rem;
+    color: #333;
+  }
+  
+  .card h3 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
+    color: #2e5c9a;
+  }
+  
+  /* Section Titles */
+  .section-title {
+    background-color: #3a6ea5;
+    color: white;
+    padding: 0.5rem;
+    font-weight: bold;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    margin-top: 2rem;
+  }
+  
+  /* Tables */
+  .table-container {
+    background-color: white;
+    border: 1px solid #999;
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th {
+    background-color: #eef3fc;
+    color: #2e5c9a;
+    font-weight: bold;
+  }
+  
+  th,
+  td {
+    border: 1px solid #999;
+    padding: 0.5rem;
+    text-align: left;
+  }
+
+  .topbar-StaffDashboard {
+    background-color: #777777;
+    color: white;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Billing Status */
+  .paid-status td:last-child {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .pending-status td:last-child {
+    color: red;
+    font-weight: bold;
+  }
+  
+  /* Inventory Stock Status */
+  .in-stock td:last-child {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .low-stock td:last-child {
+    color: red;
+    font-weight: bold;
+  }
+  

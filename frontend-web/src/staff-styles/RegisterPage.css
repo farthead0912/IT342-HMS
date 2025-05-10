@@ -1,0 +1,213 @@
+/* RegisterPage.css */
+
+.register-page-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+  }
+  
+  .register-layout {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    height: 600px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  /* Left panel */
+  .left-panel {
+    flex: 1;
+    background-color: #2074d4; /* Changed from gray to blue as requested */
+    color: white;
+    padding: 40px;
+    position: relative;
+  }
+  
+  .logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  .welcome-content {
+    margin-top: 60px;
+  }
+  
+  .welcome-content h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  .welcome-content p {
+    margin-bottom: 40px;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+  
+  .role-selector {
+    margin-top: 40px;
+  }
+  
+  .role-selector h3 {
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: normal;
+  }
+  
+  .dropdown {
+    position: relative;
+    width: 180px;
+  }
+  
+  .dropdown-toggle {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: white;
+    border: none;
+    border-radius: 4px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .dropdown-toggle::after {
+    content: "";
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #333;
+    margin-left: 8px;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  
+  .dropdown-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f5f5f5;
+  }
+  
+  /* Right panel */
+  .right-panel {
+    flex: 1;
+    background-color: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .register-form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  .register-form-container h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .form-group input {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .register-button {
+    margin-bottom: 20px;
+    padding: 5px 10px;
+    background-color: #e6e6e6;
+    color: #333;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 120px;
+  }
+  
+  .register-button:hover {
+    background-color: #d9d9d9;
+  }
+  
+  /* Unauthorized access styles */
+  .unauthorized-container {
+    text-align: center;
+    padding: 40px;
+    max-width: 600px;
+    margin: 100px auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .unauthorized-container h2 {
+    margin-bottom: 20px;
+    color: #d32f2f;
+  }
+  
+  .unauthorized-container p {
+    margin-bottom: 30px;
+  }
+  
+  .auth-button {
+    padding: 12px 24px;
+    background-color: #2074d4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .auth-button:hover {
+    background-color: #1a5eb8;
+  }

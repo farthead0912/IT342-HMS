@@ -1,0 +1,180 @@
+/*DoctorTelemedicine.jsx*/
+
+.dashboard-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 250px;
+    background-color: #3b82f6;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    min-height: 100vh;
+}
+
+.sidebar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.menu-title {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.sidebar li {
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s, padding-left 0.3s;
+}
+
+.sidebar li:hover {
+    background-color: #3d4b56;
+    padding-left: 15px; 
+}
+
+.sidebar .active {
+    background-color: #1d2a32;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+/* Main content area */
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    width: 100%;
+}
+
+.topbar-DoctorTelemedicine {
+    background-color: #777777;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar-DoctorDashboard span {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.logout-btn {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #c9302c;
+}
+
+/* Section */
+.dashboard-section {
+    padding: 2rem;
+}
+
+.page-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Search bar */
+.search-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+}
+
+.new-request-btn-Telemedicine {
+    background-color: #22c55e;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.new-request-btn:hover {
+    background-color: #16a34a;
+}
+
+/* Table */
+.table-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+thead {
+    background-color: #e2e8f0;
+}
+
+tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Actions buttons - Updated (remove 'View' button styles) */
+.actions button {
+    margin-right: 0.5rem;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.actions button:last-child {
+    background-color: #22c55e;
+}
+
+.actions button:hover {
+    opacity: 0.9;
+}

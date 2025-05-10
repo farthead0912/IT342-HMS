@@ -1,0 +1,102 @@
+/*StartConsultationTelemedicine.jsx*/
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    /* Center the form vertically within 70% of the viewport height */
+    padding: 2rem 0;
+}
+
+/* Form styling */
+.telemedicine-form {
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+    /* Restrict max width */
+}
+
+/* Label styling */
+.telemedicine-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+
+/* Input and textarea styling */
+.telemedicine-form input,
+.telemedicine-form textarea {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    width: 100%;
+}
+
+/* Resize textarea vertically */
+.telemedicine-form textarea {
+    resize: vertical;
+}
+
+/* Submit button */
+.new-request-btn {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Submit button hover effect */
+.new-request-btn:hover {
+    background-color: #388e3c;
+}
+
+/* Text link styling */
+.text-link {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.text-link:hover {
+    text-decoration: underline;
+}
+
+/* Remove default margins/paddings for better spacing */
+.dashboard-section,
+.patient-info {
+    margin-bottom: 20px;
+}
+
+.page-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.topbar-DoctorTelemedicine {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #34495e;
+    color: white;
+    padding: 10px 20px;
+}
+
+.topbar-DoctorTelemedicine span {
+    font-size: 20px;
+}
+
+.logout-btn {
+    background-color: #e74c3c;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
