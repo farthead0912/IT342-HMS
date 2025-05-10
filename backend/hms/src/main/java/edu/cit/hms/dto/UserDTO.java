@@ -1,5 +1,3 @@
-/*UserDTO.java */
-
 package edu.cit.hms.dto;
 
 import edu.cit.hms.enums.Roles;

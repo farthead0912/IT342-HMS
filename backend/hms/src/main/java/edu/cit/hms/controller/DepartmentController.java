@@ -18,7 +18,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
     @ApiResponse(responseCode = "404", description = "Department not found"),
     @ApiResponse(responseCode = "500", description = "Internal server error")
 })
-@PreAuthorize("hasAnyRole('ADMIN', 'STAFF')") // Class-level restriction
 @RestController
 @RequestMapping(value = "/api/department", produces = "application/json")
 public class DepartmentController {

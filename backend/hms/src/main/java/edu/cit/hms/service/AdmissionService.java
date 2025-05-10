@@ -47,6 +47,14 @@ public class AdmissionService {
         return admissionRepository.findAll();
     }
 
+    public List<AdmissionEntity> getAdmissionsByPatientId(int patientId) {
+        PatientEntity patient = patientRepository.findById(patientId)
+            .orElseThrow(() -> new RuntimeException("Patient ID: " + patientId + " not found!"));
+        
+        return admissionRepository.findByPatient(patient)
+            .orElseThrow(() -> new RuntimeException("No admission found for Patient ID: " + patientId));
+    }
+
     public AdmissionEntity updateAdmission(int admissionId, AdmissionEntity newAdmission) {
         AdmissionEntity admission = admissionRepository.findById(admissionId)
             .orElseThrow(() -> new RuntimeException("Admission ID: " + admissionId + " not found!"));

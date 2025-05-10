@@ -34,6 +34,25 @@ public class DoctorService {
         return doctorRepository.findById(doctorId).orElse(null);
     }
 
+    public List<DoctorEntity> getDoctorByFirstName(String firstName) {
+        return doctorRepository.findByFirstName(firstName).orElse(null);
+    }
+
+    public List<DoctorEntity> getDoctorByLastName(String lastName) {
+        return doctorRepository.findByLastName(lastName).orElse(null);
+    }
+
+    public List<DoctorEntity> getDoctorBySpecialization(String specialization) {
+        return doctorRepository.findBySpecialization(specialization).orElse(null);
+    }
+
+    public List<DoctorEntity> getDoctorByDepartmentId(int departmentId) {
+        DepartmentEntity department = departmentRepository.findById(departmentId)
+            .orElseThrow(() -> new RuntimeException("Department ID: " + departmentId + " not found!"));
+
+        return doctorRepository.findByDepartment(department).orElse(null);
+    }
+
     public List<DoctorEntity> getAllDoctors() {
         return doctorRepository.findAll();
     }

@@ -24,9 +24,16 @@ import DoctorAdmission from "./doctor-pages/DoctorAdmission";
 import DoctorPatientsRecords from "./doctor-pages/DoctorPatientsRecords";
 import DoctorTelemedicine from "./doctor-pages/DoctorTelemedicine";
 import AddNewRequestTelemedicine from "./doctor-pages/AddNewRequestTelemedicine";
-import StartConsultationTelemedicine from "./doctor-pages/StartConsultationTelemedicine"; // Import the StartConsultation page
+import StartConsultationTelemedicine from "./doctor-pages/StartConsultationTelemedicine";
 import DoctorPrescriptions from "./doctor-pages/DoctorPrescriptions";
 import AddNewPatientPrescription from "./doctor-pages/AddNewPatientPrescription";
+
+// Patient Pages
+import PatientDashboard from "./patient-pages/PatientDashboard";
+import PatientAppointments from "./patient-pages/PatientAppointments";
+import PatientMedicalRecords from "./patient-pages/PatientMedicalRecords";
+import PatientTelemedicine from "./patient-pages/PatientTelemedicine";
+import PatientPrescriptions from "./patient-pages/PatientPrescriptions";
 
 // 🔐 Staff/Admin Route Protection
 const StaffProtectedRoute = ({ children }) => {
@@ -48,6 +55,16 @@ const DoctorProtectedRoute = ({ children }) => {
   return children;
 };
 
+// 🔐 Patient Route Protection
+const PatientProtectedRoute = ({ children }) => {
+  const { user, loading, error } = useAuth();
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  const isPatient = user && user.role === "patient";
+  if (!isPatient) return <Navigate to="/login" replace />;
+  return children;
+};
+
 function App() {
   return (
     <AuthProvider>
@@ -63,7 +80,6 @@ function App() {
           <Route path="/staff-admission" element={<StaffProtectedRoute><StaffAppointments /></StaffProtectedRoute>} />
           <Route path="/staff-patient-records" element={<StaffProtectedRoute><StaffPatientsRecords /></StaffProtectedRoute>} />
           <Route path="/staff-add-new-patients-records" element={<StaffProtectedRoute><AddNewPatientsRecords /></StaffProtectedRoute>} />
-
           <Route path="/staff-billing" element={<StaffProtectedRoute><StaffBilling /></StaffProtectedRoute>} />
           <Route path="/staff-inventory" element={<StaffProtectedRoute><StaffInventory /></StaffProtectedRoute>} />
           <Route path="/add-new-item" element={<StaffProtectedRoute><AddNewItem /></StaffProtectedRoute>} />
@@ -78,7 +94,14 @@ function App() {
           <Route path="/doctor-telemedicine/new-request" element={<DoctorProtectedRoute><AddNewRequestTelemedicine /></DoctorProtectedRoute>} />
           <Route path="/doctor-prescriptions" element={<DoctorProtectedRoute><DoctorPrescriptions /></DoctorProtectedRoute>} />
           <Route path="/doctor-prescriptions/add-new-patients-prescriptions" element={<DoctorProtectedRoute><AddNewPatientPrescription /></DoctorProtectedRoute>} />
-          <Route path="/doctor-consultation" element={<DoctorProtectedRoute><StartConsultationTelemedicine /></DoctorProtectedRoute>} /> 
+          <Route path="/doctor-consultation" element={<DoctorProtectedRoute><StartConsultationTelemedicine /></DoctorProtectedRoute>} />
+
+          {/* 🔐 Patient Routes */}
+          <Route path="/patient-dashboard" element={<PatientProtectedRoute><PatientDashboard /></PatientProtectedRoute>} />
+          <Route path="/patient-appointments" element={<PatientProtectedRoute><PatientAppointments /></PatientProtectedRoute>} />
+          <Route path="/patient-medical-records" element={<PatientProtectedRoute><PatientMedicalRecords /></PatientProtectedRoute>} />
+          <Route path="/patient-telemedicine" element={<PatientProtectedRoute><PatientTelemedicine /></PatientProtectedRoute>} />
+          <Route path="/patient-prescriptions" element={<PatientProtectedRoute><PatientPrescriptions /></PatientProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -1,0 +1,302 @@
+/* src/patient-styles/PatientTelemedicine.css */
+.dashboard-container {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 200px;
+    background-color: #3b82f6;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    min-height: 100vh;
+}
+
+.sidebar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+.menu-title {
+    font-size: 14px;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, padding-left 0.3s;
+}
+
+.sidebar li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding-left: 1.25rem;
+}
+
+.sidebar li.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    font-weight: bold;
+}
+
+/* Main content area */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f5f5;
+}
+
+.topbar-PatientTelemedicine {
+    background-color: #777777;
+    color: white;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout-btn {
+    background-color: #ef4444;
+    border: 1px solid white;
+    padding: 0.4rem 0.8rem;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+    background-color: #dc2626;
+}
+
+/* Section */
+.dashboard-section {
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+.page-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+/* Search bar and buttons */
+.search-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.new-appointment-btn {
+    background-color: #22c55e;
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: 500;
+}
+
+.new-appointment-btn:hover {
+    background-color: #16a34a;
+}
+
+/* Table */
+.table-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+    margin-bottom: 2rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+}
+
+th {
+    background-color: #eef3fc;
+    color: #2e5c9a;
+    font-weight: 600;
+    border-bottom: 1px solid #ddd;
+}
+
+td {
+    border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+/* Status badges */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status-badge.scheduled {
+    background-color: #dcfce7;
+    color: #16a34a;
+    border: 1px solid #86efac;
+}
+
+.status-badge.pending-approval {
+    background-color: #fef9c3;
+    color: #ca8a04;
+    border: 1px solid #fde047;
+}
+
+.status-badge.cancelled {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+}
+
+/* Action buttons */
+.actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.actions button {
+    padding: 0.4rem 0.75rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.2s;
+}
+
+.join-btn {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.join-btn:hover {
+    background-color: #2563eb;
+}
+
+.reschedule-btn {
+    background-color: #facc15;
+    color: #1f2937;
+}
+
+.reschedule-btn:hover {
+    background-color: #eab308;
+}
+
+.cancel-btn {
+    background-color: #ef4444;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background-color: #dc2626;
+}
+
+/* Telemedicine info section */
+.telemedicine-info {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.telemedicine-info h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.telemedicine-info p {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    color: #4b5563;
+}
+
+.info-cards {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.info-card {
+    flex: 1;
+    min-width: 250px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1.25rem;
+}
+
+.info-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #1e40af;
+}
+
+.info-card ul {
+    padding-left: 1.25rem;
+    margin: 0;
+}
+
+.info-card li {
+    margin-bottom: 0.5rem;
+    color: #4b5563;
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+    }
+
+    .info-cards {
+        flex-direction: column;
+    }
+}

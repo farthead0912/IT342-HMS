@@ -21,7 +21,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 })
 @RestController
 @RequestMapping(value = "/api/patient_record", produces = "application/json")
-@PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'STAFF')") // Class-level restriction
 public class PatientRecordController {
     @Autowired
     private PatientRecordService patientRecordService;
@@ -40,8 +39,14 @@ public class PatientRecordController {
         return ResponseEntity.ok(patientRecordService.getPatientRecordById(patientRecordId));
     }
 
+    @GetMapping(value = "/patient/{patientId}")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved patient record by patient ID")
+    public ResponseEntity<PatientRecordEntity> getPatientRecordByPatientId(@PathVariable int patientId) {
+        return ResponseEntity.ok(patientRecordService.getPatientRecordByPatientId(patientId));
+    }
+
     // Creates a new patient record
-    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')") // ADMINs and DOCTORs can create patient records
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'STAFF')") // ADMINs and DOCTORs can create patient records
     @PostMapping(value = "/", consumes = "application/json")
     @ApiResponse(responseCode = "201", description = "Successfully created patient record")
     public ResponseEntity<PatientRecordEntity> createPatientRecord(@RequestBody PatientRecordDTO patientRecord) {
@@ -49,7 +54,7 @@ public class PatientRecordController {
     }
 
     // Updates patient record details by ID
-    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')") // ADMINs and DOCTORs can update patient records
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR', 'STAFF')") // ADMINs and DOCTORs can update patient records
     @PutMapping(value = "/{patientRecordId}", consumes = "application/json")
     @ApiResponse(responseCode = "200", description = "Successfully updated patient record")
     public ResponseEntity<PatientRecordEntity> updatePatientRecord(@PathVariable int patientRecordId, @RequestBody PatientRecordEntity patientRecord) {

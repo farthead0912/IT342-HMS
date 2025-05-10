@@ -7,18 +7,9 @@ import jakarta.validation.constraints.NotBlank;
 @Entity
 @Table(name = "users")
 public class UserEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
-
-    @Column(nullable = false, length = 30)
-    @NotBlank(message = "First name is required!")
-    private String firstName;
-
-    @Column(nullable = false, length = 30)
-    @NotBlank(message = "Last name is required!")
-    private String lastName;
 
     @Column(nullable = false, length = 18)
     @NotBlank(message = "Username is required!")
@@ -41,22 +32,6 @@ public class UserEntity {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getUsername() {

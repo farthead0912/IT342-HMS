@@ -1,7 +1,11 @@
+/*RegisterPage.jsx*/
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../staff-styles/RegisterPage.css";
+
+const API_BASE_URL = "https://it342-hms-medisync.onrender.com/api/auth";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -9,19 +13,19 @@ const RegisterPage = () => {
     username: "",
     email: "",
     password: "",
-    role: ""
+    role: "",
   });
-  const [selectedRole, setSelectedRole] = useState("");
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleRoleSelect = (role) => {
-    setSelectedRole(role);
-    setFormData({ ...formData, role });
+    setFormData((prevData) => ({ ...prevData, role }));
     setIsDropdownOpen(false);
   };
 
@@ -31,21 +35,31 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { username, email, password, role } = formData;
 
-    if (!formData.username || !formData.email || !formData.password || !selectedRole) {
+    if (!username || !email || !password || !role) {
       alert("Please fill in all required fields");
       return;
     }
 
+    let endpoint = "";
+    if (role === "Doctor") endpoint = "/doctor/register";
+    else if (role === "Patient") endpoint = "/register";
+    else if (role === "Staff") endpoint = "/staff/register";
+    else {
+      alert("Invalid role selected");
+      return;
+    }
+
     try {
+      console.log("Submitting to:", `${API_BASE_URL}${endpoint}`);
+      console.log("Data:", formData);
+
+      const { role, ...dataToSend } = formData;
+
       const response = await axios.post(
-        "https://it342-hms-medisync.onrender.com/users/register",
-        {
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-          role: formData.role,
-        },
+        `${API_BASE_URL}${endpoint}`,
+        dataToSend,
         {
           headers: {
             "Content-Type": "application/json",
@@ -57,7 +71,7 @@ const RegisterPage = () => {
       navigate("/login");
     } catch (error) {
       console.error("Registration failed:", error.response?.data || error.message);
-      alert("Registration failed. Please try again.");
+      setError(error.response?.data?.message || "Registration failed. Please try again.");
     }
   };
 
@@ -72,12 +86,11 @@ const RegisterPage = () => {
               A secure platform for managing patient records, doctor schedules,
               bed availability, equipment usage, and billing processes.
             </p>
-
             <div className="role-selector">
               <h3>Register As:</h3>
               <div className="dropdown">
                 <button className="dropdown-toggle" onClick={toggleDropdown}>
-                  {selectedRole || "Pick an option"}
+                  {formData.role || "Pick an option"}
                 </button>
                 {isDropdownOpen && (
                   <div className="dropdown-menu">
@@ -100,6 +113,7 @@ const RegisterPage = () => {
         <div className="right-panel">
           <div className="register-form-container">
             <h2>Register Now</h2>
+            {error && <div className="error-message">{error}</div>}
             <form onSubmit={handleSubmit} className="register-form">
               <div className="form-row">
                 <div className="form-group">

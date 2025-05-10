@@ -7,13 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.cit.hms.dto.PatientRecordDTO;
+import edu.cit.hms.entity.PatientEntity;
 import edu.cit.hms.entity.PatientRecordEntity;
 import edu.cit.hms.repository.PatientRecordRepository;
+import edu.cit.hms.repository.PatientRepository;
 
 @Service
 public class PatientRecordService {
     @Autowired
     private PatientRecordRepository patientRecordRepository;
+    
+    @Autowired
+    private PatientRepository patientRepository;
 
     public PatientRecordEntity createPatientRecord(PatientRecordDTO patientRecordDTO) {
         PatientRecordEntity patientRecord = convertFromDTO(patientRecordDTO);
@@ -23,6 +28,13 @@ public class PatientRecordService {
 
     public PatientRecordEntity getPatientRecordById(int patientRecordId) {
         return patientRecordRepository.findById(patientRecordId).orElse(null);
+    }
+
+    public PatientRecordEntity getPatientRecordByPatientId(int patientId) {
+        PatientEntity patient = patientRepository.findById(patientId)
+                .orElseThrow(() -> new RuntimeException("Patient ID: " + patientId + " not found!"));
+
+        return patientRecordRepository.findByPatient(patient).orElse(null);
     }
 
     public List<PatientRecordEntity> getPatientRecords() {

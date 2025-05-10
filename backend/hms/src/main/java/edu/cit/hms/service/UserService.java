@@ -1,5 +1,3 @@
-/*UserService.java*/
-
 package edu.cit.hms.service;
 
 import java.util.*;

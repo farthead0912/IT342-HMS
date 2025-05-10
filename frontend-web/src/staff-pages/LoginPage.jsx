@@ -1,4 +1,4 @@
-/*LoginPag.jsx*/
+/*LoginPage.jsx*/
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,32 +18,30 @@ const LoginPage = () => {
 
     // Dummy staff credentials
     if (username === "staff@example.com" && password === "123") {
-      const user = {
-        username,
-        role: "staff", // role stored for protected route
-      };
-
-      // Use the auth context login function
+      const user = { username, role: "staff" };
       login(user);
       console.log("Login successful, navigating to staff dashboard");
-
-      // Redirect to staff dashboard
       navigate("/staff-dashboard");
-    } 
+    }
+
     // Dummy doctor credentials
     else if (username === "doctor@example.com" && password === "456") {
-      const user = {
-        username,
-        role: "doctor", // role stored for protected route
-      };
-
-      // Use the auth context login function
+      const user = { username, role: "doctor" };
       login(user);
       console.log("Login successful, navigating to doctor dashboard");
-
-      // Redirect to doctor dashboard
       navigate("/doctor-dashboard");
-    } else {
+    }
+
+    // ✅ Dummy patient credentials
+    else if (username === "patient@example.com" && password === "789") {
+      const user = { username, role: "patient" };
+      login(user);
+      console.log("Login successful, navigating to patient dashboard");
+      navigate("/patient-dashboard");
+    }
+
+    // ❌ Invalid credentials
+    else {
       alert("Invalid credentials. Please try again.");
     }
   };
